@@ -130,8 +130,12 @@ declare module '@delhivery/tarmac' {
     size?: string;
     text?: string;
     src?: string;
+    alt?: string;
+    avatarType?: string;
     shape?: string;
     type?: string;
+    showStatus?: boolean;
+    statusType?: string;
     className?: string;
   }
   export const Avatar: FC<AvatarProps>;
