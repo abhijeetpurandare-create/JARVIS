@@ -1,11 +1,22 @@
 {
   "mcpServers": {
-    "tarmac": {
+    "tarmac-storybook": {
       "command": "npx",
-      "args": ["tarmac-mcp"],
+      "args": ["-y", "storybook-mcp@latest"],
+      "env": {
+        "STORYBOOK_URL": "https://tarmac-storybook-dev.pntrzz.com/storybook/sb/index.json"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "tarmac-props": {
+      "command": "node",
+      "args": ["/Users/abhijeet.purandare/Downloads/Tarmac-Design-System-main 2/packages/tarmac-mcp/bin/tarmac-mcp.cjs"],
       "env": {
         "STORYBOOK_URL": "https://tarmac-storybook-dev.pntrzz.com/storybook/sb"
-      }
+      },
+      "disabled": false,
+      "autoApprove": []
     }
   }
 }

@@ -25,7 +25,9 @@ const TopNavigation = () => {
       <div className="flex items-center justify-between flex-1">
         {/* Left — Logo */}
         <div className="flex items-center">
-          <img src="./jarvis-logo.svg" alt="JARVIS" className="h-[20px]" />
+          <span className="text-[20px] font-bold text-tds-text-heading-primary tracking-[0.05em]" style={{ fontFamily: "'Noto Sans', sans-serif" }}>
+            JARVIS
+          </span>
         </div>
 
         {/* Right — Search + Create Ticket */}
@@ -51,7 +53,7 @@ const TopNavigation = () => {
           </div>
 
           {/* Create Ticket — TDS Button */}
-          <Button variant="black" buttonStyle="secondary" size="md" leadingIcon={<AddCircleIcon />} text="Create Ticket" className="!h-[36px] !py-0" />
+          <Button variant="black" buttonStyle="primary" size="md" leadingIcon={<AddCircleIcon />} text="Create Ticket" className="!h-[36px] !py-0" />
         </div>
       </div>
     </header>

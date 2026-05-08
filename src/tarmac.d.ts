@@ -78,7 +78,14 @@ declare module '@delhivery/tarmac' {
     title?: string;
     subtextTop?: string;
     subtextBottom?: string;
+    showTitle?: boolean;
+    showSubtextTop?: boolean;
+    showSubtextBottom?: boolean;
     variant?: string;
+    leadingIcon?: ReactNode;
+    trailingIcon?: ReactNode;
+    leadingSubtextIcon?: ReactNode;
+    trailingSubtextIcon?: ReactNode;
     className?: string;
   }
   interface TarmacTableComponent extends FC<any> {
