@@ -178,7 +178,7 @@ const TicketList = () => {
           </h1>
           <span className="text-[13px] font-medium text-tds-text-caption-secondary">({totalTickets})</span>
         </div>
-        <Button variant="black" buttonStyle="secondary" size="md" leadingIcon={<FilterIcon />} text="Filter List" className="!h-[36px] !py-0" onClick={() => setFilterOpen(true)} />
+        <Button variant="black" buttonStyle="secondary" size="md" leadingIcon={<FilterIcon />} text="Filter" className="!h-[36px] !py-0" onClick={() => setFilterOpen(true)} />
       </div>
 
       {/* Table */}
