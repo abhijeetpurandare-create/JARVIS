@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "tarmac": {
+      "command": "npx",
+      "args": ["tarmac-mcp"],
+      "env": {
+        "STORYBOOK_URL": "https://tarmac-storybook-dev.pntrzz.com/storybook/sb"
+      }
+    }
+  }
+}
