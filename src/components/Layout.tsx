@@ -4,17 +4,19 @@ import TopNavigation from './TopNavigation';
 
 const Layout = () => {
   return (
-    <div className="flex h-screen bg-tds-surface-bg-coal-weakest">
-      {/* Side Navigation — 60px icon-only nav */}
-      <SideNavigation />
+    <div className="flex flex-col h-screen bg-tds-surface-bg-coal-weakest">
+      {/* Top Navigation — full width */}
+      <TopNavigation />
 
-      {/* Main content area */}
-      <div className="flex flex-col flex-1 overflow-hidden">
-        {/* Top Navigation */}
-        <TopNavigation />
+      {/* Content area below top nav */}
+      <div className="flex flex-1 overflow-hidden relative">
+        {/* Side Navigation — floating bar with margins */}
+        <div className="absolute left-tds-12 top-tds-12 bottom-tds-12 z-20">
+          <SideNavigation />
+        </div>
 
-        {/* Page content */}
-        <main className="flex-1 overflow-auto">
+        {/* Page content — offset for the floating nav */}
+        <main className="flex-1 overflow-auto ml-[70px]">
           <Outlet />
         </main>
       </div>

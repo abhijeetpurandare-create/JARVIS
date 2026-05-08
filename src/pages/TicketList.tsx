@@ -62,18 +62,19 @@ const STATUSES: { label: string; variant: TicketRow['statusVariant'] }[] = [
   { label: 'Resolved', variant: 'success' },
 ];
 
-const mockTickets: TicketRow[] = Array.from({ length: 30 }, (_, i) => {
+const mockTickets: TicketRow[] = Array.from({ length: 215 }, (_, i) => {
   const status = STATUSES[i % STATUSES.length];
-  const createdDay = 14 - Math.floor(i / 3);
+  const createdDay = 28 - (i % 28);
+  const month = i < 140 ? 'Apr' : 'Mar';
   return {
     id: String(i + 1),
     publicTicketId: `J${17769268800000 + i + 1}`,
     subject: SUBJECTS[i % SUBJECTS.length],
     customerName: NAMES[i % NAMES.length],
     agent: AGENTS[i % AGENTS.length],
-    createdDate: `${createdDay} Apr 2026`,
+    createdDate: `${createdDay} ${month} 2026`,
     createdTime: `${9 + (i % 8)}:${String((i * 7) % 60).padStart(2, '0')}${i % 2 === 0 ? 'AM' : 'PM'}`,
-    closureDueDate: `${createdDay + 7} Apr 2026`,
+    closureDueDate: `${createdDay + 7 > 28 ? (createdDay + 7 - 28) : createdDay + 7} ${month === 'Mar' ? 'Apr' : 'Apr'} 2026`,
     closureDueTime: '12:00PM',
     status: status.label,
     statusVariant: status.variant,
@@ -89,6 +90,8 @@ const FilterIcon = () => (
 const TicketList = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [sortState, setSortState] = useState<SortState>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(30);
 
   const handleSort = (column: string) => {
     if (sortState?.column !== column) {
@@ -132,6 +135,32 @@ const TicketList = () => {
     return sorted;
   }, [sortState]);
 
+  const totalTickets = sortedTickets.length;
+  const totalPages = Math.ceil(totalTickets / perPage);
+  const paginatedTickets = sortedTickets.slice((currentPage - 1) * perPage, currentPage * perPage);
+
+  const handlePerPageChange = (value: number) => {
+    setPerPage(value);
+    setCurrentPage(1);
+  };
+
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push('...');
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) pages.push('...');
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+
   return (
     <div className="flex flex-col h-full bg-tds-surface-bg-primary-default">
       {/* Filter Panel — slides in from right */}
@@ -143,9 +172,12 @@ const TicketList = () => {
 
       {/* Action Bar */}
       <div className="flex items-center justify-between px-tds-24 py-tds-16 w-full">
-        <h1 className="text-[16px] font-semibold leading-[24px] text-tds-text-heading-primary">
-          Ticket List
-        </h1>
+        <div className="flex items-center gap-tds-8">
+          <h1 className="text-[16px] font-semibold leading-[24px] text-tds-text-heading-primary">
+            Ticket List
+          </h1>
+          <span className="text-[13px] font-medium text-tds-text-caption-secondary">({totalTickets})</span>
+        </div>
         <Button variant="black" buttonStyle="secondary" size="md" leadingIcon={<FilterIcon />} text="Filter List" className="!h-[36px] !py-0" onClick={() => setFilterOpen(true)} />
       </div>
 
@@ -182,7 +214,7 @@ const TicketList = () => {
 
           {/* Scrollable Data Rows */}
           <div className="flex-1 overflow-auto">
-            {sortedTickets.map((ticket) => (
+            {paginatedTickets.map((ticket) => (
               <div key={ticket.id} className="flex items-center border-b border-tds-border-neutral-primary hover:bg-tds-surface-bg-coal-weakest cursor-pointer transition-colors">
                 {/* Ticket name — TDS TextCell */}
                 <div className="w-[35%] min-w-[300px] [&>div]:!gap-0">
@@ -220,27 +252,55 @@ const TicketList = () => {
 
           {/* Pagination — sticky bottom */}
           <div className="shrink-0 border-t border-tds-border-neutral-primary flex items-center justify-between px-tds-16 py-tds-12">
-            <div className="flex-1">
-              <span className="text-[14px] font-medium text-tds-text-caption-secondary">Showing {sortedTickets.length} Tickets</span>
+            <div className="flex-1 flex items-center gap-tds-4">
+              <span className="text-[13px] font-medium text-tds-text-caption-secondary">Show</span>
+              <select
+                className="text-[13px] font-medium text-tds-text-body-primary bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary rounded-tds-default px-tds-6 py-tds-2 cursor-pointer outline-none"
+                value={perPage}
+                onChange={(e) => handlePerPageChange(Number(e.target.value))}
+              >
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={30}>30</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+              <span className="text-[13px] font-medium text-tds-text-caption-secondary">per page</span>
             </div>
             <div className="flex-1 flex items-center justify-center">
               <div className="flex items-center gap-[2px]">
-                <div className="flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[13px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">1</div>
-                <div className="flex items-center justify-center w-[32px] h-[32px] rounded-tds-default bg-tds-surface-bg-primary-inverse-default text-[13px] font-medium text-tds-text-heading-inverse-only-white">2</div>
-                <div className="flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[13px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">3</div>
-                <div className="flex items-center justify-center w-[32px] h-[32px] text-[13px] font-medium text-tds-text-body-primary">...</div>
-                <div className="flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[13px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">16</div>
-                <div className="flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[13px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">17</div>
-                <div className="flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[13px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">18</div>
+                {getPageNumbers().map((page, idx) => (
+                  <div
+                    key={idx}
+                    className={`flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[13px] font-medium ${
+                      page === currentPage
+                        ? 'bg-tds-surface-bg-primary-inverse-default text-tds-text-heading-inverse-only-white'
+                        : page === '...'
+                        ? 'text-tds-text-body-primary'
+                        : 'text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest'
+                    }`}
+                    onClick={() => typeof page === 'number' && setCurrentPage(page)}
+                  >
+                    {page}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="flex-1 flex items-center justify-end gap-tds-8">
-              <button className="flex items-center gap-tds-4 text-[13px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary">
+              <button
+                className="flex items-center gap-tds-4 text-[13px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 Previous
               </button>
               <div className="w-px h-[12px] bg-tds-border-neutral-primary" />
-              <button className="flex items-center gap-tds-4 text-[13px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary">
+              <button
+                className="flex items-center gap-tds-4 text-[13px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
                 Next
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </button>
