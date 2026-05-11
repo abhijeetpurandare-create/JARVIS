@@ -107,7 +107,7 @@ const Dashboard = () => {
       {/* Header */}
       <div className="flex items-center justify-between py-tds-16">
         <div className="flex items-center gap-tds-8">
-          <h1 className="text-[24px] font-bold text-tds-text-heading-primary leading-[32px]">My Overview</h1>
+          <h1 className="text-[16px] font-semibold text-tds-text-heading-primary leading-[24px]">Dashboard</h1>
         </div>
         <div className="flex items-center gap-tds-12">
           <span className="text-[14px] text-tds-text-caption-secondary">Last Updated: 11 May, 3:34 PM</span>

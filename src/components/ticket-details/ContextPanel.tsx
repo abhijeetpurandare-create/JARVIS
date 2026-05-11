@@ -29,8 +29,8 @@ const ContextPanel = ({ ticket }: { ticket: TicketDetail }) => {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="flex items-center gap-tds-8 px-tds-16 py-tds-16 border-b border-tds-border-neutral-primary">
-        <span className="text-[14px] font-semibold text-[#6366F1]">Ask AI</span>
+      <div className="flex items-center gap-tds-8 px-tds-16 py-tds-12 border-b border-tds-border-neutral-primary">
+        <span className="text-[12px] font-semibold text-[#6366F1]">Ask AI</span>
       </div>
 
       {/* Context sections — scrollable */}
