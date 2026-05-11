@@ -92,6 +92,8 @@ const TicketList = () => {
   const [sortState, setSortState] = useState<SortState>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(30);
+  const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
 
   const handleSort = (column: string) => {
     if (sortState?.column !== column) {
@@ -104,10 +106,17 @@ const TicketList = () => {
   };
 
   const sortedTickets = useMemo(() => {
-    if (!sortState) return mockTickets;
+    let tickets = mockTickets;
+
+    // Apply status filter
+    if (statusFilter !== 'All') {
+      tickets = tickets.filter((t) => t.status === statusFilter);
+    }
+
+    if (!sortState) return tickets;
 
     const { column, direction } = sortState;
-    const sorted = [...mockTickets].sort((a, b) => {
+    const sorted = [...tickets].sort((a, b) => {
       let cmp = 0;
 
       switch (column) {
@@ -133,7 +142,7 @@ const TicketList = () => {
     });
 
     return sorted;
-  }, [sortState]);
+  }, [sortState, statusFilter]);
 
   const totalTickets = sortedTickets.length;
   const totalPages = Math.ceil(totalTickets / perPage);
@@ -205,9 +214,26 @@ const TicketList = () => {
               <span className="text-[12px] font-normal text-tds-text-caption-primary">To Be Closed By</span>
               <SortArrow column="closure_due" sortState={sortState} onSort={handleSort} />
             </div>
-            <div className="w-[13%] flex items-center px-tds-12 py-tds-12 cursor-pointer select-none" onClick={() => handleSort('status')}>
+            <div className="w-[13%] flex items-center px-tds-12 py-tds-12 cursor-pointer select-none relative" onClick={() => setStatusDropdownOpen(!statusDropdownOpen)}>
               <span className="text-[12px] font-normal text-tds-text-caption-primary">Status</span>
-              <SortArrow column="status" sortState={sortState} onSort={handleSort} />
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="ml-tds-4"><path d="M3 4.5L6 7.5L9 4.5" stroke={statusFilter !== 'All' ? '#ED1B36' : '#999'} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              {statusFilter !== 'All' && <span className="w-[6px] h-[6px] rounded-full bg-[#ED1B36] absolute top-[8px] right-[8px]" />}
+
+              {/* Status filter dropdown */}
+              {statusDropdownOpen && (
+                <div className="absolute top-full left-0 mt-tds-4 w-[180px] bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary rounded-tds-md shadow-lg z-30 overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                  <div className="py-tds-4 text-[12px] font-medium text-tds-text-caption-secondary px-tds-12 pt-tds-8">Show:</div>
+                  {['All', 'Agent Handling', 'Open', 'System Handling', 'Closed', 'Waiting On Customer', 'Resolved'].map((status) => (
+                    <div
+                      key={status}
+                      className={`px-tds-12 py-tds-8 text-[13px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors ${statusFilter === status ? 'font-semibold text-tds-text-body-primary bg-tds-surface-bg-coal-weakest' : 'text-tds-text-body-secondary'}`}
+                      onClick={() => { setStatusFilter(status); setStatusDropdownOpen(false); setCurrentPage(1); }}
+                    >
+                      {status}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
