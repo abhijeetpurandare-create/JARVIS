@@ -100,7 +100,7 @@ const SideNavigation = () => {
 
         {/* Dropdown */}
         {profileOpen && (
-          <div className="absolute bottom-0 left-[64px] w-[240px] bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary shadow-lg z-50 overflow-hidden">
+          <div className="absolute bottom-[48px] left-1/2 -translate-x-1/2 w-[240px] bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary shadow-lg z-50 overflow-hidden">
             {/* Profile header */}
             <div className="flex items-center gap-tds-12 px-tds-16 py-tds-12 border-b border-tds-border-neutral-primary">
               <Avatar
