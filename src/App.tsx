@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
+import { SnackbarManager } from '@delhivery/tarmac';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import TicketList from './pages/TicketList';
 import TicketDetails from './pages/TicketDetails';
 import AgentAvailability from './pages/AgentAvailability';
-import Toast from './components/Toast';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           <Route path="availability" element={<AgentAvailability />} />
         </Route>
       </Routes>
-      <Toast />
+      <SnackbarManager />
     </>
   );
 }
