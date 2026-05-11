@@ -92,6 +92,8 @@ const TicketList = () => {
   const [sortState, setSortState] = useState<SortState>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(30);
+  const [agentFilter, setAgentFilter] = useState<string[]>([]);
+  const [agentDropdownOpen, setAgentDropdownOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
 
@@ -111,6 +113,11 @@ const TicketList = () => {
     // Apply status filter
     if (statusFilter.length > 0) {
       tickets = tickets.filter((t) => statusFilter.includes(t.status));
+    }
+
+    // Apply agent filter
+    if (agentFilter.length > 0) {
+      tickets = tickets.filter((t) => agentFilter.includes(t.agent));
     }
 
     if (!sortState) return tickets;
@@ -142,7 +149,7 @@ const TicketList = () => {
     });
 
     return sorted;
-  }, [sortState, statusFilter]);
+  }, [sortState, statusFilter, agentFilter]);
 
   const totalTickets = sortedTickets.length;
   const totalPages = Math.ceil(totalTickets / perPage);
@@ -202,9 +209,47 @@ const TicketList = () => {
               <span className="text-[12px] font-normal text-tds-text-caption-primary">Customer</span>
               <SortArrow column="customer" sortState={sortState} onSort={handleSort} />
             </div>
-            <div className="w-[12%] flex items-center px-tds-12 py-tds-12 cursor-pointer select-none" onClick={() => handleSort('agent')}>
+            <div className="w-[12%] flex items-center px-tds-12 py-tds-12 cursor-pointer select-none relative" onClick={() => setAgentDropdownOpen(!agentDropdownOpen)}>
               <span className="text-[12px] font-normal text-tds-text-caption-primary">Agent</span>
-              <SortArrow column="agent" sortState={sortState} onSort={handleSort} />
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="ml-tds-4"><path d="M3 4.5L6 7.5L9 4.5" stroke={agentFilter.length > 0 ? '#ED1B36' : '#999'} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              {agentFilter.length > 0 && <span className="w-[6px] h-[6px] rounded-full bg-[#ED1B36] absolute top-[8px] right-[8px]" />}
+
+              {/* Agent filter dropdown with checkboxes */}
+              {agentDropdownOpen && (
+                <div className="absolute top-full left-0 mt-tds-4 w-[200px] bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary rounded-tds-md shadow-lg z-30 max-h-[280px] overflow-auto" onClick={(e) => e.stopPropagation()}>
+                  <div className="py-tds-4 text-[12px] font-medium text-tds-text-caption-secondary px-tds-12 pt-tds-8">Show:</div>
+                  {/* All option */}
+                  <div
+                    className={`px-tds-12 py-tds-8 text-[13px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${agentFilter.length === 0 ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
+                    onClick={() => { setAgentFilter([]); setCurrentPage(1); }}
+                  >
+                    <div className={`w-[16px] h-[16px] rounded-[3px] border flex items-center justify-center ${agentFilter.length === 0 ? 'bg-tds-surface-bg-primary-inverse-default border-tds-surface-bg-primary-inverse-default' : 'border-tds-border-neutral-primary'}`}>
+                      {agentFilter.length === 0 && <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                    </div>
+                    All Agents
+                  </div>
+                  {/* Individual agents */}
+                  {AGENTS.map((agent) => {
+                    const isChecked = agentFilter.includes(agent);
+                    return (
+                      <div
+                        key={agent}
+                        className={`px-tds-12 py-tds-8 text-[13px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${isChecked ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
+                        onClick={() => {
+                          if (isChecked) setAgentFilter(agentFilter.filter((a) => a !== agent));
+                          else setAgentFilter([...agentFilter, agent]);
+                          setCurrentPage(1);
+                        }}
+                      >
+                        <div className={`w-[16px] h-[16px] rounded-[3px] border flex items-center justify-center ${isChecked ? 'bg-tds-surface-bg-primary-inverse-default border-tds-surface-bg-primary-inverse-default' : 'border-tds-border-neutral-primary'}`}>
+                          {isChecked && <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                        </div>
+                        {agent}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
             <div className="w-[13%] flex items-center px-tds-12 py-tds-12 cursor-pointer select-none" onClick={() => handleSort('created_on')}>
               <span className="text-[12px] font-normal text-tds-text-caption-primary">Created On</span>
