@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react';
 import { Avatar } from '@delhivery/tarmac';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -37,11 +38,33 @@ const NavItem = ({ icon, active, onClick }: NavItemProps) => (
   </div>
 );
 
+const profileMenuItems = [
+  { label: 'My Requests', icon: null },
+  { label: 'Agent Availability', icon: null },
+  { label: 'Bulk Ticket Update', icon: null },
+  { label: 'Settings', icon: null },
+  { label: 'Logout', icon: null },
+];
+
 const SideNavigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
   const isTickets = location.pathname === '/tickets' || location.pathname.startsWith('/ticket/');
+
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!profileOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [profileOpen]);
 
   return (
     <div
@@ -55,20 +78,57 @@ const SideNavigation = () => {
         <NavItem icon={<UsersIcon />} label="Users" />
       </div>
 
-      {/* Spacer — pushes avatar to bottom */}
+      {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Avatar at bottom — TDS Avatar */}
-      <div className="flex items-center justify-center cursor-pointer">
-        <Avatar
-          size="md"
-          avatarType="image"
-          src="https://i.pravatar.cc/40"
-          alt="Profile"
-          shape="round"
-          showStatus={true}
-          statusType="active"
-        />
+      {/* Avatar + Profile Dropdown */}
+      <div ref={profileRef} className="relative">
+        <div
+          className="flex items-center justify-center cursor-pointer"
+          onClick={() => setProfileOpen(!profileOpen)}
+        >
+          <Avatar
+            size="md"
+            avatarType="image"
+            src="https://i.pravatar.cc/40"
+            alt="Profile"
+            shape="round"
+            showStatus={true}
+            statusType="active"
+          />
+        </div>
+
+        {/* Dropdown */}
+        {profileOpen && (
+          <div className="absolute bottom-0 left-[64px] w-[240px] bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary shadow-lg z-50 overflow-hidden">
+            {/* Profile header */}
+            <div className="flex items-center gap-tds-12 px-tds-16 py-tds-12 border-b border-tds-border-neutral-primary">
+              <Avatar
+                size="md"
+                avatarType="image"
+                src="https://i.pravatar.cc/40"
+                alt="Profile"
+                shape="round"
+              />
+              <div className="flex flex-col">
+                <span className="text-[14px] font-semibold text-tds-text-heading-primary">Abhijeet Pramod Purandare</span>
+              </div>
+            </div>
+
+            {/* Menu items */}
+            <div className="py-tds-4">
+              {profileMenuItems.map((item) => (
+                <button
+                  key={item.label}
+                  className="w-full text-left px-tds-16 py-tds-12 text-[14px] text-tds-text-body-primary hover:bg-tds-surface-bg-coal-weakest cursor-pointer transition-colors"
+                  onClick={() => setProfileOpen(false)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
