@@ -162,7 +162,7 @@ const TicketList = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-tds-surface-bg-primary-default">
+    <div className="flex flex-col h-full">
       {/* Filter Panel — slides in from right */}
       <FilterPanel
         isOpen={filterOpen}
@@ -171,18 +171,18 @@ const TicketList = () => {
       />
 
       {/* Action Bar */}
-      <div className="flex items-center justify-between px-tds-24 py-tds-16 w-full">
+      <div className="flex items-center justify-between pr-tds-16 py-tds-16 w-full">
         <div className="flex items-center gap-tds-8">
           <h1 className="text-[16px] font-semibold leading-[24px] text-tds-text-heading-primary">
             Ticket List
           </h1>
           <span className="text-[13px] font-medium text-tds-text-caption-secondary">({totalTickets})</span>
         </div>
-        <Button variant="black" buttonStyle="secondary" size="md" leadingIcon={<FilterIcon />} text="Filter" className="!h-[36px] !py-0" onClick={() => setFilterOpen(true)} />
+        <Button variant="black" buttonStyle="secondary" size="sm" leadingIcon={<FilterIcon />} text="Filter" onClick={() => setFilterOpen(true)} />
       </div>
 
       {/* Table */}
-      <div className="flex-1 overflow-hidden px-tds-24 pb-tds-24 flex flex-col">
+      <div className="flex-1 overflow-hidden pr-tds-16 pb-tds-16 flex flex-col">
         <div className="border border-tds-border-neutral-primary rounded-tds-md overflow-hidden flex flex-col flex-1">
           {/* Header Row */}
           <div className="flex bg-[#f7f7f7] border-b border-tds-border-neutral-primary shrink-0">

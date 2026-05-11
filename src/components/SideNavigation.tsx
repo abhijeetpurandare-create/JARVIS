@@ -1,4 +1,5 @@
 import { Avatar } from '@delhivery/tarmac';
+import SpotlightHover from './SpotlightHover';
 
 
 const HomeIcon = () => (
@@ -26,20 +27,18 @@ interface NavItemProps {
 }
 
 const NavItem = ({ icon, label, active }: NavItemProps) => (
-  <button
-    className={`flex items-center justify-center w-[44px] h-[36px] rounded-tds-md cursor-pointer transition-colors ${
-      active ? 'bg-tds-alpha-white-200' : 'hover:bg-tds-alpha-white-100'
+  <SpotlightHover
+    className={`flex items-center justify-center w-[44px] h-[36px] rounded-tds-md cursor-pointer transition-all ${
+      active ? 'bg-tds-alpha-white-200' : ''
     }`}
-    aria-label={label}
-    title={label}
   >
-    <span className="text-tds-text-heading-inverse-only-white">{icon}</span>
-  </button>
+    <span className="text-tds-text-heading-inverse-only-white relative z-10">{icon}</span>
+  </SpotlightHover>
 );
 
 const SideNavigation = () => {
   return (
-    <nav className="flex flex-col items-center h-full w-[60px] bg-tds-surface-bg-primary-inverse-default pt-tds-16 pb-tds-16 px-tds-8 rounded-tds-lg relative z-10" style={{ boxShadow: '2px 0px 8px rgba(0,0,0,0.15)' }}>
+    <SpotlightHover className="flex flex-col items-center h-full w-[60px] bg-tds-surface-bg-primary-inverse-default pt-tds-16 pb-tds-16 px-tds-8 rounded-tds-lg relative z-10" style={{ boxShadow: '2px 0px 8px rgba(0,0,0,0.15)' } as React.CSSProperties}>
       {/* Top nav items */}
       <div className="flex flex-col items-center gap-tds-8">
         <NavItem icon={<HomeIcon />} label="Home" />
@@ -62,7 +61,7 @@ const SideNavigation = () => {
           statusType="active"
         />
       </div>
-    </nav>
+    </SpotlightHover>
   );
 };
 

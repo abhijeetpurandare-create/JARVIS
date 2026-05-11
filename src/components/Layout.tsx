@@ -16,7 +16,7 @@ const Layout = () => {
         </div>
 
         {/* Page content — offset for the floating nav */}
-        <main className="flex-1 overflow-auto ml-[70px]">
+        <main className="flex-1 overflow-auto ml-[88px]">
           <Outlet />
         </main>
       </div>

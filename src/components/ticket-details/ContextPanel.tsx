@@ -1,3 +1,5 @@
+import { TicketDetail } from '../../data/ticketDetailsData';
+
 interface ContextSectionProps {
   title: string;
   content: string;
@@ -10,47 +12,44 @@ const ContextSection = ({ title, content }: ContextSectionProps) => (
   </div>
 );
 
-const ContextPanel = () => {
+const ContextPanel = ({ ticket }: { ticket: TicketDetail }) => {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center gap-tds-8 px-tds-16 py-tds-16 border-b border-tds-border-neutral-primary">
-        <svg width="13" height="17" viewBox="0 0 13 17" fill="none">
-          <path d="M6.5 0L0 3V8C0 12.4 2.8 16.5 6.5 17C10.2 16.5 13 12.4 13 8V3L6.5 0Z" fill="#121212" />
-        </svg>
-        <span className="text-[14px] font-semibold text-tds-text-heading-primary">Context</span>
+        <span className="text-[14px] font-semibold text-[#6366F1]">Ask AI</span>
       </div>
 
       {/* Context sections — scrollable */}
       <div className="flex-1 overflow-auto p-tds-16 flex flex-col gap-tds-12">
         <ContextSection
           title="Consignee"
-          content={`Address: -- , Delhi, Haryana 110061\nHistory: The customer has 3/10 successful deliveries\nStatus: Address valid\nRisk: LOW RTO risk (69.0%)`}
+          content={`Address: ${ticket.customerAddress}\nHistory: The customer has ${ticket.customerHistory}\nStatus: Address valid\nRisk: LOW RTO risk (69.0%)`}
         />
 
         <ContextSection
           title="Product"
-          content={`Product: CON 3(1)\nClient: 6023ec-RAINADIHATTI-do\nType: COD B2C`}
+          content={`Product: ${ticket.product}\nClient: ${ticket.productClient}\nType: ${ticket.productType}`}
         />
 
         <ContextSection
           title="Ticket"
-          content={`Complaint: The consignee is reporting a complaint about delivery staff's behavior.\nRequesting Action: To report complaint about delivery staff's behavior.\nLatest Response: System on April 17, 2026 — ticket closed as shipment delivered.`}
+          content={`Subject: ${ticket.subject}\nStatus: ${ticket.status}\nAgent: ${ticket.agent}\nPriority: ${ticket.priority}`}
         />
 
         <ContextSection
           title="Shipment"
-          content={`Status: Shipment was Delivered from Gurgaon_Sector18_D (Haryana) on April 17, 2026 4:41 PM.\nVerification: Geo-verified.`}
+          content={`Status: ${ticket.shipmentStatus}`}
         />
 
         <ContextSection
           title="Center"
-          content={`Location: Gurgaon_Sector18_D (Haryana) has issues.\nMetrics: AVTD: 1786, 57.9% Service Level, 110 shipments aging >24 hours.\nIssues: Aging Shipments backlog, productivity drop in new LMAs, and AVTD load increase.\nCoordinate via: Assistant Team Lead, Vikash Kumar Mishra, at vikash.mishra2@delhivery.com or 6207801415.`}
+          content={`Location: ${ticket.centerLocation}\nMetrics: ${ticket.centerMetrics}`}
         />
       </div>
 
       {/* Bottom — Ask AI input */}
-      <div className="border-t border-tds-border-neutral-primary p-tds-12">
+      <div className="border-t border-tds-border-neutral-primary p-tds-16">
         <div className="flex items-center gap-tds-8">
           <input
             type="text"

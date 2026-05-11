@@ -1,167 +1,86 @@
-interface Message {
-  id: string;
-  sender: string;
-  role: string;
-  timestamp: string;
-  content: string;
-  type: 'customer' | 'agent' | 'private_note' | 'email';
-  notifiedTo?: string[];
-}
+import { Conversation } from '../../data/ticketDetailsData';
 
-const mockConversations: Message[] = [
-  {
-    id: '1',
-    sender: 'Ramesh Kumar',
-    role: 'ramesh.kumar | Consignee',
-    timestamp: 'Aug 25, 12:08 PM',
-    content: 'THE ORDER IS DELAYED. THE CUSTOMER IS AVAILABLE. PLEASE DELIVER IT AS SOON AS POSSIBLE Order ID: 7300610253142',
-    type: 'customer',
-  },
-  {
-    id: '2',
-    sender: 'Melika Govekar',
-    role: 'melika.govekar | Executive | Service Center Operations',
-    timestamp: 'Sept 04, 12:08 PM',
-    content: 'Dear Sir/Ma\'am,\n\nWe apologise for the inconvenience caused, and we have forwarded this issue to the concerned team. We request you to allow us some more time to work on the same.\n\nRegards,\nDelhivery Customer Support Team',
-    type: 'agent',
-  },
-  {
-    id: '3',
-    sender: 'Melika Govekar',
-    role: 'melika.govekar | Executive | Service Center Operations',
-    timestamp: 'Sept 04, 12:08 PM',
-    content: 'Hi @Bangalore_Hoskote_GW team & @Security team AWB 73006012351322\n\nThis shipment has been found short at Bengaluru, Arahara DC (Karnataka) facility. Kindly investigate this case and share the solution to correct the shipment ID',
-    type: 'private_note',
-  },
-  {
-    id: '4',
-    sender: 'Melika Govekar',
-    role: 'melika.govekar | Executive | Service Center Operations',
-    timestamp: 'Sept 04, 12:08 PM',
-    content: 'Dear Sir/Ma\'am,\n\nWe apologise for the inconvenience caused, and we have forwarded this issue to the concerned team. We request you to allow us some more time to work on the same.\n\nRegards,\nDelhivery Customer Support Team',
-    type: 'agent',
-  },
-  {
-    id: '5',
-    sender: 'Melika Govekar',
-    role: 'melika.govekar@delhivery.com | Executive | Service Center Operations',
-    timestamp: 'Sept 04, 12:08 PM',
-    content: 'Dear Sir/Ma\'am,\n\nWe apologise for the inconvenience caused, and we have forwarded this issue to the concerned team. We request you to allow us some more time to work on the same.\n\nRegards,\nDelhivery Customer Support Team',
-    type: 'email',
-  },
-  {
-    id: '6',
-    sender: 'Melika Govekar',
-    role: 'melika.govekar | Executive | Service Center Operations',
-    timestamp: 'Sept 09, 12:08 PM',
-    content: 'The shipment is marked as lost. Please proceed with the claim.',
-    type: 'private_note',
-    notifiedTo: ['ramesh.kb@delhivery.com', 'ishani.singh@delhivery.com', 'rajesh.c@delhivery.com'],
-  },
-  {
-    id: '7',
-    sender: 'Ramesh Kumar',
-    role: 'ramesh.kumar | Consignee',
-    timestamp: 'Sept 25, 12:08 PM',
-    content: 'PLEASE DELIVER IT AS SOON AS POSSIBLE.',
-    type: 'customer',
-  },
-];
-
-const CustomerAvatar = () => (
-  <div className="w-[32px] h-[32px] rounded-full bg-tds-surface-bg-blue-weakest flex items-center justify-center shrink-0">
-    <span className="text-[11px] font-semibold text-tds-text-info-blue-primary">RK</span>
-  </div>
-);
-
-const AgentAvatar = () => (
-  <div className="w-[32px] h-[32px] rounded-full bg-tds-surface-bg-coal-weakest flex items-center justify-center shrink-0">
-    <span className="text-[11px] font-semibold text-tds-text-caption-primary">MG</span>
-  </div>
-);
-
-const MessageBubble = ({ message }: { message: Message }) => {
+const MessageBubble = ({ message }: { message: Conversation }) => {
+  const isCustomer = message.type === 'customer';
   const isPrivateNote = message.type === 'private_note';
 
+  // Bubble styles based on type
+  const bubbleStyles = isCustomer
+    ? 'bg-tds-surface-bg-blue-weakest border border-tds-border-info-primary/30'
+    : isPrivateNote
+    ? 'bg-tds-surface-bg-warning-weakest border border-tds-border-warning-primary/40'
+    : 'bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary';
+
+  // Alignment
+  const alignStyles = isCustomer ? 'ml-tds-16 mr-tds-32' : 'ml-auto mr-tds-16 ml-tds-32';
+
   return (
-    <div className={`px-tds-24 py-tds-12 ${isPrivateNote ? 'bg-tds-surface-bg-warning-weakest' : ''}`}>
-      <div className="flex gap-tds-16">
-        {/* Avatar */}
-        {message.type === 'customer' ? <CustomerAvatar /> : <AgentAvatar />}
-
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-tds-2">
-            <div>
-              <div className="flex items-center gap-tds-8">
-                <span className="text-[12px] font-semibold text-tds-text-body-primary">{message.sender}</span>
-                <span className="text-[12px] text-tds-text-caption-secondary">{message.timestamp}</span>
-              </div>
-              <p className="text-[12px] text-tds-text-caption-secondary">{message.role}</p>
-            </div>
-            {isPrivateNote && (
-              <span className="text-[12px] font-medium text-tds-text-warning-primary bg-tds-surface-bg-warning-weakest px-tds-8 py-[2px] rounded-tds-default border border-tds-border-warning-primary">
-                Private Note
-              </span>
-            )}
-          </div>
-
-          {/* Notified To */}
-          {message.notifiedTo && (
-            <div className="mb-tds-4">
-              <p className="text-[12px] text-tds-text-caption-secondary">
-                Notified To: {message.notifiedTo.join(', ')} {message.notifiedTo.length > 3 && `+${message.notifiedTo.length - 3} more`}
-              </p>
-              <div className="h-px bg-tds-border-neutral-primary my-tds-4" />
-            </div>
+    <div className={`max-w-[calc(100%-32px)] ${alignStyles} my-tds-8`}>
+      <div className={`rounded-tds-lg p-tds-12 ${bubbleStyles}`}>
+        {/* Header */}
+        <div className="flex items-center gap-tds-8 mb-tds-4">
+          <span className="text-[12px] font-semibold text-tds-text-body-primary">{message.sender}</span>
+          <span className="text-[11px] text-tds-text-caption-secondary">{message.timestamp}</span>
+          {isPrivateNote && (
+            <span className="text-[10px] font-medium text-tds-text-warning-primary bg-tds-surface-bg-warning-weakest px-tds-6 py-[1px] rounded-tds-full border border-tds-border-warning-primary/50 ml-auto">
+              Private Note
+            </span>
           )}
-
-          {/* Body */}
-          <p className="text-[13px] text-tds-text-body-primary leading-[20px] whitespace-pre-line">
-            {message.content}
-          </p>
         </div>
+        <p className="text-[11px] text-tds-text-caption-secondary mb-tds-4">{message.role}</p>
+
+        {/* Notified To */}
+        {message.notifiedTo && (
+          <div className="mb-tds-6">
+            <p className="text-[11px] text-tds-text-caption-secondary">
+              Notified To: {message.notifiedTo.join(', ')}
+            </p>
+            <div className="h-px bg-tds-border-neutral-primary/50 my-tds-4" />
+          </div>
+        )}
+
+        {/* Body */}
+        <p className="text-[12px] text-tds-text-body-primary leading-[18px] whitespace-pre-line">
+          {message.content}
+        </p>
       </div>
     </div>
   );
 };
 
-const ConversationPanel = () => {
+const ConversationPanel = ({ conversations }: { conversations: Conversation[] }) => {
   return (
     <div className="flex flex-col h-full">
       {/* Messages */}
-      <div className="flex-1 overflow-auto">
-        {mockConversations.map((msg) => (
+      <div className="flex-1 overflow-auto py-tds-12 flex flex-col">
+        {conversations.map((msg) => (
           <MessageBubble key={msg.id} message={msg} />
         ))}
       </div>
 
       {/* Reply action bar */}
-      <div className="border-t border-tds-border-neutral-primary px-tds-24 py-tds-16 flex items-center gap-tds-12">
-        <div className="flex items-center gap-tds-8">
-          <button className="flex items-center gap-tds-4 px-tds-8 py-tds-4 rounded-tds-default border border-tds-border-neutral-primary text-[12px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8L8 4V6.5C14 6.5 14 12 14 12C14 12 12 8.5 8 8.5V11L2 8Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
-            Reply
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-          <button className="flex items-center gap-tds-4 px-tds-8 py-tds-4 rounded-tds-default border border-tds-border-neutral-primary text-[12px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
-            Note
-          </button>
-          <button className="flex items-center gap-tds-4 px-tds-8 py-tds-4 rounded-tds-default border border-tds-border-neutral-primary text-[12px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
-            Forward
-          </button>
-          <button className="flex items-center gap-tds-4 px-tds-8 py-tds-4 rounded-tds-default border border-tds-border-neutral-primary text-[12px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
-            Canned Response
-          </button>
-        </div>
+      <div className="border-t border-tds-border-neutral-primary px-tds-16 py-tds-12 flex items-center gap-tds-8">
+        <button className="flex items-center gap-tds-4 px-tds-8 py-tds-4 rounded-tds-default border border-tds-border-neutral-primary text-[12px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8L8 4V6.5C14 6.5 14 12 14 12C14 12 12 8.5 8 8.5V11L2 8Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
+          Reply
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+        <button className="flex items-center gap-tds-4 px-tds-8 py-tds-4 rounded-tds-default border border-tds-border-neutral-primary text-[12px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
+          Note
+        </button>
+        <button className="flex items-center gap-tds-4 px-tds-8 py-tds-4 rounded-tds-default border border-tds-border-neutral-primary text-[12px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
+          Forward
+        </button>
+        <button className="flex items-center gap-tds-4 px-tds-8 py-tds-4 rounded-tds-default border border-tds-border-neutral-primary text-[12px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
+          Canned Response
+        </button>
 
-        {/* Toggle — Show All */}
+        {/* Toggle */}
         <div className="ml-auto flex items-center gap-tds-6">
-          <div className="w-[38px] h-[20px] rounded-full bg-tds-border-neutral-primary relative cursor-pointer">
-            <div className="absolute top-[2px] left-[2px] w-[16px] h-[16px] rounded-full bg-tds-surface-bg-primary-default shadow-sm" />
+          <div className="w-[34px] h-[18px] rounded-full bg-tds-border-neutral-primary relative cursor-pointer">
+            <div className="absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full bg-tds-surface-bg-primary-default shadow-sm" />
           </div>
-          <span className="text-[12px] text-tds-text-caption-secondary">Show All</span>
+          <span className="text-[11px] text-tds-text-caption-secondary">Show All</span>
         </div>
       </div>
     </div>
