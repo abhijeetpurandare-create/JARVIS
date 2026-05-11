@@ -1,4 +1,4 @@
-import { Button, Breadcrumbs } from '@delhivery/tarmac';
+import { Button } from '@delhivery/tarmac';
 import { triggerToast } from './Toast';
 
 const jarvisLogo = './jarvis-logo.png';
@@ -28,19 +28,10 @@ const CopyIcon = () => (
 
 const TopNavigation = () => {
   // Get current ticket ID from hash
-  const hash = window.location.hash;
+  const hash = typeof window !== 'undefined' ? window.location.hash : '';
   const ticketMatch = hash.match(/ticket\/(J\d+)/);
   const ticketId = ticketMatch ? ticketMatch[1] : null;
   const isTicketDetails = !!ticketId;
-
-  const breadcrumbItems = isTicketDetails
-    ? [
-        { label: 'Ticket Listing', link: '#/' },
-        { label: `Ticket Details (#${ticketId})` },
-      ]
-    : [
-        { label: 'Ticket Listing', isCurrent: true },
-      ];
 
   return (
     <header className="flex items-center gap-tds-16 px-tds-24 py-tds-8 bg-tds-surface-bg-primary-default w-full h-[60px] relative z-10" style={{ boxShadow: '0px 1px 4px 0px rgba(0,0,0,0.12), 0px 1px 2px 0px rgba(0,0,0,0.05)' }}>
@@ -50,12 +41,15 @@ const TopNavigation = () => {
           <img src={jarvisLogo} alt="JARVIS" className="h-[20px] w-auto object-contain" />
           <div className="w-px h-[24px] bg-tds-border-neutral-primary" />
           <div className="flex items-center gap-tds-6">
-            <Breadcrumbs
-              dividerStyle="chevron"
-              size="sm"
-              showDivider
-              items={breadcrumbItems}
-            />
+            <nav className="flex items-center gap-tds-6 text-[12px]">
+              <a href="#/" className="text-tds-text-caption-secondary hover:text-tds-text-body-primary cursor-pointer">Ticket Listing</a>
+              {isTicketDetails && (
+                <>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3L7.5 6L4.5 9" stroke="#999" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <span className="text-tds-text-body-primary font-medium">Ticket Details (#{ticketId})</span>
+                </>
+              )}
+            </nav>
             {isTicketDetails && (
               <button
                 onClick={() => { navigator.clipboard.writeText(ticketId!); triggerToast('Ticket ID copied to clipboard'); }}

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Switch, Button, TextArea } from '@delhivery/tarmac';
+import { Button } from '@delhivery/tarmac';
 import { Conversation } from '../../data/ticketDetailsData';
 
 const MessageBubble = ({ message }: { message: Conversation }) => {
@@ -128,18 +128,14 @@ const ReplyTextbox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () 
         </div>
       )}
 
-      {/* TDS TextArea for the body */}
+      {/* TextArea for the body */}
       <div className="px-tds-12 py-tds-8">
-        <TextArea
-          textAreaStyle="tarmac-01"
-          textAreaType="regular"
-          textAreaSize="sm"
-          styleVariant="standard"
-          placeholder={mode === 'note' ? 'Add a private note...' : 'Type your reply...'}
+        <textarea
           value={bodyValue}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setBodyValue(e.target.value)}
+          onChange={(e) => setBodyValue(e.target.value)}
+          placeholder={mode === 'note' ? 'Add a private note...' : 'Type your reply...'}
+          className="w-full text-[12px] text-tds-text-body-primary bg-transparent outline-none resize-y leading-[18px] placeholder:text-tds-text-caption-secondary/60 min-h-[60px] border border-tds-border-neutral-primary rounded-tds-default p-tds-8"
           rows={3}
-          resize="vertical"
         />
       </div>
 
@@ -242,15 +238,14 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
           text="Canned Response"
         />
 
-        {/* TDS Switch for Show Activity */}
+        {/* Toggle for Show Activity */}
         <div className="ml-auto flex items-center gap-tds-6">
-          <Switch
-            tarmacColor="black"
-            tarmacStyle="filled"
-            tarmacSize="sm"
-            checked={showActivity}
-            onChange={(val) => setShowActivity(val)}
-          />
+          <div
+            className={`w-[34px] h-[18px] rounded-full relative cursor-pointer transition-colors ${showActivity ? 'bg-tds-surface-bg-primary-inverse-default' : 'bg-tds-border-neutral-primary'}`}
+            onClick={() => setShowActivity(!showActivity)}
+          >
+            <div className={`absolute top-[2px] w-[14px] h-[14px] rounded-full bg-tds-surface-bg-primary-default shadow-sm transition-transform ${showActivity ? 'translate-x-[18px]' : 'translate-x-[2px]'}`} />
+          </div>
           <span className="text-[11px] text-tds-text-caption-secondary">Show Activity</span>
         </div>
       </div>
