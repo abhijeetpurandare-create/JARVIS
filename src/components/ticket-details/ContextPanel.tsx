@@ -62,7 +62,7 @@ const ContextPanel = ({ ticket }: { ticket: TicketDetail }) => {
       </div>
 
       {/* Bottom — Ask AI input */}
-      <div className="border-t border-tds-border-neutral-primary px-tds-16 py-tds-8 flex items-end gap-tds-8 shrink-0">
+      <div className="border-t border-tds-border-neutral-primary px-tds-12 h-[52px] flex items-center gap-tds-8 shrink-0">
         <textarea
           ref={textareaRef}
           value={aiInput}
