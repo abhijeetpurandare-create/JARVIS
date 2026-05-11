@@ -2,12 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { Avatar } from '@delhivery/tarmac';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const MenuIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
-
 const HomeIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
     <path d="M3.33 8.33L10 2.5L16.67 8.33V16.67H12.5V11.67H7.5V16.67H3.33V8.33Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -78,19 +72,13 @@ const SideNavigation = () => {
   }, [profileOpen]);
 
   return (
-    <div className={`flex flex-col bg-[#f7f7f7] py-tds-8 pb-tds-12 px-tds-8 shrink-0 transition-all duration-200 ${expanded ? 'w-[180px]' : 'w-[60px]'}`}>
-      {/* Menu toggle */}
-      <div className={`flex items-center ${expanded ? '' : 'justify-center'} mb-tds-8`}>
-        <div
-          onClick={() => setExpanded(!expanded)}
-          className="flex items-center justify-center w-[36px] h-[36px] rounded-[8px] cursor-pointer hover:bg-[#ededed] text-[#2b2b2b]"
-        >
-          <MenuIcon />
-        </div>
-      </div>
-
+    <div
+      className={`flex flex-col bg-[#f7f7f7] py-tds-8 pb-tds-12 px-tds-8 shrink-0 transition-all duration-200 ${expanded ? 'w-[180px]' : 'w-[60px]'}`}
+      onMouseEnter={() => setExpanded(true)}
+      onMouseLeave={() => { setExpanded(false); }}
+    >
       {/* Nav items */}
-      <div className="flex flex-col gap-tds-4">
+      <div className="flex flex-col gap-tds-4 mt-tds-4">
         <NavItem icon={<HomeIcon />} label="Home" active={isHome} expanded={expanded} onClick={() => navigate('/')} />
         <NavItem icon={<TicketIcon />} label="Tickets" active={isTickets} expanded={expanded} onClick={() => navigate('/tickets')} />
         <NavItem icon={<UsersIcon />} label="Team" expanded={expanded} />

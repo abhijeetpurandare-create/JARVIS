@@ -62,15 +62,15 @@ const ContextPanel = ({ ticket }: { ticket: TicketDetail }) => {
       </div>
 
       {/* Bottom — Ask AI input */}
-      <div className="border-t border-tds-border-neutral-primary px-tds-12 h-[52px] flex items-center gap-tds-8 shrink-0">
+      <div className="border-t border-tds-border-neutral-primary px-tds-12 py-tds-8 flex items-end gap-tds-8 shrink-0">
         <textarea
           ref={textareaRef}
           value={aiInput}
           onChange={handleInputChange}
           placeholder="Ask AI about this ticket..."
           rows={1}
-          className="flex-1 px-tds-12 py-tds-6 border border-tds-border-neutral-primary rounded-[6px] text-[12px] text-tds-text-body-primary placeholder:text-tds-text-body-disabled outline-none bg-tds-surface-bg-primary-default resize-none overflow-hidden leading-[18px]"
-          style={{ maxHeight: '108px', overflowY: aiInput.split('\n').length > 6 || (textareaRef.current && textareaRef.current.scrollHeight > 108) ? 'auto' : 'hidden' }}
+          className="flex-1 px-tds-12 py-tds-8 border border-tds-border-neutral-primary rounded-[6px] text-[12px] text-tds-text-body-primary placeholder:text-tds-text-body-disabled outline-none bg-tds-surface-bg-primary-default resize-none leading-[18px]"
+          style={{ maxHeight: '108px', overflowY: (textareaRef.current && textareaRef.current.scrollHeight > 108) ? 'auto' : 'hidden' }}
         />
         <button
           disabled={!aiInput.trim()}

@@ -121,7 +121,7 @@ const AgentAvailability = () => {
       </div>
 
       {/* Teams Grid — TDS Card, grouped by letter with A-Z scroll */}
-      <div className="flex-1 overflow-auto pb-tds-16 relative">
+      <div className="flex-1 overflow-auto pb-tds-16 relative [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {/* A-Z index — fixed, vertically centered within content area (below 60px top nav) */}
         <div className="fixed right-[16px] flex flex-col items-center gap-[1px] z-20" style={{ top: 'calc(50% + 30px)', transform: 'translateY(-50%)' }}>
           {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => (
