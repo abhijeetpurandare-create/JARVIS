@@ -39,11 +39,11 @@ const NavItem = ({ icon, active, onClick }: NavItemProps) => (
 );
 
 const profileMenuItems = [
-  { label: 'My Requests', icon: null },
-  { label: 'Agent Availability', icon: null },
-  { label: 'Bulk Ticket Update', icon: null },
-  { label: 'Settings', icon: null },
-  { label: 'Logout', icon: null },
+  { label: 'My Requests', path: '' },
+  { label: 'Agent Availability', path: '/availability' },
+  { label: 'Bulk Ticket Update', path: '' },
+  { label: 'Settings', path: '' },
+  { label: 'Logout', path: '' },
 ];
 
 const SideNavigation = () => {
@@ -121,7 +121,7 @@ const SideNavigation = () => {
                 <button
                   key={item.label}
                   className="w-full text-left px-tds-16 py-tds-12 text-[14px] text-tds-text-body-primary hover:bg-tds-surface-bg-coal-weakest cursor-pointer transition-colors"
-                  onClick={() => setProfileOpen(false)}
+                  onClick={() => { setProfileOpen(false); if (item.path) navigate(item.path); }}
                 >
                   {item.label}
                 </button>

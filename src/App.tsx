@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import TicketList from './pages/TicketList';
 import TicketDetails from './pages/TicketDetails';
+import AgentAvailability from './pages/AgentAvailability';
 import Toast from './components/Toast';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="tickets" element={<TicketList />} />
           <Route path="ticket/:ticketId" element={<TicketDetails />} />
+          <Route path="availability" element={<AgentAvailability />} />
         </Route>
       </Routes>
       <Toast />
