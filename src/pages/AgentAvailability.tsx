@@ -122,13 +122,17 @@ const AgentAvailability = () => {
 
       {/* Teams Grid — TDS Card, grouped by letter with A-Z scroll */}
       <div className="flex-1 overflow-auto pr-tds-16 pb-tds-16 relative">
-        {/* A-Z index — center aligned vertically on the right side of content */}
-        <div className="absolute right-[8px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-[2px] z-20">
-          {letters.map((letter) => (
+        {/* A-Z index — fixed, horizontally centered on page, vertically centered */}
+        <div className="fixed right-[16px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-[1px] z-20">
+          {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => (
             <button
               key={letter}
               onClick={() => scrollToLetter(letter)}
-              className="w-[18px] h-[18px] flex items-center justify-center text-[10px] font-semibold text-tds-text-caption-secondary hover:text-tds-text-body-primary hover:bg-tds-surface-bg-coal-weakest rounded-full cursor-pointer transition-colors"
+              className={`w-[16px] h-[16px] flex items-center justify-center text-[9px] font-semibold rounded-full cursor-pointer transition-colors ${
+                letters.includes(letter)
+                  ? 'text-tds-text-body-primary hover:bg-tds-surface-bg-coal-weakest'
+                  : 'text-tds-text-caption-secondary/40'
+              }`}
             >
               {letter}
             </button>
