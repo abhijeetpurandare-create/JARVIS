@@ -20,9 +20,22 @@ const UsersIcon = () => (
   </svg>
 );
 
+const HelpIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <path d="M10 17.5C14.14 17.5 17.5 14.14 17.5 10C17.5 5.86 14.14 2.5 10 2.5C5.86 2.5 2.5 5.86 2.5 10C2.5 14.14 5.86 17.5 10 17.5Z" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M7.5 7.5C7.5 6.12 8.62 5 10 5C11.38 5 12.5 6.12 12.5 7.5C12.5 8.88 11.38 10 10 10V11.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <circle cx="10" cy="13.75" r="0.75" fill="currentColor" />
+  </svg>
+);
+
+const LogoutIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <path d="M7.5 17.5H4.17C3.72 17.5 3.29 17.32 2.97 17.01C2.66 16.69 2.5 16.27 2.5 15.83V4.17C2.5 3.72 2.66 3.29 2.97 2.97C3.29 2.66 3.72 2.5 4.17 2.5H7.5M13.33 14.17L17.5 10L13.33 5.83M17.5 10H7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 interface NavItemProps {
   icon: React.ReactNode;
-  label: string;
   active?: boolean;
   onClick?: () => void;
 }
@@ -30,11 +43,11 @@ interface NavItemProps {
 const NavItem = ({ icon, active, onClick }: NavItemProps) => (
   <div
     onClick={onClick}
-    className={`flex items-center justify-center w-[44px] h-[36px] rounded-tds-md cursor-pointer transition-all hover:bg-white/10 ${
-      active ? 'bg-white/15' : ''
+    className={`flex items-center justify-center w-[36px] h-[36px] rounded-tds-md cursor-pointer transition-all ${
+      active ? 'bg-[#ededed]' : 'hover:bg-[#ededed]'
     }`}
   >
-    <span className="text-tds-text-heading-inverse-only-white">{icon}</span>
+    <span className={active ? 'text-[#2b2b2b]' : 'text-[#737373]'}>{icon}</span>
   </div>
 );
 
@@ -57,78 +70,70 @@ const SideNavigation = () => {
 
   useEffect(() => {
     if (!profileOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
+    const handleClick = (e: MouseEvent) => {
       if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
         setProfileOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
   }, [profileOpen]);
 
   return (
-    <div
-      className="flex flex-col items-center h-full w-[60px] bg-tds-surface-bg-primary-inverse-default pt-tds-16 pb-tds-16 px-tds-8 rounded-tds-lg relative z-10"
-      style={{ boxShadow: '2px 0px 8px rgba(0,0,0,0.15)' }}
-    >
+    <div className="flex flex-col items-center w-[60px] bg-[#f7f7f7] py-tds-8 px-tds-8 shrink-0">
       {/* Top nav items */}
-      <div className="flex flex-col items-center gap-tds-8">
-        <NavItem icon={<HomeIcon />} label="Home" active={isHome} onClick={() => navigate('/')} />
-        <NavItem icon={<TicketIcon />} label="Tickets" active={isTickets} onClick={() => navigate('/tickets')} />
-        <NavItem icon={<UsersIcon />} label="Users" />
+      <div className="flex flex-col items-center gap-tds-4">
+        <NavItem icon={<HomeIcon />} active={isHome} onClick={() => navigate('/')} />
+        <NavItem icon={<TicketIcon />} active={isTickets} onClick={() => navigate('/tickets')} />
+        <NavItem icon={<UsersIcon />} />
       </div>
 
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Avatar + Profile Dropdown */}
-      <div ref={profileRef} className="relative">
-        <div
-          className="flex items-center justify-center cursor-pointer"
-          onClick={() => setProfileOpen(!profileOpen)}
-        >
-          <Avatar
-            size="md"
-            avatarType="image"
-            src="https://i.pravatar.cc/40"
-            alt="Profile"
-            shape="round"
-            showStatus={true}
-            statusType="active"
-          />
-        </div>
+      {/* Bottom items */}
+      <div className="flex flex-col items-center gap-tds-4">
+        <NavItem icon={<HelpIcon />} />
+        <NavItem icon={<LogoutIcon />} />
 
-        {/* Dropdown */}
-        {profileOpen && (
-          <div className="absolute bottom-[48px] left-0 w-[240px] bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary shadow-lg z-50 overflow-hidden">
-            {/* Profile header */}
-            <div className="flex items-center gap-tds-12 px-tds-16 py-tds-12 border-b border-tds-border-neutral-primary">
-              <Avatar
-                size="md"
-                avatarType="image"
-                src="https://i.pravatar.cc/40"
-                alt="Profile"
-                shape="round"
-              />
-              <div className="flex flex-col">
-                <span className="text-[14px] font-semibold text-tds-text-heading-primary">Abhijeet Pramod Purandare</span>
+        {/* Avatar + Profile Dropdown */}
+        <div ref={profileRef} className="relative mt-tds-8">
+          <div
+            className="flex items-center justify-center cursor-pointer"
+            onClick={() => setProfileOpen(!profileOpen)}
+          >
+            <Avatar
+              size="sm"
+              avatarType="image"
+              src="https://i.pravatar.cc/40"
+              alt="Profile"
+              shape="round"
+              showStatus={true}
+              statusType="active"
+            />
+          </div>
+
+          {/* Dropdown */}
+          {profileOpen && (
+            <div className="absolute bottom-[40px] left-0 w-[240px] bg-white rounded-tds-lg border border-[#e6e6e6] shadow-lg z-50 overflow-hidden">
+              <div className="flex items-center gap-tds-12 px-tds-16 py-tds-12 border-b border-[#e6e6e6]">
+                <Avatar size="sm" avatarType="image" src="https://i.pravatar.cc/40" alt="Profile" shape="round" />
+                <span className="text-[14px] font-semibold text-[#2b2b2b]">Abhijeet Pramod Purandare</span>
+              </div>
+              <div className="py-tds-4">
+                {profileMenuItems.map((item) => (
+                  <button
+                    key={item.label}
+                    className="w-full text-left px-tds-16 py-tds-12 text-[14px] text-[#2b2b2b] hover:bg-[#f7f7f7] cursor-pointer transition-colors"
+                    onClick={() => { setProfileOpen(false); if (item.path) navigate(item.path); }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </div>
             </div>
-
-            {/* Menu items */}
-            <div className="py-tds-4">
-              {profileMenuItems.map((item) => (
-                <button
-                  key={item.label}
-                  className="w-full text-left px-tds-16 py-tds-12 text-[14px] text-tds-text-body-primary hover:bg-tds-surface-bg-coal-weakest cursor-pointer transition-colors"
-                  onClick={() => { setProfileOpen(false); if (item.path) navigate(item.path); }}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ const TopNavigation = () => {
   const isAvailability = location.pathname === '/availability';
 
   return (
-    <header className="flex items-center gap-tds-16 px-tds-24 py-tds-8 bg-tds-surface-bg-primary-default w-full h-[60px] relative z-10" style={{ boxShadow: '0px 1px 4px 0px rgba(0,0,0,0.12), 0px 1px 2px 0px rgba(0,0,0,0.05)' }}>
+    <header className="flex items-center gap-tds-16 px-tds-16 py-tds-8 bg-[#f7f7f7] w-full h-[56px] relative z-10 shrink-0">
       <div className="flex items-center justify-between flex-1">
         {/* Left — Logo + Divider + TDS Breadcrumbs */}
         <div className="flex items-center gap-tds-16">
