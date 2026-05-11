@@ -71,8 +71,16 @@ const AgentAvailability = () => {
   const [agents, setAgents] = useState<{ id: string; name: string; isAvailable: boolean }[]>([]);
 
   const filteredTeams = search
-    ? allTeams.filter((t) => t.toLowerCase().includes(search.toLowerCase()))
-    : allTeams;
+    ? allTeams.filter((t) => t.toLowerCase().includes(search.toLowerCase())).sort((a, b) => a.localeCompare(b))
+    : [...allTeams].sort((a, b) => a.localeCompare(b));
+
+  // Group teams by first letter for A-Z index
+  const letters = Array.from(new Set(filteredTeams.map((t) => t[0].toUpperCase()))).sort();
+
+  const scrollToLetter = (letter: string) => {
+    const el = document.getElementById(`team-letter-${letter}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const openTeam = (team: string) => {
     setSelectedTeam(team);
@@ -112,24 +120,48 @@ const AgentAvailability = () => {
         </div>
       </div>
 
-      {/* Teams Grid — TDS Card */}
-      <div className="flex-1 overflow-auto pr-tds-16 pb-tds-16">
-        <div className="grid grid-cols-4 gap-tds-12">
-          {filteredTeams.map((team) => (
-            <Card
-              key={team}
-              cardStyle="tarmac-01"
-              cardVariant="standard"
-              isHoverable
-              onClick={() => openTeam(team)}
-              className="!cursor-pointer"
+      {/* Teams Grid — TDS Card, grouped by letter with A-Z scroll */}
+      <div className="flex-1 overflow-auto pr-tds-16 pb-tds-16 relative">
+        {/* A-Z index — center aligned vertically on the right side of content */}
+        <div className="absolute right-[8px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-[2px] z-20">
+          {letters.map((letter) => (
+            <button
+              key={letter}
+              onClick={() => scrollToLetter(letter)}
+              className="w-[18px] h-[18px] flex items-center justify-center text-[10px] font-semibold text-tds-text-caption-secondary hover:text-tds-text-body-primary hover:bg-tds-surface-bg-coal-weakest rounded-full cursor-pointer transition-colors"
             >
-              <div className="flex items-center gap-tds-8 px-tds-12 py-tds-8">
-                <span className="text-tds-text-caption-secondary shrink-0"><UsersIcon /></span>
-                <span className="text-[13px] font-medium text-tds-text-body-primary truncate">{team}</span>
-              </div>
-            </Card>
+              {letter}
+            </button>
           ))}
+        </div>
+
+        {/* Grouped teams */}
+        <div className="flex flex-col gap-tds-16 pr-[32px]">
+          {letters.map((letter) => {
+            const teamsForLetter = filteredTeams.filter((t) => t[0].toUpperCase() === letter);
+            return (
+              <div key={letter} id={`team-letter-${letter}`}>
+                <div className="text-[12px] font-semibold text-tds-text-caption-secondary mb-tds-8">{letter}</div>
+                <div className="grid grid-cols-4 gap-tds-16">
+                  {teamsForLetter.map((team) => (
+                    <Card
+                      key={team}
+                      cardStyle="tarmac-01"
+                      cardVariant="standard"
+                      isHoverable
+                      onClick={() => openTeam(team)}
+                      className="!cursor-pointer"
+                    >
+                      <div className="flex items-center gap-tds-8 px-tds-12 py-tds-8">
+                        <span className="text-tds-text-caption-secondary shrink-0"><UsersIcon /></span>
+                        <span className="text-[13px] font-medium text-tds-text-body-primary truncate">{team}</span>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
