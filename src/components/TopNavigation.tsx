@@ -33,6 +33,8 @@ const TopNavigation = () => {
   const ticketMatch = location.pathname.match(/ticket\/(J\d+)/);
   const ticketId = ticketMatch ? ticketMatch[1] : null;
   const isTicketDetails = !!ticketId;
+  const isTicketList = location.pathname === '/tickets';
+  const isDashboard = location.pathname === '/';
 
   return (
     <header className="flex items-center gap-tds-16 px-tds-24 py-tds-8 bg-tds-surface-bg-primary-default w-full h-[60px] relative z-10" style={{ boxShadow: '0px 1px 4px 0px rgba(0,0,0,0.12), 0px 1px 2px 0px rgba(0,0,0,0.05)' }}>
@@ -43,9 +45,19 @@ const TopNavigation = () => {
           <div className="w-px h-[24px] bg-tds-border-neutral-primary" />
           <div className="flex items-center gap-tds-6">
             <nav className="flex items-center gap-tds-6 text-[12px]">
-              <a href="#/" className="text-tds-text-caption-secondary hover:text-tds-text-body-primary cursor-pointer">Ticket Listing</a>
+              {isDashboard && (
+                <span className="text-tds-text-body-primary font-medium">Dashboard</span>
+              )}
+              {isTicketList && (
+                <>
+                  <a href="#/" className="text-tds-text-caption-secondary hover:text-tds-text-body-primary cursor-pointer">Dashboard</a>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3L7.5 6L4.5 9" stroke="#999" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <span className="text-tds-text-body-primary font-medium">Ticket Listing</span>
+                </>
+              )}
               {isTicketDetails && (
                 <>
+                  <a href="#/tickets" className="text-tds-text-caption-secondary hover:text-tds-text-body-primary cursor-pointer">Ticket Listing</a>
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3L7.5 6L4.5 9" stroke="#999" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   <span className="text-tds-text-body-primary font-medium">Ticket Details (#{ticketId})</span>
                 </>

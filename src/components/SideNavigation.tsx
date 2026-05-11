@@ -1,4 +1,5 @@
 import { Avatar } from '@delhivery/tarmac';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const HomeIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -22,10 +23,12 @@ interface NavItemProps {
   icon: React.ReactNode;
   label: string;
   active?: boolean;
+  onClick?: () => void;
 }
 
-const NavItem = ({ icon, active }: NavItemProps) => (
+const NavItem = ({ icon, active, onClick }: NavItemProps) => (
   <div
+    onClick={onClick}
     className={`flex items-center justify-center w-[44px] h-[36px] rounded-tds-md cursor-pointer transition-all hover:bg-white/10 ${
       active ? 'bg-white/15' : ''
     }`}
@@ -35,6 +38,11 @@ const NavItem = ({ icon, active }: NavItemProps) => (
 );
 
 const SideNavigation = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
+  const isTickets = location.pathname === '/tickets' || location.pathname.startsWith('/ticket/');
+
   return (
     <div
       className="flex flex-col items-center h-full w-[60px] bg-tds-surface-bg-primary-inverse-default pt-tds-16 pb-tds-16 px-tds-8 rounded-tds-lg relative z-10"
@@ -42,8 +50,8 @@ const SideNavigation = () => {
     >
       {/* Top nav items */}
       <div className="flex flex-col items-center gap-tds-8">
-        <NavItem icon={<HomeIcon />} label="Home" />
-        <NavItem icon={<TicketIcon />} label="Tickets" active />
+        <NavItem icon={<HomeIcon />} label="Home" active={isHome} onClick={() => navigate('/')} />
+        <NavItem icon={<TicketIcon />} label="Tickets" active={isTickets} onClick={() => navigate('/tickets')} />
         <NavItem icon={<UsersIcon />} label="Users" />
       </div>
 
