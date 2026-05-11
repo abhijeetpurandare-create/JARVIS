@@ -90,18 +90,20 @@ const SideNavigation = () => {
       {/* Avatar + Profile Dropdown */}
       <div ref={profileRef} className="relative">
         <div
-          className={`flex items-center gap-tds-12 cursor-pointer rounded-[8px] hover:bg-[#ededed] px-tds-8 py-tds-6`}
+          className="flex items-center gap-tds-12 cursor-pointer rounded-[8px] hover:bg-[#ededed] px-[6px] py-tds-6"
           onClick={() => setProfileOpen(!profileOpen)}
         >
-          <Avatar
-            size="sm"
-            avatarType="image"
-            src="https://i.pravatar.cc/40"
-            alt="Profile"
-            shape="round"
-            showStatus={true}
-            statusType="active"
-          />
+          <span className="shrink-0 w-[20px] flex items-center justify-center">
+            <Avatar
+              size="sm"
+              avatarType="image"
+              src="https://i.pravatar.cc/40"
+              alt="Profile"
+              shape="round"
+              showStatus={true}
+              statusType="active"
+            />
+          </span>
           {expanded && (
             <div className="flex flex-col min-w-0">
               <span className="text-[12px] font-medium text-[#2b2b2b] truncate">Abhijeet P.</span>
