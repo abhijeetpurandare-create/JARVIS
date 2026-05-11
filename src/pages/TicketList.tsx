@@ -215,7 +215,7 @@ const TicketList = () => {
           {/* Scrollable Data Rows */}
           <div className="flex-1 overflow-auto">
             {paginatedTickets.map((ticket) => (
-              <div key={ticket.id} className="flex items-center border-b border-tds-border-neutral-primary hover:bg-tds-surface-bg-coal-weakest cursor-pointer transition-colors">
+              <div key={ticket.id} className="flex items-center border-b border-tds-border-neutral-primary hover:bg-tds-surface-bg-coal-weakest cursor-pointer transition-colors" onClick={() => window.location.hash = `#/ticket/${ticket.publicTicketId}`}>
                 {/* Ticket name — TDS TextCell */}
                 <div className="w-[35%] min-w-[300px] [&>div]:!gap-0">
                   <TextCell title={ticket.subject} subtextBottom={`#${ticket.publicTicketId} | AWB# 2282889929020${ticket.id}2`} showSubtextTop={false} showSubtextBottom={true} />
