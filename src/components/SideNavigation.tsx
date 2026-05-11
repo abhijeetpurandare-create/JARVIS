@@ -2,6 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { Avatar } from '@delhivery/tarmac';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+const MenuIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
 const HomeIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
     <path d="M3.33 8.33L10 2.5L16.67 8.33V16.67H12.5V11.67H7.5V16.67H3.33V8.33Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -22,18 +28,23 @@ const UsersIcon = () => (
 
 interface NavItemProps {
   icon: React.ReactNode;
+  label: string;
   active?: boolean;
+  expanded?: boolean;
   onClick?: () => void;
 }
 
-const NavItem = ({ icon, active, onClick }: NavItemProps) => (
+const NavItem = ({ icon, label, active, expanded, onClick }: NavItemProps) => (
   <div
     onClick={onClick}
-    className={`flex items-center justify-center w-[36px] h-[36px] rounded-tds-md cursor-pointer transition-all ${
-      active ? 'bg-[#ededed]' : 'hover:bg-[#ededed]'
-    }`}
+    className={`flex items-center gap-tds-12 h-[36px] rounded-[8px] cursor-pointer transition-all ${
+      expanded ? 'px-tds-12' : 'justify-center w-[36px]'
+    } ${active ? 'bg-[#ededed]' : 'hover:bg-[#ededed]'}`}
   >
-    <span className={active ? 'text-[#2b2b2b]' : 'text-[#737373]'}>{icon}</span>
+    <span className={`shrink-0 ${active ? 'text-[#2b2b2b]' : 'text-[#737373]'}`}>{icon}</span>
+    {expanded && (
+      <span className={`text-[12px] font-medium whitespace-nowrap ${active ? 'text-[#2b2b2b]' : 'text-[#737373]'}`}>{label}</span>
+    )}
   </div>
 );
 
@@ -51,6 +62,7 @@ const SideNavigation = () => {
   const isHome = location.pathname === '/';
   const isTickets = location.pathname === '/tickets' || location.pathname.startsWith('/ticket/');
 
+  const [expanded, setExpanded] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -66,57 +78,70 @@ const SideNavigation = () => {
   }, [profileOpen]);
 
   return (
-    <div className="flex flex-col items-center w-[60px] bg-[#f7f7f7] py-tds-8 px-tds-8 shrink-0">
-      {/* Top nav items */}
-      <div className="flex flex-col items-center gap-tds-4">
-        <NavItem icon={<HomeIcon />} active={isHome} onClick={() => navigate('/')} />
-        <NavItem icon={<TicketIcon />} active={isTickets} onClick={() => navigate('/tickets')} />
-        <NavItem icon={<UsersIcon />} />
+    <div className={`flex flex-col bg-[#f7f7f7] py-tds-8 px-tds-8 shrink-0 transition-all duration-200 ${expanded ? 'w-[180px]' : 'w-[60px]'}`}>
+      {/* Menu toggle */}
+      <div className={`flex items-center ${expanded ? '' : 'justify-center'} mb-tds-8`}>
+        <div
+          onClick={() => setExpanded(!expanded)}
+          className="flex items-center justify-center w-[36px] h-[36px] rounded-[8px] cursor-pointer hover:bg-[#ededed] text-[#2b2b2b]"
+        >
+          <MenuIcon />
+        </div>
+      </div>
+
+      {/* Nav items */}
+      <div className="flex flex-col gap-tds-4">
+        <NavItem icon={<HomeIcon />} label="Home" active={isHome} expanded={expanded} onClick={() => navigate('/')} />
+        <NavItem icon={<TicketIcon />} label="Tickets" active={isTickets} expanded={expanded} onClick={() => navigate('/tickets')} />
+        <NavItem icon={<UsersIcon />} label="Team" expanded={expanded} />
       </div>
 
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Bottom items */}
-      <div className="flex flex-col items-center gap-tds-4">
-        {/* Avatar + Profile Dropdown */}
-        <div ref={profileRef} className="relative mt-tds-8">
-          <div
-            className="flex items-center justify-center cursor-pointer"
-            onClick={() => setProfileOpen(!profileOpen)}
-          >
-            <Avatar
-              size="sm"
-              avatarType="image"
-              src="https://i.pravatar.cc/40"
-              alt="Profile"
-              shape="round"
-              showStatus={true}
-              statusType="active"
-            />
-          </div>
-
-          {/* Dropdown */}
-          {profileOpen && (
-            <div className="absolute bottom-[40px] left-0 w-[240px] bg-white rounded-tds-lg border border-[#e6e6e6] shadow-lg z-50 overflow-hidden">
-              <div className="flex items-center gap-tds-12 px-tds-16 py-tds-12 border-b border-[#e6e6e6]">
-                <Avatar size="sm" avatarType="image" src="https://i.pravatar.cc/40" alt="Profile" shape="round" />
-                <span className="text-[14px] font-semibold text-[#2b2b2b]">Abhijeet Pramod Purandare</span>
-              </div>
-              <div className="py-tds-4">
-                {profileMenuItems.map((item) => (
-                  <button
-                    key={item.label}
-                    className="w-full text-left px-tds-16 py-tds-12 text-[14px] text-[#2b2b2b] hover:bg-[#f7f7f7] cursor-pointer transition-colors"
-                    onClick={() => { setProfileOpen(false); if (item.path) navigate(item.path); }}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
+      {/* Avatar + Profile Dropdown */}
+      <div ref={profileRef} className="relative">
+        <div
+          className={`flex items-center gap-tds-12 cursor-pointer rounded-[8px] hover:bg-[#ededed] ${expanded ? 'px-tds-8 py-tds-6' : 'justify-center py-tds-6'}`}
+          onClick={() => setProfileOpen(!profileOpen)}
+        >
+          <Avatar
+            size="sm"
+            avatarType="image"
+            src="https://i.pravatar.cc/40"
+            alt="Profile"
+            shape="round"
+            showStatus={true}
+            statusType="active"
+          />
+          {expanded && (
+            <div className="flex flex-col min-w-0">
+              <span className="text-[12px] font-medium text-[#2b2b2b] truncate">Abhijeet P.</span>
+              <span className="text-[10px] text-[#737373] truncate">Online</span>
             </div>
           )}
         </div>
+
+        {/* Dropdown */}
+        {profileOpen && (
+          <div className="absolute bottom-[44px] left-0 w-[240px] bg-white rounded-tds-lg border border-[#e6e6e6] shadow-lg z-50 overflow-hidden">
+            <div className="flex items-center gap-tds-12 px-tds-16 py-tds-12 border-b border-[#e6e6e6]">
+              <Avatar size="sm" avatarType="image" src="https://i.pravatar.cc/40" alt="Profile" shape="round" />
+              <span className="text-[14px] font-semibold text-[#2b2b2b]">Abhijeet Pramod Purandare</span>
+            </div>
+            <div className="py-tds-4">
+              {profileMenuItems.map((item) => (
+                <button
+                  key={item.label}
+                  className="w-full text-left px-tds-16 py-tds-12 text-[14px] text-[#2b2b2b] hover:bg-[#f7f7f7] cursor-pointer transition-colors"
+                  onClick={() => { setProfileOpen(false); if (item.path) navigate(item.path); }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
