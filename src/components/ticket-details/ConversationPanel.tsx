@@ -248,7 +248,7 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
             className={`w-[34px] h-[18px] rounded-full relative cursor-pointer transition-colors ${showActivity ? 'bg-tds-surface-bg-primary-inverse-default' : 'bg-tds-border-neutral-primary'}`}
             onClick={() => setShowActivity(!showActivity)}
           >
-            <div className={`absolute top-[2px] w-[14px] h-[14px] rounded-full bg-tds-surface-bg-primary-default shadow-sm transition-transform ${showActivity ? 'translate-x-[18px]' : 'translate-x-[2px]'}`} />
+            <div className={`absolute top-[2px] w-[14px] h-[14px] rounded-full bg-tds-surface-bg-primary-default shadow-sm transition-transform ${showActivity ? 'left-[18px]' : 'left-[2px]'}`} />
           </div>
           <span className="text-[11px] text-tds-text-caption-secondary">Show Activity</span>
         </div>
