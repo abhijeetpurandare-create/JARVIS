@@ -35,6 +35,7 @@ const TopNavigation = () => {
   const isTicketDetails = !!ticketId;
   const isTicketList = location.pathname === '/tickets';
   const isDashboard = location.pathname === '/';
+  const isAvailability = location.pathname === '/availability';
 
   return (
     <header className="flex items-center gap-tds-16 px-tds-24 py-tds-8 bg-tds-surface-bg-primary-default w-full h-[60px] relative z-10" style={{ boxShadow: '0px 1px 4px 0px rgba(0,0,0,0.12), 0px 1px 2px 0px rgba(0,0,0,0.05)' }}>
@@ -60,6 +61,13 @@ const TopNavigation = () => {
                   <a href="#/tickets" className="text-tds-text-caption-secondary hover:text-tds-text-body-primary cursor-pointer">Ticket Listing</a>
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3L7.5 6L4.5 9" stroke="#999" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   <span className="text-tds-text-body-primary font-medium">Ticket Details (#{ticketId})</span>
+                </>
+              )}
+              {isAvailability && (
+                <>
+                  <a href="#/" className="text-tds-text-caption-secondary hover:text-tds-text-body-primary cursor-pointer">Dashboard</a>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3L7.5 6L4.5 9" stroke="#999" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <span className="text-tds-text-body-primary font-medium">Manage Availability</span>
                 </>
               )}
             </nav>
