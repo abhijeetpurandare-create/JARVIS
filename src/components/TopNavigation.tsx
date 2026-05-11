@@ -1,5 +1,7 @@
 import { Button } from '@delhivery/tarmac';
 
+const jarvisLogo = './jarvis-logo.png';
+
 const SearchIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
     <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -25,9 +27,7 @@ const TopNavigation = () => {
       <div className="flex items-center justify-between flex-1">
         {/* Left — Logo */}
         <div className="flex items-center">
-          <span className="text-[20px] font-bold text-tds-text-heading-primary tracking-[0.05em]" style={{ fontFamily: "'Noto Sans', sans-serif" }}>
-            JARVIS
-          </span>
+          <img src={jarvisLogo} alt="JARVIS" className="h-[20px] w-auto object-contain" />
         </div>
 
         {/* Right — Search + Create Ticket */}

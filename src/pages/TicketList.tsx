@@ -2,7 +2,7 @@ import { Pill, Button, TarmacTable } from '@delhivery/tarmac';
 import { useState, useMemo } from 'react';
 import FilterPanel from '../components/FilterPanel';
 
-const { HeaderCell, TextCell } = TarmacTable;
+const { TextCell } = TarmacTable;
 
 // Sort arrow component — grey default, red asc (up), red desc (down), 3rd click resets
 type SortState = { column: string; direction: 'asc' | 'desc' } | null;

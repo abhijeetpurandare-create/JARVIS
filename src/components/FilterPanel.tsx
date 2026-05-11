@@ -1,5 +1,5 @@
-import { Button, Dropdown } from '@delhivery/tarmac';
-import { useState } from 'react';
+import { Button } from '@delhivery/tarmac';
+// import { useState } from 'react';
 
 interface FilterPanelProps {
   isOpen: boolean;
@@ -27,12 +27,6 @@ const ChevronDownIcon = () => (
 );
 
 // Filter field options from narad-ui database
-const AGENTS = ['Sulaksha Halankar', 'Abhay Kumar', 'Conney Dcosta', 'Ravi Sharma', 'Priya Patel'];
-const STATUSES = ['Open', 'Agent Handling', 'System Handling', 'Waiting On Customer', 'Waiting On Internal Team', 'Resolved', 'Reopened', 'Closed', 'Pending'];
-const CATEGORIES = ['Delivery Issue', 'Pickup Issue', 'Payment Issue', 'Return/Refund', 'Address Change', 'Escalation', 'COD Issue'];
-const SUB_CATEGORIES = ['Delivery Delayed', 'Package Lost', 'Wrong Item', 'Damaged Package', 'Not Delivered', 'Reattempt Required'];
-const SORT_OPTIONS = ['Date Created', 'Closure Due', 'First Response Due', 'Next Response Due'];
-const DATE_OPTIONS = ['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'Custom Range'];
 
 interface FilterDropdownProps {
   label: string;
