@@ -93,7 +93,7 @@ const ReplyBox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () => v
     : 'bg-tds-surface-bg-primary-default';
 
   return (
-    <div className={`mx-tds-16 mb-tds-12 rounded-tds-lg border ${modeBorder} ${modeBg} overflow-hidden`}>
+    <div className={`m-tds-12 rounded-tds-lg border ${modeBorder} ${modeBg}`}>
       {/* Header */}
       <div className="flex items-center justify-between px-tds-12 py-tds-8 border-b border-tds-border-neutral-primary/50">
         <span className="text-[12px] font-semibold text-tds-text-body-primary">{modeLabel}</span>
@@ -160,15 +160,14 @@ const ReplyBox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () => v
             </button>
           ))}
         </div>
-        <Button
-          variant="black"
-          buttonStyle="primary"
-          size="sm"
-          text="Send"
-          leadingIcon={<SendIcon />}
+        <button
           disabled={!bodyValue.trim()}
           onClick={onSend}
-        />
+          className="flex items-center gap-tds-4 px-tds-12 py-tds-6 rounded-tds-default text-[12px] font-medium bg-tds-surface-bg-primary-inverse-default text-tds-text-heading-inverse-only-white cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <SendIcon />
+          Send
+        </button>
       </div>
     </div>
   );
@@ -198,18 +197,20 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
 
   return (
     <div className="flex flex-col h-full">
-      {/* Messages + Reply box — scrollable together (Gmail-like) */}
-      <div ref={scrollContainerRef} className="flex-1 overflow-auto py-tds-12 flex flex-col">
+      {/* Messages — scrollable */}
+      <div ref={scrollContainerRef} className="flex-1 overflow-auto py-tds-12 flex flex-col min-h-0">
         {conversations.map((msg) => (
           <MessageBubble key={msg.id} message={msg} />
         ))}
-
-        {/* Reply box appears inline after messages, scrolls with them */}
-        {replyMode && (
-          <ReplyBox mode={replyMode} onClose={handleClose} onSend={handleSend} />
-        )}
         <div ref={messagesEndRef} />
       </div>
+
+      {/* Reply box — between messages and action strip, visible immediately */}
+      {replyMode && (
+        <div className="shrink-0 border-t border-tds-border-neutral-primary max-h-[50%] overflow-auto">
+          <ReplyBox mode={replyMode} onClose={handleClose} onSend={handleSend} />
+        </div>
+      )}
 
       {/* Bottom action strip — STATIC, never scrolls */}
       <div className="border-t border-tds-border-neutral-primary px-tds-16 h-[52px] flex items-center gap-tds-8 shrink-0">
