@@ -20,20 +20,6 @@ const UsersIcon = () => (
   </svg>
 );
 
-const HelpIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <path d="M10 17.5C14.14 17.5 17.5 14.14 17.5 10C17.5 5.86 14.14 2.5 10 2.5C5.86 2.5 2.5 5.86 2.5 10C2.5 14.14 5.86 17.5 10 17.5Z" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M7.5 7.5C7.5 6.12 8.62 5 10 5C11.38 5 12.5 6.12 12.5 7.5C12.5 8.88 11.38 10 10 10V11.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="10" cy="13.75" r="0.75" fill="currentColor" />
-  </svg>
-);
-
-const LogoutIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <path d="M7.5 17.5H4.17C3.72 17.5 3.29 17.32 2.97 17.01C2.66 16.69 2.5 16.27 2.5 15.83V4.17C2.5 3.72 2.66 3.29 2.97 2.97C3.29 2.66 3.72 2.5 4.17 2.5H7.5M13.33 14.17L17.5 10L13.33 5.83M17.5 10H7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 interface NavItemProps {
   icon: React.ReactNode;
   active?: boolean;
@@ -93,9 +79,6 @@ const SideNavigation = () => {
 
       {/* Bottom items */}
       <div className="flex flex-col items-center gap-tds-4">
-        <NavItem icon={<HelpIcon />} />
-        <NavItem icon={<LogoutIcon />} />
-
         {/* Avatar + Profile Dropdown */}
         <div ref={profileRef} className="relative mt-tds-8">
           <div

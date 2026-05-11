@@ -78,14 +78,14 @@ const TicketDetails = () => {
   return (
     <div className="flex flex-col h-full bg-tds-surface-bg-coal-weakest overflow-hidden">
       {/* Ticket Title Bar */}
-      <div className="pr-tds-16 pt-tds-16 shrink-0">
+      <div className="pt-tds-16 shrink-0">
         <div className="bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary">
           <TicketTitleBar ticket={ticket} />
         </div>
       </div>
 
       {/* Main content — 3 resizable panels using flex-grow */}
-      <div ref={containerRef} className="flex flex-1 min-h-0 pr-tds-16 pb-tds-16 pt-tds-12 gap-tds-16">
+      <div ref={containerRef} className="flex flex-1 min-h-0 pb-tds-16 pt-tds-12 gap-tds-16">
         {/* Left — Conversation */}
         <div
           className="min-w-0 overflow-hidden bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary"

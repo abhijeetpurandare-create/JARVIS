@@ -104,7 +104,7 @@ const AgentAvailability = () => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between pr-[48px] py-tds-16 shrink-0">
+      <div className="flex items-center justify-between py-tds-16 shrink-0">
         <h1 className="text-[16px] font-semibold text-tds-text-heading-primary">Manage Availability</h1>
         <div className="w-[240px]">
           <Input
@@ -121,7 +121,7 @@ const AgentAvailability = () => {
       </div>
 
       {/* Teams Grid — TDS Card, grouped by letter with A-Z scroll */}
-      <div className="flex-1 overflow-auto pr-tds-16 pb-tds-16 relative">
+      <div className="flex-1 overflow-auto pb-tds-16 relative">
         {/* A-Z index — fixed, vertically centered within content area (below 60px top nav) */}
         <div className="fixed right-[16px] flex flex-col items-center gap-[1px] z-20" style={{ top: 'calc(50% + 30px)', transform: 'translateY(-50%)' }}>
           {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => (

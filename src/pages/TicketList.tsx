@@ -179,7 +179,7 @@ const TicketList = () => {
       />
 
       {/* Action Bar */}
-      <div className="flex items-center justify-between pr-tds-16 py-tds-16 w-full">
+      <div className="flex items-center justify-between py-tds-16 w-full">
         <div className="flex items-center gap-tds-8">
           <h1 className="text-[16px] font-semibold leading-[24px] text-tds-text-heading-primary">
             Ticket List
@@ -190,7 +190,7 @@ const TicketList = () => {
       </div>
 
       {/* Table */}
-      <div className="flex-1 overflow-hidden pr-tds-16 pb-tds-16 flex flex-col">
+      <div className="flex-1 overflow-hidden pb-tds-16 flex flex-col">
         <div className="border border-tds-border-neutral-primary rounded-tds-md overflow-hidden flex flex-col flex-1">
           {/* Header Row */}
           <div className="flex bg-[#f7f7f7] border-b border-tds-border-neutral-primary shrink-0">

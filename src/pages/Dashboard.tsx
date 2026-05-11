@@ -105,7 +105,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col h-full overflow-auto">
       {/* Header */}
-      <div className="flex items-center justify-between pr-tds-16 py-tds-16">
+      <div className="flex items-center justify-between py-tds-16">
         <div className="flex items-center gap-tds-8">
           <h1 className="text-[24px] font-bold text-tds-text-heading-primary leading-[32px]">My Overview</h1>
         </div>
@@ -116,7 +116,7 @@ const Dashboard = () => {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col gap-tds-16 pr-tds-16 pb-tds-16">
+      <div className="flex flex-col gap-tds-16 pb-tds-16">
         {/* Today's Workload Overview */}
         <div className="bg-tds-surface-bg-primary-default rounded-[12px] p-tds-16 border border-tds-border-neutral-primary">
           <h2 className="text-[16px] font-semibold text-tds-text-heading-primary mb-tds-16">Today's Workload Overview</h2>
