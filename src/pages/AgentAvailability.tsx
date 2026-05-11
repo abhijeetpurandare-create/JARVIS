@@ -104,7 +104,7 @@ const AgentAvailability = () => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between pr-tds-16 py-tds-16 shrink-0">
+      <div className="flex items-center justify-between pr-[48px] py-tds-16 shrink-0">
         <h1 className="text-[16px] font-semibold text-tds-text-heading-primary">Manage Availability</h1>
         <div className="w-[240px]">
           <Input
