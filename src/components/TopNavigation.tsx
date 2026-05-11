@@ -1,4 +1,5 @@
 import { Button } from '@delhivery/tarmac';
+import { useLocation } from 'react-router-dom';
 import { triggerToast } from './Toast';
 
 const jarvisLogo = './jarvis-logo.png';
@@ -27,9 +28,9 @@ const CopyIcon = () => (
 );
 
 const TopNavigation = () => {
-  // Get current ticket ID from hash
-  const hash = typeof window !== 'undefined' ? window.location.hash : '';
-  const ticketMatch = hash.match(/ticket\/(J\d+)/);
+  // Use React Router location for reactive breadcrumb updates
+  const location = useLocation();
+  const ticketMatch = location.pathname.match(/ticket\/(J\d+)/);
   const ticketId = ticketMatch ? ticketMatch[1] : null;
   const isTicketDetails = !!ticketId;
 
