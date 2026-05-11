@@ -31,13 +31,13 @@ interface NavItemProps {
 const NavItem = ({ icon, label, active, expanded, onClick }: NavItemProps) => (
   <div
     onClick={onClick}
-    className={`flex items-center gap-tds-12 h-[36px] rounded-[8px] cursor-pointer transition-all ${
-      expanded ? 'px-tds-12' : 'justify-center w-[36px]'
-    } ${active ? 'bg-[#ededed]' : 'hover:bg-[#ededed]'}`}
+    className={`flex items-center h-[36px] rounded-[8px] cursor-pointer transition-all px-tds-8 gap-tds-12 ${
+      active ? 'bg-[#ededed]' : 'hover:bg-[#ededed]'
+    }`}
   >
-    <span className={`shrink-0 ${active ? 'text-[#2b2b2b]' : 'text-[#737373]'}`}>{icon}</span>
+    <span className={`shrink-0 w-[20px] flex items-center justify-center ${active ? 'text-[#2b2b2b]' : 'text-[#737373]'}`}>{icon}</span>
     {expanded && (
-      <span className={`text-[12px] font-medium whitespace-nowrap ${active ? 'text-[#2b2b2b]' : 'text-[#737373]'}`}>{label}</span>
+      <span className={`text-[12px] font-bold uppercase whitespace-nowrap ${active ? 'text-[#2b2b2b]' : 'text-[#737373]'}`}>{label}</span>
     )}
   </div>
 );
@@ -90,7 +90,7 @@ const SideNavigation = () => {
       {/* Avatar + Profile Dropdown */}
       <div ref={profileRef} className="relative">
         <div
-          className={`flex items-center gap-tds-12 cursor-pointer rounded-[8px] hover:bg-[#ededed] ${expanded ? 'px-tds-8 py-tds-6' : 'justify-center py-tds-6'}`}
+          className={`flex items-center gap-tds-12 cursor-pointer rounded-[8px] hover:bg-[#ededed] px-tds-8 py-tds-6`}
           onClick={() => setProfileOpen(!profileOpen)}
         >
           <Avatar
