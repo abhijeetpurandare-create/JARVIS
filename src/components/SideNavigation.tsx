@@ -76,7 +76,7 @@ const SideNavigation = () => {
 
   return (
     <div
-      className={`flex flex-col bg-[#f7f7f7] py-tds-8 pb-tds-12 px-tds-8 shrink-0 transition-all duration-200 ${expanded ? 'w-[180px]' : 'w-[60px]'}`}
+      className={`flex flex-col bg-[#f7f7f7] p-tds-8 pb-tds-12 shrink-0 transition-all duration-200 ${expanded ? 'w-[180px]' : 'w-[52px]'}`}
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => { setExpanded(false); }}
     >
