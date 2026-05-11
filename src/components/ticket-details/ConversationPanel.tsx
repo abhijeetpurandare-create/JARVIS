@@ -178,10 +178,16 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
   const [replyMode, setReplyMode] = useState<ReplyMode>(null);
   const [showActivity, setShowActivity] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (replyMode && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (replyMode && scrollContainerRef.current) {
+      // Scroll container to bottom so reply box is visible
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+        }
+      }, 50);
     }
   }, [replyMode]);
 
@@ -191,7 +197,7 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
   return (
     <div className="flex flex-col h-full">
       {/* Messages + Reply box — scrollable together (Gmail-like) */}
-      <div className="flex-1 overflow-auto py-tds-12 flex flex-col">
+      <div ref={scrollContainerRef} className="flex-1 overflow-auto py-tds-12 flex flex-col">
         {conversations.map((msg) => (
           <MessageBubble key={msg.id} message={msg} />
         ))}
