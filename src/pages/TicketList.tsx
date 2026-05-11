@@ -1,4 +1,4 @@
-import { Pill, Button, TarmacTable } from '@delhivery/tarmac';
+import { Pill, Button, TarmacTable, Pagination } from '@delhivery/tarmac';
 import { useState, useMemo } from 'react';
 import FilterPanel from '../components/FilterPanel';
 
@@ -136,30 +136,7 @@ const TicketList = () => {
   }, [sortState]);
 
   const totalTickets = sortedTickets.length;
-  const totalPages = Math.ceil(totalTickets / perPage);
   const paginatedTickets = sortedTickets.slice((currentPage - 1) * perPage, currentPage * perPage);
-
-  const handlePerPageChange = (value: number) => {
-    setPerPage(value);
-    setCurrentPage(1);
-  };
-
-  // Generate page numbers to display
-  const getPageNumbers = () => {
-    const pages: (number | string)[] = [];
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      if (currentPage > 3) pages.push('...');
-      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
-        pages.push(i);
-      }
-      if (currentPage < totalPages - 2) pages.push('...');
-      pages.push(totalPages);
-    }
-    return pages;
-  };
 
   return (
     <div className="flex flex-col h-full">
@@ -250,61 +227,33 @@ const TicketList = () => {
             ))}
           </div>
 
-          {/* Pagination — sticky bottom */}
-          <div className="shrink-0 border-t border-tds-border-neutral-primary flex items-center justify-between px-tds-16 py-tds-12">
-            <div className="flex-1 flex items-center gap-tds-4">
-              <span className="text-[13px] font-medium text-tds-text-caption-secondary">Show</span>
-              <select
-                className="text-[13px] font-medium text-tds-text-body-primary bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary rounded-tds-default px-tds-6 py-tds-2 cursor-pointer outline-none"
-                value={perPage}
-                onChange={(e) => handlePerPageChange(Number(e.target.value))}
-              >
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={30}>30</option>
-                <option value={50}>50</option>
-                <option value={100}>100</option>
-              </select>
-              <span className="text-[13px] font-medium text-tds-text-caption-secondary">per page</span>
-            </div>
-            <div className="flex-1 flex items-center justify-center">
-              <div className="flex items-center gap-[2px]">
-                {getPageNumbers().map((page, idx) => (
-                  <div
-                    key={idx}
-                    className={`flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[13px] font-medium ${
-                      page === currentPage
-                        ? 'bg-tds-surface-bg-primary-inverse-default text-tds-text-heading-inverse-only-white'
-                        : page === '...'
-                        ? 'text-tds-text-body-primary'
-                        : 'text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest'
-                    }`}
-                    onClick={() => typeof page === 'number' && setCurrentPage(page)}
-                  >
-                    {page}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex-1 flex items-center justify-end gap-tds-8">
-              <button
-                className="flex items-center gap-tds-4 text-[13px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary disabled:opacity-40 disabled:cursor-not-allowed"
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(currentPage - 1)}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                Previous
-              </button>
-              <div className="w-px h-[12px] bg-tds-border-neutral-primary" />
-              <button
-                className="flex items-center gap-tds-4 text-[13px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary disabled:opacity-40 disabled:cursor-not-allowed"
-                disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage(currentPage + 1)}
-              >
-                Next
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              </button>
-            </div>
+          {/* Pagination — TDS Component */}
+          <div className="shrink-0 border-t border-tds-border-neutral-primary px-tds-16 py-tds-8">
+            <Pagination
+              paginationStyle="tarmac-01"
+              cellStyle="black"
+              tarmacSize="sm"
+              total={totalTickets}
+              pageSize={perPage}
+              current={currentPage}
+              onChange={(page, pageSize) => {
+                if (page) setCurrentPage(page);
+                if (pageSize && pageSize !== perPage) {
+                  setPerPage(pageSize);
+                  setCurrentPage(1);
+                }
+              }}
+              showSizeChanger
+              pageSizeOptions={[10, 20, 30, 50, 100]}
+              onShowSizeChange={(_current, size) => {
+                setPerPage(size);
+                setCurrentPage(1);
+              }}
+              showTotal={(total, range) => `Showing ${range[0]}-${range[1]} of ${total}`}
+              showTextLeft
+              showNumberCells
+              showTextRight
+            />
           </div>
         </div>
       </div>

@@ -3,11 +3,12 @@ import { useRef, useState, ReactNode } from 'react';
 interface SpotlightHoverProps {
   children: ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   onClick?: () => void;
   disabled?: boolean;
 }
 
-const SpotlightHover = ({ children, className = '', onClick, disabled }: SpotlightHoverProps) => {
+const SpotlightHover = ({ children, className = '', style, onClick, disabled }: SpotlightHoverProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -22,6 +23,7 @@ const SpotlightHover = ({ children, className = '', onClick, disabled }: Spotlig
     <div
       ref={ref}
       className={`relative overflow-hidden ${className}`}
+      style={style}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

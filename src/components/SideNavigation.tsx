@@ -26,7 +26,7 @@ interface NavItemProps {
   active?: boolean;
 }
 
-const NavItem = ({ icon, label, active }: NavItemProps) => (
+const NavItem = ({ icon, label: _label, active }: NavItemProps) => (
   <SpotlightHover
     className={`flex items-center justify-center w-[44px] h-[36px] rounded-tds-md cursor-pointer transition-all ${
       active ? 'bg-tds-alpha-white-200' : ''
