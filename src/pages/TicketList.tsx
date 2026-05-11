@@ -39,8 +39,8 @@ interface TicketRow {
 }
 
 // Realistic mock data based on narad-ui's actual ticket structure
-const NAMES = ['Sulaksha Halankar', 'Abhay Kumar', 'Conney Dcosta', 'Seeya Sitaram Mahale', 'Ravi Sharma', 'Priya Patel', 'Amit Verma', 'Neha Gupta', 'Karan Singh', 'Pooja Reddy'];
-const AGENTS = ['Sulaksha Halankar', 'Abhay Kumar', 'Conney Dcosta', 'Ravi Sharma', 'Priya Patel'];
+const NAMES = ['Ramesh Kumar', 'Conney Dcosta', 'Seeya Sitaram Mahale', 'Amit Verma', 'Neha Gupta', 'Karan Singh', 'Pooja Reddy', 'Vikram Joshi', 'Anita Desai', 'Deepak Nair'];
+const AGENTS = ['Melika Govekar', 'Abhay Kumar', 'Ravi Sharma', 'Priya Patel', 'Sulaksha Halankar', 'Arun Mehta', 'Divya Iyer', 'Nikhil Rao'];
 const SUBJECTS = [
   'Reattempt or Delay in delivery / consignee pickup - Delivery Delayed',
   'Package not delivered - Customer complaint about missing delivery',
