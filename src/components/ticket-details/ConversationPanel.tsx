@@ -181,13 +181,15 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (replyMode && scrollContainerRef.current) {
-      // Scroll container to bottom so reply box is visible
-      setTimeout(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
-        }
-      }, 50);
+    if (replyMode) {
+      // Use requestAnimationFrame to ensure DOM has rendered the box
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+          }
+        });
+      });
     }
   }, [replyMode]);
 
@@ -234,7 +236,7 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
           onClick={() => setReplyMode('forward')}
         />
         <Button
-          variant={replyMode === 'escalate' ? 'error' : 'black'}
+          variant={replyMode === 'escalate' ? 'dlv_red' : 'black'}
           buttonStyle="secondary"
           size="sm"
           text="Escalate to Ops"
