@@ -314,6 +314,23 @@ declare module '@delhivery/tarmac' {
   // DropdownList
   export const DropdownList: FC<any>;
 
+  // Snackbar
+  export interface SnackbarOptions {
+    message: ReactNode;
+    title?: ReactNode;
+    variant?: string;
+    snackbarStyle?: string;
+    size?: string;
+    position?: string;
+    duration?: number;
+    closable?: boolean;
+    leadingIcon?: ReactNode;
+    onClose?: () => void;
+  }
+  export function snackbar(options: SnackbarOptions): void;
+  export const Snackbar: FC<any>;
+  export const SnackbarManager: FC<any>;
+
   // Input
   export interface InputProps {
     inputStyle?: string;

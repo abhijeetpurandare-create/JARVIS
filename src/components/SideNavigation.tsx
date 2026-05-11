@@ -1,6 +1,4 @@
 import { Avatar } from '@delhivery/tarmac';
-import SpotlightHover from './SpotlightHover';
-
 
 const HomeIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -26,19 +24,22 @@ interface NavItemProps {
   active?: boolean;
 }
 
-const NavItem = ({ icon, label: _label, active }: NavItemProps) => (
-  <SpotlightHover
-    className={`flex items-center justify-center w-[44px] h-[36px] rounded-tds-md cursor-pointer transition-all ${
-      active ? 'bg-tds-alpha-white-200' : ''
+const NavItem = ({ icon, active }: NavItemProps) => (
+  <div
+    className={`flex items-center justify-center w-[44px] h-[36px] rounded-tds-md cursor-pointer transition-all hover:bg-white/10 ${
+      active ? 'bg-white/15' : ''
     }`}
   >
-    <span className="text-tds-text-heading-inverse-only-white relative z-10">{icon}</span>
-  </SpotlightHover>
+    <span className="text-tds-text-heading-inverse-only-white">{icon}</span>
+  </div>
 );
 
 const SideNavigation = () => {
   return (
-    <SpotlightHover className="flex flex-col items-center h-full w-[60px] bg-tds-surface-bg-primary-inverse-default pt-tds-16 pb-tds-16 px-tds-8 rounded-tds-lg relative z-10" style={{ boxShadow: '2px 0px 8px rgba(0,0,0,0.15)' } as React.CSSProperties}>
+    <div
+      className="flex flex-col items-center h-full w-[60px] bg-tds-surface-bg-primary-inverse-default pt-tds-16 pb-tds-16 px-tds-8 rounded-tds-lg relative z-10"
+      style={{ boxShadow: '2px 0px 8px rgba(0,0,0,0.15)' }}
+    >
       {/* Top nav items */}
       <div className="flex flex-col items-center gap-tds-8">
         <NavItem icon={<HomeIcon />} label="Home" />
@@ -49,7 +50,7 @@ const SideNavigation = () => {
       {/* Spacer — pushes avatar to bottom */}
       <div className="flex-1" />
 
-      {/* Avatar at bottom — TDS Avatar with profile photo */}
+      {/* Avatar at bottom — TDS Avatar */}
       <div className="flex items-center justify-center cursor-pointer">
         <Avatar
           size="md"
@@ -61,7 +62,7 @@ const SideNavigation = () => {
           statusType="active"
         />
       </div>
-    </SpotlightHover>
+    </div>
   );
 };
 
