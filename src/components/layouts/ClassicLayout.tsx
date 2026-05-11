@@ -16,7 +16,7 @@ const ClassicLayout = () => {
         </div>
 
         {/* Page content */}
-        <main className="flex-1 overflow-auto ml-[88px] px-tds-16">
+        <main className="flex-1 overflow-auto ml-[76px] px-tds-16">
           <Outlet />
         </main>
       </div>
