@@ -359,4 +359,60 @@ declare module '@delhivery/tarmac' {
   }
   export const Input: FC<InputProps>;
   export const InputAddon: FC<any>;
+
+  // SideDrawer
+  export interface SideDrawerProps {
+    isOpen?: boolean;
+    onClose?: () => void;
+    variant?: string;
+    closeOnOverlay?: boolean;
+    closeOnEsc?: boolean;
+    renderInline?: boolean;
+    className?: string;
+    children?: ReactNode;
+  }
+  interface SideDrawerComponent extends FC<SideDrawerProps> {
+    Header: FC<{ title?: string; subtext?: string; children?: ReactNode }>;
+    Content: FC<{ children?: ReactNode }>;
+    Footer: FC<{ ctasRight?: ReactNode; ctasLeft?: ReactNode; children?: ReactNode }>;
+    Tabs: FC<{ children?: ReactNode }>;
+    Snackbar: FC<{ children?: ReactNode }>;
+  }
+  export const SideDrawer: SideDrawerComponent;
+
+  // Card
+  export interface CardProps {
+    cardStyle?: string;
+    cardVariant?: string;
+    variant?: string;
+    size?: string;
+    title?: ReactNode;
+    subtitle?: ReactNode;
+    description?: ReactNode;
+    isHoverable?: boolean;
+    isDisabled?: boolean;
+    isGhost?: boolean;
+    onClick?: (e: React.MouseEvent) => void;
+    className?: string;
+    style?: React.CSSProperties;
+    children?: ReactNode;
+    leadingIcon?: ReactNode;
+    trailingIcon?: ReactNode;
+    badge?: ReactNode;
+  }
+  interface CardComponent extends FC<CardProps> {
+    Header: FC<{ children?: ReactNode }>;
+    TextGroup: FC<{ children?: ReactNode }>;
+    Title: FC<{ children?: ReactNode }>;
+    Subtext: FC<{ position?: string; children?: ReactNode }>;
+    LeadingIcon: FC<{ children?: ReactNode }>;
+    TrailingIcon: FC<{ children?: ReactNode }>;
+    BadgeGroup: FC<{ children?: ReactNode }>;
+    Number: FC<{ children?: ReactNode }>;
+    Actions: FC<{ children?: ReactNode }>;
+    Subitems: FC<{ children?: ReactNode }>;
+    SubitemEntry: FC<{ icon?: ReactNode; label?: string }>;
+    StatusIndicator: FC<{ children?: ReactNode }>;
+  }
+  export const Card: CardComponent;
 }

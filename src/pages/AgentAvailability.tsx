@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
+import { Button, Input, Switch, SideDrawer, Card } from '@delhivery/tarmac';
 
 const UsersIcon = () => (
   <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
@@ -7,13 +8,13 @@ const UsersIcon = () => (
 );
 
 const SearchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-    <path d="M8.75 15C12.2018 15 15 12.2018 15 8.75C15 5.29822 12.2018 2.5 8.75 2.5C5.29822 2.5 2.5 5.29822 2.5 8.75C2.5 12.2018 5.29822 15 8.75 15Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M13.25 13.25L17.5 17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M7 12.5C10.0376 12.5 12.5 10.0376 12.5 7C12.5 3.96243 10.0376 1.5 7 1.5C3.96243 1.5 1.5 3.96243 1.5 7C1.5 10.0376 3.96243 12.5 7 12.5Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M11 11L14.5 14.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-// All teams from the screenshots
+// All teams
 const allTeams = [
   'B2C KAM Narad', 'Production Testing Narad', 'Ops Support Narad', 'Direct Shipper Narad',
   'SME B2C Narad', 'Hyperlocal', 'LT Retail Narad', 'AnI - Breakdown and Downtime',
@@ -45,7 +46,7 @@ const allTeams = [
   'narad-test-21', 'E2E Data Upload Narad', 'FMS Ops Support Narad',
 ];
 
-// Mock agents per team (based on narad-ui data structure: name, id, state, isAvailable)
+// Mock agents per team (based on narad-ui user data structure)
 const AGENT_NAMES = [
   'Ashish Kumar Bhoi', 'Krishna Kant Sharma', 'Sravani Tammisetty', 'Narad Agent',
   'Siddharth Jain', 'Pranav Bhargava Bhargava', 'Mohit Sharma', 'Ayushi Aswal',
@@ -54,26 +55,20 @@ const AGENT_NAMES = [
 ];
 
 function getAgentsForTeam(teamName: string) {
-  // Generate deterministic agents per team based on team name hash
   const hash = teamName.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-  const count = 4 + (hash % 8); // 4-11 agents per team
+  const count = 4 + (hash % 8);
   return Array.from({ length: count }, (_, i) => ({
     id: `${hash}-${i}`,
     name: AGENT_NAMES[(hash + i) % AGENT_NAMES.length],
-    isAvailable: (hash + i) % 3 !== 0, // ~66% available
+    isAvailable: (hash + i) % 3 !== 0,
   }));
 }
-
-const BackIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-);
 
 const AgentAvailability = () => {
   const [search, setSearch] = useState('');
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
   const [agentSearch, setAgentSearch] = useState('');
   const [agents, setAgents] = useState<{ id: string; name: string; isAvailable: boolean }[]>([]);
-  const panelRef = useRef<HTMLDivElement>(null);
 
   const filteredTeams = search
     ? allTeams.filter((t) => t.toLowerCase().includes(search.toLowerCase()))
@@ -98,121 +93,102 @@ const AgentAvailability = () => {
     ? agents.filter((a) => a.name.toLowerCase().includes(agentSearch.toLowerCase()))
     : agents;
 
-  // Close panel on click outside
-  useEffect(() => {
-    if (!selectedTeam) return;
-    const handleClick = (e: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        closePanel();
-      }
-    };
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [selectedTeam]);
-
   return (
-    <div className="flex flex-col h-full overflow-hidden relative">
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between pr-tds-16 py-tds-16 shrink-0">
         <h1 className="text-[16px] font-semibold text-tds-text-heading-primary">Manage Availability</h1>
-        <div className="flex items-center gap-tds-8 px-tds-12 py-tds-6 border border-tds-border-neutral-primary rounded-tds-default bg-tds-surface-bg-primary-default w-[240px]">
-          <span className="text-tds-text-caption-secondary"><SearchIcon /></span>
-          <input
-            type="text"
+        <div className="w-[240px]">
+          <Input
+            inputStyle="tarmac-01"
+            inputType="regular"
+            inputSize="sm"
+            styleVariant="standard"
+            placeholder="Search Teams"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search Teams"
-            className="flex-1 text-[13px] text-tds-text-body-primary placeholder:text-tds-text-body-disabled outline-none bg-transparent"
+            leadingIcon={<SearchIcon />}
           />
         </div>
       </div>
 
-      {/* Teams Grid */}
+      {/* Teams Grid — TDS Card */}
       <div className="flex-1 overflow-auto pr-tds-16 pb-tds-16">
         <div className="grid grid-cols-4 gap-tds-12">
           {filteredTeams.map((team) => (
-            <div
+            <Card
               key={team}
+              cardStyle="tarmac-01"
+              cardVariant="standard"
+              isHoverable
               onClick={() => openTeam(team)}
-              className="flex items-center gap-tds-8 px-tds-16 py-tds-12 border border-tds-border-neutral-primary rounded-tds-md bg-tds-surface-bg-primary-default hover:bg-tds-surface-bg-coal-weakest cursor-pointer transition-colors"
+              className="!cursor-pointer"
             >
-              <span className="text-tds-text-caption-secondary shrink-0"><UsersIcon /></span>
-              <span className="text-[13px] font-medium text-tds-text-body-primary truncate">{team}</span>
-            </div>
+              <div className="flex items-center gap-tds-8 px-tds-12 py-tds-8">
+                <span className="text-tds-text-caption-secondary shrink-0"><UsersIcon /></span>
+                <span className="text-[13px] font-medium text-tds-text-body-primary truncate">{team}</span>
+              </div>
+            </Card>
           ))}
         </div>
       </div>
 
-      {/* Slide-in Panel — Manage Team */}
-      {selectedTeam && (
-        <>
-          {/* Backdrop */}
-          <div className="fixed inset-0 bg-black/20 z-40" />
-          {/* Panel */}
-          <div
-            ref={panelRef}
-            className="fixed top-0 right-0 h-full w-[400px] bg-tds-surface-bg-primary-default shadow-xl z-50 flex flex-col animate-[slideInRight_0.2s_ease-out]"
-          >
-            {/* Header */}
-            <div className="flex items-center gap-tds-12 px-tds-16 py-tds-16 border-b border-tds-border-neutral-primary shrink-0">
-              <button onClick={closePanel} className="flex items-center justify-center w-[36px] h-[36px] border border-tds-border-neutral-primary rounded-tds-md cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
-                <BackIcon />
-              </button>
-              <span className="text-[16px] font-medium text-tds-text-heading-primary">Manage Team</span>
-            </div>
-
-            {/* Search agents */}
-            <div className="px-tds-16 py-tds-12 shrink-0">
-              <div className="flex items-center gap-tds-8 px-tds-12 py-tds-6 border border-tds-border-neutral-primary rounded-tds-default bg-tds-surface-bg-primary-default">
-                <span className="text-tds-text-caption-secondary"><SearchIcon /></span>
-                <input
-                  type="text"
-                  value={agentSearch}
-                  onChange={(e) => setAgentSearch(e.target.value)}
-                  placeholder="Search Agents"
-                  className="flex-1 text-[13px] text-tds-text-body-primary placeholder:text-tds-text-body-disabled outline-none bg-transparent"
-                />
-              </div>
-            </div>
-
-            {/* Team name header */}
-            <div className="px-tds-16 py-tds-8 bg-[#f9f8fb] border-b border-tds-border-neutral-primary shrink-0">
-              <span className="text-[14px] font-medium text-tds-text-body-primary">{selectedTeam} Agents</span>
-            </div>
-
-            {/* Agent list */}
-            <div className="flex-1 overflow-auto">
-              {filteredAgents.map((agent) => (
-                <div key={agent.id} className="flex items-center justify-between px-tds-16 py-tds-12 bg-[#f9f8fb] border-b border-tds-border-neutral-primary/50">
-                  <span className="text-[14px] font-medium text-tds-text-body-primary">{agent.name}</span>
-                  <div className="flex flex-col items-end gap-tds-2">
-                    {/* Toggle */}
-                    <div
-                      className={`w-[40px] h-[22px] rounded-full relative cursor-pointer transition-colors ${agent.isAvailable ? 'bg-[#48a26b]' : 'bg-tds-border-neutral-primary'}`}
-                      onClick={() => toggleAvailability(agent.id)}
-                    >
-                      <div className={`absolute top-[3px] w-[16px] h-[16px] rounded-full bg-tds-surface-bg-primary-default shadow-sm transition-all ${agent.isAvailable ? 'left-[21px]' : 'left-[3px]'}`} />
-                    </div>
-                    <span className={`text-[12px] ${agent.isAvailable ? 'text-[#48a26b]' : 'text-tds-text-caption-secondary'}`}>
-                      {agent.isAvailable ? 'Available' : 'Unavailable'}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Footer */}
-            <div className="px-tds-16 py-tds-12 border-t border-tds-border-neutral-primary flex justify-end shrink-0">
-              <button
-                onClick={closePanel}
-                className="px-tds-16 py-tds-8 border border-tds-border-neutral-primary rounded-tds-default text-[14px] font-medium text-tds-text-body-primary cursor-pointer hover:bg-tds-surface-bg-coal-weakest"
-              >
-                Cancel
-              </button>
-            </div>
+      {/* TDS SideDrawer — Manage Team */}
+      <SideDrawer
+        isOpen={!!selectedTeam}
+        onClose={closePanel}
+        variant="narrow"
+        closeOnOverlay
+        closeOnEsc
+      >
+        <SideDrawer.Header title="Manage Team" />
+        <SideDrawer.Content>
+          {/* Search Agents — TDS Input */}
+          <div className="px-tds-16 py-tds-12">
+            <Input
+              inputStyle="tarmac-01"
+              inputType="regular"
+              inputSize="sm"
+              styleVariant="standard"
+              placeholder="Search Agents"
+              value={agentSearch}
+              onChange={(e) => setAgentSearch(e.target.value)}
+              leadingIcon={<SearchIcon />}
+            />
           </div>
-        </>
-      )}
+
+          {/* Team name header */}
+          <div className="px-tds-16 py-tds-8 bg-[#f9f8fb]">
+            <span className="text-[14px] font-medium text-tds-text-body-primary">{selectedTeam} Agents</span>
+          </div>
+
+          {/* Agent list with TDS Switch */}
+          <div className="flex flex-col">
+            {filteredAgents.map((agent) => (
+              <div key={agent.id} className="flex items-center justify-between px-tds-16 py-tds-12 bg-[#f9f8fb] border-b border-tds-border-neutral-primary/30">
+                <span className="text-[14px] font-medium text-tds-text-body-primary">{agent.name}</span>
+                <div className="flex flex-col items-end gap-tds-2">
+                  <Switch
+                    tarmacColor="green"
+                    tarmacStyle="filled"
+                    tarmacSize="sm"
+                    checked={agent.isAvailable}
+                    onChange={() => toggleAvailability(agent.id)}
+                  />
+                  <span className={`text-[12px] ${agent.isAvailable ? 'text-[#48a26b]' : 'text-tds-text-caption-secondary'}`}>
+                    {agent.isAvailable ? 'Available' : 'Unavailable'}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </SideDrawer.Content>
+        <SideDrawer.Footer
+          ctasRight={
+            <Button variant="black" buttonStyle="secondary" size="md" text="Cancel" onClick={closePanel} />
+          }
+        />
+      </SideDrawer>
     </div>
   );
 };
