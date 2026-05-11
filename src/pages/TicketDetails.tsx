@@ -76,7 +76,7 @@ const TicketDetails = () => {
   }, [chatRatio, propsRatio, ctxRatio]);
 
   return (
-    <div className="flex flex-col h-full bg-tds-surface-bg-coal-weakest overflow-hidden">
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Ticket Title Bar */}
       <div className="pt-tds-16 shrink-0">
         <div className="bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary">
