@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { TicketDetail } from '../../data/ticketDetailsData';
+
+// All ticket IDs in listing order (215 tickets)
+const ALL_TICKET_IDS = Array.from({ length: 215 }, (_, i) => `J${17769268800000 + i + 1}`);
 
 interface TicketTitleBarProps {
   ticket: TicketDetail;
@@ -7,6 +11,20 @@ interface TicketTitleBarProps {
 const Dot = () => <span className="w-[3px] h-[3px] rounded-full bg-tds-text-caption-secondary inline-block" />;
 
 const TicketTitleBar = ({ ticket }: TicketTitleBarProps) => {
+  const navigate = useNavigate();
+
+  const currentIndex = ALL_TICKET_IDS.indexOf(ticket.ticketId);
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex < ALL_TICKET_IDS.length - 1;
+
+  const goToPrev = () => {
+    if (hasPrev) navigate(`/ticket/${ALL_TICKET_IDS[currentIndex - 1]}`);
+  };
+
+  const goToNext = () => {
+    if (hasNext) navigate(`/ticket/${ALL_TICKET_IDS[currentIndex + 1]}`);
+  };
+
   return (
     <div className="px-tds-16 py-tds-12 flex items-center gap-tds-4">
       {/* Left — Title + metadata */}
@@ -65,10 +83,18 @@ const TicketTitleBar = ({ ticket }: TicketTitleBarProps) => {
 
         {/* Prev/Next navigation */}
         <div className="flex items-center">
-          <button className="flex items-center justify-center p-tds-4 border border-tds-border-neutral-primary rounded-l-tds-default cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
+          <button
+            onClick={goToPrev}
+            disabled={!hasPrev}
+            className="flex items-center justify-center p-tds-4 border border-tds-border-neutral-primary rounded-l-tds-default cursor-pointer hover:bg-tds-surface-bg-coal-weakest disabled:opacity-30 disabled:cursor-not-allowed"
+          >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8L10 12" stroke="#2b2b2b" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
-          <button className="flex items-center justify-center p-tds-4 border border-tds-border-neutral-primary border-l-0 rounded-r-tds-default cursor-pointer hover:bg-tds-surface-bg-coal-weakest">
+          <button
+            onClick={goToNext}
+            disabled={!hasNext}
+            className="flex items-center justify-center p-tds-4 border border-tds-border-neutral-primary border-l-0 rounded-r-tds-default cursor-pointer hover:bg-tds-surface-bg-coal-weakest disabled:opacity-30 disabled:cursor-not-allowed"
+          >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="#2b2b2b" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
         </div>
