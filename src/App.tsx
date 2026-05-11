@@ -1,24 +1,35 @@
 import { Routes, Route } from 'react-router-dom';
 import { SnackbarManager } from '@delhivery/tarmac';
+import { LayoutProvider, useLayout } from './context/LayoutContext';
 import Layout from './components/Layout';
+import ClassicLayout from './components/layouts/ClassicLayout';
 import Dashboard from './pages/Dashboard';
 import TicketList from './pages/TicketList';
 import TicketDetails from './pages/TicketDetails';
 import AgentAvailability from './pages/AgentAvailability';
 
+function AppRoutes() {
+  const { layout } = useLayout();
+  const LayoutComponent = layout === 'modern' ? Layout : ClassicLayout;
+
+  return (
+    <Routes>
+      <Route path="/" element={<LayoutComponent />}>
+        <Route index element={<Dashboard />} />
+        <Route path="tickets" element={<TicketList />} />
+        <Route path="ticket/:ticketId" element={<TicketDetails />} />
+        <Route path="availability" element={<AgentAvailability />} />
+      </Route>
+    </Routes>
+  );
+}
+
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="tickets" element={<TicketList />} />
-          <Route path="ticket/:ticketId" element={<TicketDetails />} />
-          <Route path="availability" element={<AgentAvailability />} />
-        </Route>
-      </Routes>
+    <LayoutProvider>
+      <AppRoutes />
       <SnackbarManager />
-    </>
+    </LayoutProvider>
   );
 }
 
