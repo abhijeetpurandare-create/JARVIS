@@ -6,20 +6,17 @@ const MessageBubble = ({ message }: { message: Conversation }) => {
   const isCustomer = message.type === 'customer';
   const isPrivateNote = message.type === 'private_note';
 
-  // Bubble styles based on type
   const bubbleStyles = isCustomer
     ? 'bg-tds-surface-bg-blue-weakest border border-tds-border-info-primary/30'
     : isPrivateNote
     ? 'bg-tds-surface-bg-warning-weakest border border-tds-border-warning-primary/40'
     : 'bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary';
 
-  // Alignment
   const alignStyles = isCustomer ? 'ml-tds-16 mr-tds-32' : 'ml-auto mr-tds-16 ml-tds-32';
 
   return (
     <div className={`max-w-[calc(100%-32px)] ${alignStyles} my-tds-8`}>
       <div className={`rounded-tds-lg p-tds-12 ${bubbleStyles}`}>
-        {/* Header */}
         <div className="flex items-center gap-tds-8 mb-tds-4">
           <span className="text-[12px] font-semibold text-tds-text-body-primary">{message.sender}</span>
           <span className="text-[11px] text-tds-text-caption-secondary">{message.timestamp}</span>
@@ -30,8 +27,6 @@ const MessageBubble = ({ message }: { message: Conversation }) => {
           )}
         </div>
         <p className="text-[11px] text-tds-text-caption-secondary mb-tds-4">{message.role}</p>
-
-        {/* Notified To */}
         {message.notifiedTo && (
           <div className="mb-tds-6">
             <p className="text-[11px] text-tds-text-caption-secondary">
@@ -40,8 +35,6 @@ const MessageBubble = ({ message }: { message: Conversation }) => {
             <div className="h-px bg-tds-border-neutral-primary/50 my-tds-4" />
           </div>
         )}
-
-        {/* Body */}
         <p className="text-[12px] text-tds-text-body-primary leading-[18px] whitespace-pre-line">
           {message.content}
         </p>
@@ -50,9 +43,9 @@ const MessageBubble = ({ message }: { message: Conversation }) => {
   );
 };
 
-type ReplyMode = 'reply' | 'note' | 'forward' | null;
+type ReplyMode = 'reply' | 'note' | 'forward' | 'escalate' | null;
 
-// Formatting toolbar icons
+// Toolbar icons
 const BoldIcon = () => <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 2.5H9.5C10.163 2.5 10.7989 2.76339 11.2678 3.23223C11.7366 3.70107 12 4.33696 12 5C12 5.66304 11.7366 6.29893 11.2678 6.76777C10.7989 7.23661 10.163 7.5 9.5 7.5H4V2.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M4 7.5H10.5C11.163 7.5 11.7989 7.76339 12.2678 8.23223C12.7366 8.70107 13 9.33696 13 10C13 10.663 12.7366 11.2989 12.2678 11.7678C11.7989 12.2366 11.163 12.5 10.5 12.5H4V7.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 const ItalicIcon = () => <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3H6.5M9.5 13H6M8.5 3L7.5 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 const UnderlineIcon = () => <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 2.5V7.5C4 8.56087 4.42143 9.57828 5.17157 10.3284C5.92172 11.0786 6.93913 11.5 8 11.5C9.06087 11.5 10.0783 11.0786 10.8284 10.3284C11.5786 9.57828 12 8.56087 12 7.5V2.5M3 13.5H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
@@ -63,25 +56,45 @@ const ImageIcon = () => <svg width="14" height="14" viewBox="0 0 16 16" fill="no
 const AttachIcon = () => <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 7.5L7.5 13.5C6.83696 14.163 5.93913 14.5 5 14.5C4.06087 14.5 3.16304 14.163 2.5 13.5C1.83696 12.837 1.5 11.9391 1.5 11C1.5 10.0609 1.83696 9.16304 2.5 8.5L8.5 2.5C8.94 2.06 9.53 1.81 10.15 1.81C10.77 1.81 11.36 2.06 11.8 2.5C12.24 2.94 12.49 3.53 12.49 4.15C12.49 4.77 12.24 5.36 11.8 5.8L5.79 11.8C5.57 12.02 5.28 12.14 4.97 12.14C4.66 12.14 4.37 12.02 4.15 11.8C3.93 11.58 3.81 11.29 3.81 10.98C3.81 10.67 3.93 10.38 4.15 10.16L9.65 4.66" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 const SendIcon = () => <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M14.5 1.5L7 9M14.5 1.5L10 14.5L7 9M14.5 1.5L1.5 6L7 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 
-const ReplyTextbox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () => void; onSend: () => void }) => {
+/**
+ * Reply box — always fully visible, grows with content, no height limit.
+ * Scrolls with messages (Gmail-like behavior).
+ */
+const ReplyBox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () => void; onSend: () => void }) => {
   const [toValue, setToValue] = useState('');
   const [ccValue, setCcValue] = useState('');
   const [bodyValue, setBodyValue] = useState('');
   const [showCc, setShowCc] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const modeLabel = mode === 'reply' ? 'Reply' : mode === 'note' ? 'Note' : 'Forward';
-  const modeBorderColor = mode === 'note'
+  useEffect(() => {
+    textareaRef.current?.focus();
+  }, []);
+
+  // Auto-grow textarea — no max height limit
+  const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setBodyValue(e.target.value);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  const modeLabel = mode === 'reply' ? 'Reply' : mode === 'note' ? 'Note' : mode === 'forward' ? 'Forward' : 'Escalate to Ops';
+  const modeBorder = mode === 'note'
     ? 'border-tds-border-warning-primary/50'
-    : mode === 'forward'
-    ? 'border-tds-border-neutral-primary'
+    : mode === 'escalate'
+    ? 'border-tds-border-error-primary/40'
     : 'border-tds-border-info-primary/40';
-  const modeBgColor = mode === 'note'
+  const modeBg = mode === 'note'
     ? 'bg-tds-surface-bg-warning-weakest/30'
+    : mode === 'escalate'
+    ? 'bg-[#fef2f2]'
     : 'bg-tds-surface-bg-primary-default';
 
   return (
-    <div className={`mx-tds-16 mb-tds-12 rounded-tds-lg border ${modeBorderColor} ${modeBgColor} overflow-hidden`}>
-      {/* Header with mode label and close */}
+    <div className={`mx-tds-16 mb-tds-12 rounded-tds-lg border ${modeBorder} ${modeBg} overflow-hidden`}>
+      {/* Header */}
       <div className="flex items-center justify-between px-tds-12 py-tds-8 border-b border-tds-border-neutral-primary/50">
         <span className="text-[12px] font-semibold text-tds-text-body-primary">{modeLabel}</span>
         <button
@@ -105,12 +118,7 @@ const ReplyTextbox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () 
               className="flex-1 text-[12px] text-tds-text-body-primary bg-transparent outline-none placeholder:text-tds-text-caption-secondary/60 border-b border-tds-border-neutral-primary/30 pb-tds-4"
             />
             {!showCc && (
-              <button
-                onClick={() => setShowCc(true)}
-                className="text-[11px] text-tds-text-info-primary cursor-pointer hover:underline shrink-0"
-              >
-                Cc
-              </button>
+              <button onClick={() => setShowCc(true)} className="text-[11px] text-tds-text-info-primary cursor-pointer hover:underline shrink-0">Cc</button>
             )}
           </div>
           {showCc && (
@@ -128,20 +136,20 @@ const ReplyTextbox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () 
         </div>
       )}
 
-      {/* TextArea for the body */}
+      {/* Body — auto-grows, no max height */}
       <div className="px-tds-12 py-tds-8">
         <textarea
+          ref={textareaRef}
           value={bodyValue}
-          onChange={(e) => setBodyValue(e.target.value)}
-          placeholder={mode === 'note' ? 'Add a private note...' : 'Type your reply...'}
-          className="w-full text-[12px] text-tds-text-body-primary bg-transparent outline-none resize-y leading-[18px] placeholder:text-tds-text-caption-secondary/60 min-h-[60px] border border-tds-border-neutral-primary rounded-tds-default p-tds-8"
-          rows={3}
+          onChange={handleBodyChange}
+          placeholder={mode === 'note' ? 'Add a private note...' : mode === 'escalate' ? 'Describe the escalation reason...' : 'Type your reply...'}
+          className="w-full text-[12px] text-tds-text-body-primary bg-transparent outline-none resize-none leading-[18px] placeholder:text-tds-text-caption-secondary/60 min-h-[80px] overflow-hidden"
+          rows={4}
         />
       </div>
 
       {/* Formatting toolbar + Send */}
       <div className="flex items-center justify-between px-tds-12 py-tds-8 border-t border-tds-border-neutral-primary/50">
-        {/* Formatting icons */}
         <div className="flex items-center gap-tds-4">
           {[BoldIcon, ItalicIcon, UnderlineIcon, ListOlIcon, ListUlIcon, LinkIcon, ImageIcon, AttachIcon].map((Icon, idx) => (
             <button
@@ -152,8 +160,6 @@ const ReplyTextbox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () 
             </button>
           ))}
         </div>
-
-        {/* Send — TDS Button */}
         <Button
           variant="black"
           buttonStyle="primary"
@@ -173,41 +179,31 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
   const [showActivity, setShowActivity] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom when reply box opens
   useEffect(() => {
     if (replyMode && messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [replyMode]);
 
-  const handleActionClick = (mode: ReplyMode) => {
-    setReplyMode(mode);
-  };
-
-  const handleClose = () => {
-    setReplyMode(null);
-  };
-
-  const handleSend = () => {
-    setReplyMode(null);
-  };
+  const handleClose = () => setReplyMode(null);
+  const handleSend = () => setReplyMode(null);
 
   return (
     <div className="flex flex-col h-full">
-      {/* Messages */}
+      {/* Messages + Reply box — scrollable together (Gmail-like) */}
       <div className="flex-1 overflow-auto py-tds-12 flex flex-col">
         {conversations.map((msg) => (
           <MessageBubble key={msg.id} message={msg} />
         ))}
 
-        {/* Reply textbox — appears inline after messages */}
+        {/* Reply box appears inline after messages, scrolls with them */}
         {replyMode && (
-          <ReplyTextbox mode={replyMode} onClose={handleClose} onSend={handleSend} />
+          <ReplyBox mode={replyMode} onClose={handleClose} onSend={handleSend} />
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Reply action bar — stays static at bottom */}
+      {/* Bottom action strip — STATIC, never scrolls */}
       <div className="border-t border-tds-border-neutral-primary px-tds-16 h-[52px] flex items-center gap-tds-8 shrink-0">
         <Button
           variant={replyMode === 'reply' ? 'info' : 'black'}
@@ -215,30 +211,31 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
           size="sm"
           text="Reply"
           leadingIcon={<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8L8 4V6.5C14 6.5 14 12 14 12C14 12 12 8.5 8 8.5V11L2 8Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>}
-          onClick={() => handleActionClick('reply')}
+          onClick={() => setReplyMode('reply')}
         />
         <Button
           variant={replyMode === 'note' ? 'warning' : 'black'}
           buttonStyle="secondary"
           size="sm"
           text="Note"
-          onClick={() => handleActionClick('note')}
+          onClick={() => setReplyMode('note')}
         />
         <Button
           variant={replyMode === 'forward' ? 'info' : 'black'}
           buttonStyle="secondary"
           size="sm"
           text="Forward"
-          onClick={() => handleActionClick('forward')}
+          onClick={() => setReplyMode('forward')}
         />
         <Button
-          variant="black"
+          variant={replyMode === 'escalate' ? 'error' : 'black'}
           buttonStyle="secondary"
           size="sm"
-          text="Canned Response"
+          text="Escalate to Ops"
+          onClick={() => setReplyMode('escalate')}
         />
 
-        {/* Toggle for Show Activity */}
+        {/* Show Activity toggle */}
         <div className="ml-auto flex items-center gap-tds-6">
           <div
             className={`w-[34px] h-[18px] rounded-full relative cursor-pointer transition-colors ${showActivity ? 'bg-tds-surface-bg-primary-inverse-default' : 'bg-tds-border-neutral-primary'}`}
