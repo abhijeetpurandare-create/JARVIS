@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import { TicketDetail } from '../../data/ticketDetailsData';
 
 interface ContextSectionProps {
@@ -13,6 +14,18 @@ const ContextSection = ({ title, content }: ContextSectionProps) => (
 );
 
 const ContextPanel = ({ ticket }: { ticket: TicketDetail }) => {
+  const [aiInput, setAiInput] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setAiInput(e.target.value);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      const newHeight = Math.min(textareaRef.current.scrollHeight, 108); // 6 lines × 18px
+      textareaRef.current.style.height = `${newHeight}px`;
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
@@ -49,17 +62,22 @@ const ContextPanel = ({ ticket }: { ticket: TicketDetail }) => {
       </div>
 
       {/* Bottom — Ask AI input */}
-      <div className="border-t border-tds-border-neutral-primary px-tds-16 h-[52px] flex items-center shrink-0">
-        <div className="flex items-center gap-tds-8 w-full">
-          <input
-            type="text"
-            placeholder="Ask AI about this ticket..."
-            className="flex-1 px-tds-12 py-tds-6 border border-tds-border-neutral-primary rounded-[6px] text-[12px] text-tds-text-body-primary placeholder:text-tds-text-body-disabled outline-none bg-tds-surface-bg-primary-default"
-          />
-          <button className="flex items-center justify-center w-[32px] h-[32px] bg-tds-surface-bg-primary-inverse-default rounded-tds-default cursor-pointer shrink-0">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M14 2L7 9M14 2L9.5 14L7 9M14 2L2 6.5L7 9" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-        </div>
+      <div className="border-t border-tds-border-neutral-primary px-tds-16 py-tds-8 flex items-end gap-tds-8 shrink-0">
+        <textarea
+          ref={textareaRef}
+          value={aiInput}
+          onChange={handleInputChange}
+          placeholder="Ask AI about this ticket..."
+          rows={1}
+          className="flex-1 px-tds-12 py-tds-6 border border-tds-border-neutral-primary rounded-[6px] text-[12px] text-tds-text-body-primary placeholder:text-tds-text-body-disabled outline-none bg-tds-surface-bg-primary-default resize-none overflow-hidden leading-[18px]"
+          style={{ maxHeight: '108px', overflowY: aiInput.split('\n').length > 6 || (textareaRef.current && textareaRef.current.scrollHeight > 108) ? 'auto' : 'hidden' }}
+        />
+        <button
+          disabled={!aiInput.trim()}
+          className="flex items-center justify-center w-[32px] h-[32px] bg-tds-surface-bg-primary-inverse-default rounded-tds-default shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M14 2L7 9M14 2L9.5 14L7 9M14 2L2 6.5L7 9" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
       </div>
     </div>
   );
