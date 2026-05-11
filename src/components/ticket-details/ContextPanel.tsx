@@ -49,15 +49,15 @@ const ContextPanel = ({ ticket }: { ticket: TicketDetail }) => {
       </div>
 
       {/* Bottom — Ask AI input */}
-      <div className="border-t border-tds-border-neutral-primary p-tds-16">
-        <div className="flex items-center gap-tds-8">
+      <div className="border-t border-tds-border-neutral-primary px-tds-16 h-[52px] flex items-center shrink-0">
+        <div className="flex items-center gap-tds-8 w-full">
           <input
             type="text"
             placeholder="Ask AI about this ticket..."
             className="flex-1 px-tds-12 py-tds-6 border border-tds-border-neutral-primary rounded-[6px] text-[12px] text-tds-text-body-primary placeholder:text-tds-text-body-disabled outline-none bg-tds-surface-bg-primary-default"
           />
-          <button className="flex items-center justify-center w-[36px] h-[36px] bg-tds-surface-bg-primary-inverse-default rounded-tds-default cursor-pointer">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 2L7 9M14 2L9.5 14L7 9M14 2L2 6.5L7 9" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <button className="flex items-center justify-center w-[32px] h-[32px] bg-tds-surface-bg-primary-inverse-default rounded-tds-default cursor-pointer shrink-0">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M14 2L7 9M14 2L9.5 14L7 9M14 2L2 6.5L7 9" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
         </div>
       </div>
