@@ -78,14 +78,14 @@ const TicketDetails = () => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Ticket Title Bar */}
-      <div className="pt-tds-16 shrink-0">
+      <div className="shrink-0">
         <div>
           <TicketTitleBar ticket={ticket} />
         </div>
       </div>
 
       {/* Main content — 3 panels with dividers between them */}
-      <div ref={containerRef} className="flex flex-1 min-h-0 pb-tds-16 pt-tds-12">
+      <div ref={containerRef} className="flex flex-1 min-h-0">
         {/* Left — Conversation */}
         <div
           className="min-w-0 overflow-hidden"

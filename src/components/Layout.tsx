@@ -14,7 +14,7 @@ const Layout = () => {
         <SideNavigation />
 
         {/* Page content — white background with top-left radius */}
-        <main className="flex-1 overflow-auto bg-white rounded-tl-[12px] px-tds-16">
+        <main className="flex-1 overflow-auto bg-white rounded-tl-[12px]">
           <Outlet />
         </main>
       </div>
