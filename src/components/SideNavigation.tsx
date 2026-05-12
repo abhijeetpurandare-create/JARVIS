@@ -15,11 +15,6 @@ const TicketIcon = () => (
   </svg>
 );
 
-const UsersIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <path d="M13.33 15.83V14.17C13.33 12.5 12.08 11.25 10.42 11.25H5.42C3.75 11.25 2.5 12.5 2.5 14.17V15.83M17.5 15.83V14.17C17.5 12.92 16.67 11.83 15.42 11.5M12.5 4.58C13.75 4.92 14.58 6 14.58 7.25C14.58 8.5 13.75 9.58 12.5 9.92M7.92 9.17C9.58 9.17 10.83 7.92 10.83 6.25C10.83 4.58 9.58 3.33 7.92 3.33C6.25 3.33 5 4.58 5 6.25C5 7.92 6.25 9.17 7.92 9.17Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 interface NavItemProps {
   icon: React.ReactNode;
@@ -84,7 +79,6 @@ const SideNavigation = () => {
       <div className="flex flex-col gap-tds-4 mt-tds-4">
         <NavItem icon={<HomeIcon />} label="Home" active={isHome} expanded={expanded} onClick={() => navigate('/')} />
         <NavItem icon={<TicketIcon />} label="Tickets" active={isTickets} expanded={expanded} onClick={() => navigate('/tickets')} />
-        <NavItem icon={<UsersIcon />} label="Team" expanded={expanded} />
       </div>
 
       {/* Spacer */}
