@@ -158,7 +158,7 @@ const AgentAvailability = () => {
                     >
                       <div className="flex items-center gap-tds-8 px-tds-12 py-tds-8">
                         <span className="text-tds-text-caption-secondary shrink-0"><UsersIcon /></span>
-                        <span className="text-[13px] font-medium text-tds-text-body-primary truncate">{team}</span>
+                        <span className="text-[12px] font-medium text-tds-text-body-primary truncate">{team}</span>
                       </div>
                     </Card>
                   ))}

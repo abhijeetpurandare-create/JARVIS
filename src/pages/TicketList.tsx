@@ -191,7 +191,7 @@ const TicketList = () => {
           <h1 className="text-[16px] font-semibold leading-[24px] text-tds-text-heading-primary">
             Ticket List
           </h1>
-          <span className="text-[13px] font-medium text-tds-text-caption-secondary">({totalTickets})</span>
+          <span className="text-[12px] font-medium text-tds-text-caption-secondary">({totalTickets})</span>
         </div>
         <Button variant="black" buttonStyle="secondary" size="sm" leadingIcon={<FilterIcon />} text="Filter" onClick={() => setFilterOpen(true)} />
       </div>
@@ -220,7 +220,7 @@ const TicketList = () => {
                   <div className="py-tds-4 text-[12px] font-medium text-tds-text-caption-secondary px-tds-12 pt-tds-8">Show:</div>
                   {/* All option */}
                   <div
-                    className={`px-tds-12 py-tds-8 text-[13px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${agentFilter.length === 0 ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
+                    className={`px-tds-12 py-tds-8 text-[12px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${agentFilter.length === 0 ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
                     onClick={() => { setAgentFilter([]); setCurrentPage(1); }}
                   >
                     <div className={`w-[16px] h-[16px] rounded-[3px] border flex items-center justify-center ${agentFilter.length === 0 ? 'bg-tds-surface-bg-primary-inverse-default border-tds-surface-bg-primary-inverse-default' : 'border-tds-border-neutral-primary'}`}>
@@ -234,7 +234,7 @@ const TicketList = () => {
                     return (
                       <div
                         key={agent}
-                        className={`px-tds-12 py-tds-8 text-[13px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${isChecked ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
+                        className={`px-tds-12 py-tds-8 text-[12px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${isChecked ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
                         onClick={() => {
                           if (isChecked) setAgentFilter(agentFilter.filter((a) => a !== agent));
                           else setAgentFilter([...agentFilter, agent]);
@@ -270,7 +270,7 @@ const TicketList = () => {
                   <div className="py-tds-4 text-[12px] font-medium text-tds-text-caption-secondary px-tds-12 pt-tds-8">Show:</div>
                   {/* All option */}
                   <div
-                    className={`px-tds-12 py-tds-8 text-[13px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${statusFilter.length === 0 ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
+                    className={`px-tds-12 py-tds-8 text-[12px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${statusFilter.length === 0 ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
                     onClick={() => { setStatusFilter([]); setCurrentPage(1); }}
                   >
                     <div className={`w-[16px] h-[16px] rounded-[3px] border flex items-center justify-center ${statusFilter.length === 0 ? 'bg-tds-surface-bg-primary-inverse-default border-tds-surface-bg-primary-inverse-default' : 'border-tds-border-neutral-primary'}`}>
@@ -284,7 +284,7 @@ const TicketList = () => {
                     return (
                       <div
                         key={status}
-                        className={`px-tds-12 py-tds-8 text-[13px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${isChecked ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
+                        className={`px-tds-12 py-tds-8 text-[12px] cursor-pointer hover:bg-tds-surface-bg-coal-weakest transition-colors flex items-center gap-tds-8 ${isChecked ? 'font-semibold text-tds-text-body-primary' : 'text-tds-text-body-secondary'}`}
                         onClick={() => {
                           if (isChecked) {
                             setStatusFilter(statusFilter.filter((s) => s !== status));
@@ -326,14 +326,14 @@ const TicketList = () => {
                 <div className="w-[13%] px-tds-12 py-tds-12">
                   <div className="flex flex-col">
                     <span className="text-[12px] text-tds-text-body-primary">{ticket.createdDate}</span>
-                    <span className="text-[11px] text-tds-text-caption-secondary">{ticket.createdTime}</span>
+                    <span className="text-[12px] text-tds-text-caption-secondary">{ticket.createdTime}</span>
                   </div>
                 </div>
                 {/* To Be Closed By */}
                 <div className="w-[14%] px-tds-12 py-tds-12">
                   <div className="flex flex-col">
                     <span className="text-[12px] text-tds-text-body-primary">{ticket.closureDueDate}</span>
-                    <span className="text-[11px] text-tds-text-caption-secondary">{ticket.closureDueTime}</span>
+                    <span className="text-[12px] text-tds-text-caption-secondary">{ticket.closureDueTime}</span>
                   </div>
                 </div>
                 {/* Status */}
@@ -347,9 +347,9 @@ const TicketList = () => {
           {/* Pagination */}
           <div className="shrink-0 border-t border-tds-border-neutral-primary flex items-center justify-between px-tds-16 py-tds-12">
             <div className="flex-1 flex items-center gap-tds-4">
-              <span className="text-[13px] font-medium text-tds-text-caption-secondary">Show</span>
+              <span className="text-[12px] font-medium text-tds-text-caption-secondary">Show</span>
               <select
-                className="text-[13px] font-medium text-tds-text-body-primary bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary rounded-tds-default px-tds-6 py-tds-2 cursor-pointer outline-none"
+                className="text-[12px] font-medium text-tds-text-body-primary bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary rounded-tds-default px-tds-6 py-tds-2 cursor-pointer outline-none"
                 value={perPage}
                 onChange={(e) => handlePerPageChange(Number(e.target.value))}
               >
@@ -359,14 +359,14 @@ const TicketList = () => {
                 <option value={50}>50</option>
                 <option value={100}>100</option>
               </select>
-              <span className="text-[13px] font-medium text-tds-text-caption-secondary">per page</span>
+              <span className="text-[12px] font-medium text-tds-text-caption-secondary">per page</span>
             </div>
             <div className="flex-1 flex items-center justify-center">
               <div className="flex items-center gap-[2px]">
                 {getPageNumbers().map((page, idx) => (
                   <div
                     key={idx}
-                    className={`flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[13px] font-medium ${
+                    className={`flex items-center justify-center w-[32px] h-[32px] rounded-tds-default text-[12px] font-medium ${
                       page === currentPage
                         ? 'bg-tds-surface-bg-primary-inverse-default text-tds-text-heading-inverse-only-white'
                         : page === '...'
@@ -382,7 +382,7 @@ const TicketList = () => {
             </div>
             <div className="flex-1 flex items-center justify-end gap-tds-8">
               <button
-                className="flex items-center gap-tds-4 text-[13px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center gap-tds-4 text-[12px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary disabled:opacity-40 disabled:cursor-not-allowed"
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(currentPage - 1)}
               >
@@ -391,7 +391,7 @@ const TicketList = () => {
               </button>
               <div className="w-px h-[12px] bg-tds-border-neutral-primary" />
               <button
-                className="flex items-center gap-tds-4 text-[13px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center gap-tds-4 text-[12px] font-medium text-tds-text-caption-secondary cursor-pointer hover:text-tds-text-body-primary disabled:opacity-40 disabled:cursor-not-allowed"
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(currentPage + 1)}
               >

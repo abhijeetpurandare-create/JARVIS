@@ -41,7 +41,7 @@ const PropertyField = ({ label, value, options, nested = false, onChange }: Prop
 
   return (
     <div ref={ref} className={`flex flex-col gap-tds-4 relative ${nested ? 'pl-tds-16' : ''}`}>
-      <span className="text-[11px] font-medium text-tds-text-body-secondary">{label}</span>
+      <span className="text-[12px] font-medium text-tds-text-body-secondary">{label}</span>
       <div
         className="flex items-center justify-between px-tds-12 py-tds-6 border border-tds-border-neutral-primary rounded-[6px] bg-tds-surface-bg-primary-default cursor-pointer hover:border-tds-border-neutral-secondary"
         onClick={() => options && setIsOpen(!isOpen)}

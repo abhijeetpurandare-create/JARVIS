@@ -19,17 +19,17 @@ const MessageBubble = ({ message }: { message: Conversation }) => {
       <div className={`rounded-tds-lg p-tds-12 ${bubbleStyles}`}>
         <div className="flex items-center gap-tds-8 mb-tds-4">
           <span className="text-[12px] font-semibold text-tds-text-body-primary">{message.sender}</span>
-          <span className="text-[11px] text-tds-text-caption-secondary">{message.timestamp}</span>
+          <span className="text-[12px] text-tds-text-caption-secondary">{message.timestamp}</span>
           {isPrivateNote && (
             <span className="text-[10px] font-medium text-tds-text-warning-primary bg-tds-surface-bg-warning-weakest px-tds-6 py-[1px] rounded-tds-full border border-tds-border-warning-primary/50 ml-auto">
               Private Note
             </span>
           )}
         </div>
-        <p className="text-[11px] text-tds-text-caption-secondary mb-tds-4">{message.role}</p>
+        <p className="text-[12px] text-tds-text-caption-secondary mb-tds-4">{message.role}</p>
         {message.notifiedTo && (
           <div className="mb-tds-6">
-            <p className="text-[11px] text-tds-text-caption-secondary">
+            <p className="text-[12px] text-tds-text-caption-secondary">
               Notified To: {message.notifiedTo.join(', ')}
             </p>
             <div className="h-px bg-tds-border-neutral-primary/50 my-tds-4" />
@@ -109,7 +109,7 @@ const ReplyBox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () => v
       {mode !== 'note' && (
         <div className="px-tds-12 pt-tds-8 flex flex-col gap-tds-4">
           <div className="flex items-center gap-tds-8">
-            <span className="text-[11px] text-tds-text-caption-secondary w-[24px] shrink-0">To:</span>
+            <span className="text-[12px] text-tds-text-caption-secondary w-[24px] shrink-0">To:</span>
             <input
               type="text"
               value={toValue}
@@ -118,12 +118,12 @@ const ReplyBox = ({ mode, onClose, onSend }: { mode: ReplyMode; onClose: () => v
               className="flex-1 text-[12px] text-tds-text-body-primary bg-transparent outline-none placeholder:text-tds-text-caption-secondary/60 border-b border-tds-border-neutral-primary/30 pb-tds-4"
             />
             {!showCc && (
-              <button onClick={() => setShowCc(true)} className="text-[11px] text-tds-text-info-primary cursor-pointer hover:underline shrink-0">Cc</button>
+              <button onClick={() => setShowCc(true)} className="text-[12px] text-tds-text-info-primary cursor-pointer hover:underline shrink-0">Cc</button>
             )}
           </div>
           {showCc && (
             <div className="flex items-center gap-tds-8">
-              <span className="text-[11px] text-tds-text-caption-secondary w-[24px] shrink-0">Cc:</span>
+              <span className="text-[12px] text-tds-text-caption-secondary w-[24px] shrink-0">Cc:</span>
               <input
                 type="text"
                 value={ccValue}
@@ -250,7 +250,7 @@ const ConversationPanel = ({ conversations }: { conversations: Conversation[] })
           >
             <div className={`absolute top-[2px] w-[14px] h-[14px] rounded-full bg-tds-surface-bg-primary-default shadow-sm transition-transform ${showActivity ? 'left-[18px]' : 'left-[2px]'}`} />
           </div>
-          <span className="text-[11px] text-tds-text-caption-secondary">Show Activity</span>
+          <span className="text-[12px] text-tds-text-caption-secondary">Show Activity</span>
         </div>
       </div>
     </div>

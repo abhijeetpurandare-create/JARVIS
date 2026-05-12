@@ -9,7 +9,7 @@ interface ContextSectionProps {
 const ContextSection = ({ title, content }: ContextSectionProps) => (
   <div className="border border-tds-border-neutral-primary rounded-tds-md p-tds-16">
     <h4 className="text-[12px] font-semibold text-tds-text-heading-primary mb-tds-8">{title}</h4>
-    <p className="text-[11px] text-tds-text-body-secondary leading-[16px] whitespace-pre-line">{content}</p>
+    <p className="text-[12px] text-tds-text-body-secondary leading-[16px] whitespace-pre-line">{content}</p>
   </div>
 );
 
