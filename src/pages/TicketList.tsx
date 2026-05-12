@@ -316,11 +316,11 @@ const TicketList = () => {
                 </div>
                 {/* Customer */}
                 <div className="w-[13%] px-tds-12 py-tds-12">
-                  <Pill text={ticket.customerName} pillVariant="coal" pillType="subtle" size="sm" />
+                  <Pill text={ticket.customerName} pillVariant="coal" pillType="subtle" size="md" />
                 </div>
                 {/* Agent */}
                 <div className="w-[12%] px-tds-12 py-tds-12">
-                  <Pill text={ticket.agent} pillVariant="coal" pillType="subtle" size="sm" />
+                  <Pill text={ticket.agent} pillVariant="coal" pillType="subtle" size="md" />
                 </div>
                 {/* Created On */}
                 <div className="w-[13%] px-tds-12 py-tds-12">
@@ -338,7 +338,7 @@ const TicketList = () => {
                 </div>
                 {/* Status */}
                 <div className="w-[13%] px-tds-12 py-tds-12">
-                  <Pill text={ticket.status} pillVariant={ticket.statusVariant} pillType="subtle" size="sm" />
+                  <Pill text={ticket.status} pillVariant={ticket.statusVariant} pillType="subtle" size="md" />
                 </div>
               </div>
             ))}
