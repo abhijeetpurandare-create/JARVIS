@@ -79,7 +79,7 @@ const TicketDetails = () => {
     <div className="flex flex-col h-full overflow-hidden">
       {/* Ticket Title Bar */}
       <div className="pt-tds-16 shrink-0">
-        <div className="bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary">
+        <div>
           <TicketTitleBar ticket={ticket} />
         </div>
       </div>
@@ -88,7 +88,7 @@ const TicketDetails = () => {
       <div ref={containerRef} className="flex flex-1 min-h-0 pb-tds-16 pt-tds-12 gap-tds-16">
         {/* Left — Conversation */}
         <div
-          className="min-w-0 overflow-hidden bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary"
+          className="min-w-0 overflow-hidden"
           style={{ flex: chatRatio }}
         >
           <ConversationPanel conversations={ticket.conversations} />
@@ -102,7 +102,7 @@ const TicketDetails = () => {
 
         {/* Middle — Properties */}
         <div
-          className="min-w-0 overflow-hidden bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary"
+          className="min-w-0 overflow-hidden"
           style={{ flex: propsRatio }}
         >
           <PropertiesPanel ticket={ticket} />
@@ -116,7 +116,7 @@ const TicketDetails = () => {
 
         {/* Right — Ask AI */}
         <div
-          className="min-w-0 overflow-hidden bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary"
+          className="min-w-0 overflow-hidden"
           style={{ flex: ctxRatio }}
         >
           <ContextPanel ticket={ticket} />
