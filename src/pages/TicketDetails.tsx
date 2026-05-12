@@ -78,57 +78,45 @@ const TicketDetails = () => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Ticket Title Bar */}
-      <div className="shrink-0">
-        <div>
+      <div className="pt-tds-16 shrink-0">
+        <div className="bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary">
           <TicketTitleBar ticket={ticket} />
         </div>
       </div>
 
-      {/* Main content — 3 panels with dividers between them */}
-      <div ref={containerRef} className="flex flex-1 min-h-0">
+      {/* Main content — 3 resizable panels */}
+      <div ref={containerRef} className="flex flex-1 min-h-0 pb-tds-16 pt-tds-12 gap-tds-16">
         {/* Left — Conversation */}
         <div
-          className="min-w-0 overflow-hidden"
+          className="min-w-0 overflow-hidden bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary"
           style={{ flex: chatRatio }}
         >
           <ConversationPanel conversations={ticket.conversations} />
         </div>
 
-        {/* Divider */}
-        <div className="w-px bg-tds-border-neutral-primary shrink-0 self-stretch" />
-
         {/* Resize handle */}
         <div
-          className="w-[4px] shrink-0 cursor-col-resize rounded-full hover:bg-tds-border-info-primary/40 active:bg-tds-border-info-primary/60 transition-colors -mx-[2px] z-10 self-stretch"
+          className="w-[4px] shrink-0 cursor-col-resize rounded-full hover:bg-tds-border-info-primary/40 active:bg-tds-border-info-primary/60 transition-colors -mx-[10px] z-10 self-stretch"
           onMouseDown={(e) => handleMouseDown('left', e)}
         />
 
-        {/* Divider */}
-        <div className="w-px bg-tds-border-neutral-primary shrink-0 self-stretch" />
-
         {/* Middle — Properties */}
         <div
-          className="min-w-0 overflow-hidden"
+          className="min-w-0 overflow-hidden bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary"
           style={{ flex: propsRatio }}
         >
           <PropertiesPanel ticket={ticket} />
         </div>
 
-        {/* Divider */}
-        <div className="w-px bg-tds-border-neutral-primary shrink-0 self-stretch" />
-
         {/* Resize handle */}
         <div
-          className="w-[4px] shrink-0 cursor-col-resize rounded-full hover:bg-tds-border-info-primary/40 active:bg-tds-border-info-primary/60 transition-colors -mx-[2px] z-10 self-stretch"
+          className="w-[4px] shrink-0 cursor-col-resize rounded-full hover:bg-tds-border-info-primary/40 active:bg-tds-border-info-primary/60 transition-colors -mx-[10px] z-10 self-stretch"
           onMouseDown={(e) => handleMouseDown('right', e)}
         />
 
-        {/* Divider */}
-        <div className="w-px bg-tds-border-neutral-primary shrink-0 self-stretch" />
-
         {/* Right — Ask AI */}
         <div
-          className="min-w-0 overflow-hidden"
+          className="min-w-0 overflow-hidden bg-tds-surface-bg-primary-default rounded-tds-lg border border-tds-border-neutral-primary"
           style={{ flex: ctxRatio }}
         >
           <ContextPanel ticket={ticket} />
