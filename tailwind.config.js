@@ -5,7 +5,11 @@ const require = createRequire(import.meta.url);
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Noto Sans', 'sans-serif'],
+      },
+    },
   },
   presets: [require('@delhivery/tarmac/tailwind-preset')],
   plugins: [],
