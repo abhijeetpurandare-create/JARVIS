@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { useLocation, useNavigate, Outlet } from 'react-router-dom';
+import { TabGroup, TabCell } from '@delhivery/tarmac';
 
 const navItems = [
   { label: 'Field Management', path: '/settings/field-management' },
@@ -12,27 +13,28 @@ const navItems = [
 ];
 
 const Settings = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const activeIndex = navItems.findIndex((item) => location.pathname === item.path);
+
   return (
     <div className="flex h-full overflow-hidden">
-      {/* Left — Vertical button-style tabs */}
-      <div className="w-[220px] shrink-0 border-r border-tds-border-neutral-primary py-tds-16 overflow-y-auto">
-        <nav className="flex flex-col">
-          {navItems.map((item) => (
-            <NavLink
+      {/* Left — TDS TabGroup vertical */}
+      <div className="w-[220px] shrink-0 border-r border-tds-border-neutral-primary py-tds-12 overflow-y-auto">
+        <TabGroup orientation="vertical" size="lg" tabType="button" showDivider={false}>
+          {navItems.map((item, i) => (
+            <TabCell
               key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `px-tds-16 py-tds-12 text-[14px] font-medium transition-colors ${
-                  isActive
-                    ? 'text-[#2563eb] bg-[#eff6ff] border-l-[3px] border-l-[#2563eb]'
-                    : 'text-tds-text-body-primary hover:bg-[#f5f5f5] border-l-[3px] border-l-transparent'
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
+              tabType="button"
+              orientation="vertical"
+              tabStyle="black"
+              size="lg"
+              title={item.label}
+              isSelected={activeIndex === i}
+              onClick={() => navigate(item.path)}
+            />
           ))}
-        </nav>
+        </TabGroup>
       </div>
 
       {/* Content Area */}
