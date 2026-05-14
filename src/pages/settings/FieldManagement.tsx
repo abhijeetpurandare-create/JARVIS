@@ -102,9 +102,7 @@ const FieldManagement = () => {
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-tds-16">
-        <h1 className="text-[20px] font-semibold text-tds-text-body-primary" style={{ fontFamily: 'Noto Sans, sans-serif' }}>
-          Field Management
-        </h1>
+        
         <Button variant="black" buttonStyle="secondary" size="md" text="Create Configuration" />
       </div>
 

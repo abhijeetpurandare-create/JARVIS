@@ -18,9 +18,7 @@ const SLAManagement = () => {
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-tds-16">
-        <h1 className="text-[20px] font-semibold text-tds-text-body-primary" style={{ fontFamily: 'Noto Sans, sans-serif' }}>
-          SLA Management
-        </h1>
+        
       </div>
 
       {/* Instructions */}

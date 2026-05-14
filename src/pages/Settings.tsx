@@ -21,6 +21,7 @@ const Settings = () => {
     <div className="flex h-full overflow-hidden">
       {/* Left — TDS TabGroup vertical */}
       <div className="shrink-0 border-r border-tds-border-neutral-primary pt-[20px] pb-tds-12 pl-tds-4 pr-tds-16 overflow-hidden">
+        <h1 className="text-[16px] font-semibold text-tds-text-heading-primary leading-[24px] pl-tds-12 mb-tds-16">Settings</h1>
         <TabGroup orientation="vertical" size="lg" tabType="button" showDivider={false} className="!w-auto [&>*]:!w-auto">
           {navItems.map((item, i) => (
             <TabCell
