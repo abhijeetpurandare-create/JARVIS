@@ -43,7 +43,7 @@ const BulkUpload = () => {
           <ul className="flex flex-col gap-tds-8">
             <li className="text-[14px] text-tds-text-body-primary leading-[20px]">
               Upload CSV file with maximum of 500 tickets. Not sure what to upload?{' '}
-              <Link href="#">Download Sample CSV file</Link>
+              <Link href="./sample_bulk_upload.csv">Download Sample CSV file</Link>
             </li>
             <li className="text-[14px] text-tds-text-body-primary leading-[20px]">
               The names of the columns should match exactly with field names in Jarvis
