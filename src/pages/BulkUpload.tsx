@@ -17,22 +17,25 @@ const BulkUpload = () => {
       {/* Content — centered, matching jarvis-staging layout */}
       <div className="w-full max-w-[720px] flex flex-col gap-tds-24">
         {/* TDS Upload — drag and drop */}
-        <Upload
-          version="v1"
-          uploadType="drag"
-          accept=".csv"
-          multiple={false}
-          maxCount={1}
-          fileList={fileList}
-          onChange={handleChange}
-          onRemove={handleRemove}
-          beforeUpload={() => false}
-          title="Drop your .CSV file with list of ticket you wish to update"
-          description="You can drag and drop or click to upload upto 500 tickets (Max 20MB)"
-          dragTitle="Drop your .CSV file with list of ticket you wish to update"
-          dragDescription="You can drag and drop or click to upload upto 500 tickets (Max 20MB). The tickets will be updated"
-          size="large"
-        />
+        <div className="w-full [&>div]:w-full [&>div>div]:w-full">
+          <Upload
+            version="v1"
+            uploadType="drag"
+            accept=".csv"
+            multiple={false}
+            maxCount={1}
+            fileList={fileList}
+            onChange={handleChange}
+            onRemove={handleRemove}
+            beforeUpload={() => false}
+            title="Drop your .CSV file with list of ticket you wish to update"
+            description="You can drag and drop or click to upload upto 500 tickets (Max 20MB)"
+            dragTitle="Drop your .CSV file with list of ticket you wish to update"
+            dragDescription="You can drag and drop or click to upload upto 500 tickets (Max 20MB). The tickets will be updated"
+            size="large"
+            className="!w-full"
+          />
+        </div>
 
         {/* Instructions */}
         <div className="border border-tds-border-neutral-primary rounded-tds-md p-tds-24">
