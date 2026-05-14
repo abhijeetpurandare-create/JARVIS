@@ -380,41 +380,45 @@ declare module '@delhivery/tarmac' {
   }
   export const SideDrawer: SideDrawerComponent;
 
-  // FileUpload
-  export interface FileUploadItem {
-    id: string;
+  // FileUpload / Upload
+  export interface UploadFile {
+    uid: string;
     name: string;
-    size: number;
-    progress?: number;
+    size?: number;
+    type?: string;
     status?: string;
+    percent?: number;
+    url?: string;
+    originFileObj?: File;
   }
-  export interface FileUploadProps {
-    title?: ReactNode;
-    showTitle?: boolean;
-    subtext?: ReactNode;
-    showSubtext?: boolean;
-    subtextBottom?: ReactNode;
-    showSubtextBottom?: boolean;
-    showStatusIndicator?: boolean;
-    statusText?: string;
-    statusVariant?: string;
-    files?: FileUploadItem[];
-    multiple?: boolean;
+  export interface UploadProps {
+    version?: 'v1' | 'v2';
     accept?: string;
-    maxSize?: number;
-    maxFiles?: number;
-    isDisabled?: boolean;
-    dropText?: string;
-    browseText?: string;
-    onFilesAdded?: (files: File[]) => void;
-    onFileRemove?: (fileId: string) => void;
-    onFileCancel?: (fileId: string) => void;
-    onFilePreview?: (fileId: string) => void;
-    onFileChange?: (fileId: string) => void;
+    action?: string | ((file: File) => string);
+    beforeUpload?: (file: File, fileList: File[]) => boolean | Promise<boolean>;
+    customRequest?: (options: any) => void;
+    fileList?: UploadFile[];
+    defaultFileList?: UploadFile[];
+    multiple?: boolean;
+    maxCount?: number;
+    uploadType?: string;
+    listType?: string;
+    size?: string;
+    disabled?: boolean;
+    showUploadList?: boolean;
+    title?: ReactNode;
+    description?: ReactNode;
+    dragTitle?: ReactNode;
+    dragDescription?: ReactNode;
+    icon?: ReactNode;
+    dragIcon?: ReactNode;
+    onChange?: (info: { file: UploadFile; fileList: UploadFile[] }) => void;
+    onRemove?: (file: UploadFile) => void | boolean;
+    onDrop?: (e: React.DragEvent) => void;
     className?: string;
-    illustrationVariant?: string;
+    children?: ReactNode;
   }
-  export const FileUpload: FC<FileUploadProps>;
+  export const Upload: FC<UploadProps>;
 
   // Link
   export interface LinkProps {
