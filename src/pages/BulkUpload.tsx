@@ -13,14 +13,9 @@ const BulkUpload = () => {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-auto px-tds-16">
-      {/* Header */}
-      <div className="py-tds-16">
-        <h1 className="text-[16px] font-semibold text-tds-text-heading-primary leading-[24px]">Bulk Upload</h1>
-      </div>
-
-      {/* Content */}
-      <div className="max-w-[720px] mx-auto w-full flex flex-col gap-tds-24">
+    <div className="flex flex-col h-full overflow-auto items-center pt-[60px] px-tds-16">
+      {/* Content — centered, matching jarvis-staging layout */}
+      <div className="w-full max-w-[720px] flex flex-col gap-tds-24">
         {/* TDS Upload — drag and drop */}
         <Upload
           version="v1"
