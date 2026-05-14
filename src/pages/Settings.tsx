@@ -14,21 +14,18 @@ const navItems = [
 const Settings = () => {
   return (
     <div className="flex h-full overflow-hidden">
-      {/* Left Sidebar */}
-      <div className="w-[240px] shrink-0 border-r border-tds-border-neutral-primary bg-tds-surface-bg-primary-default p-tds-16 overflow-y-auto">
-        <p className="text-[10px] font-bold text-tds-text-caption-secondary uppercase tracking-wider mb-tds-12">
-          Organization Configurations
-        </p>
-        <nav className="flex flex-col gap-tds-4">
+      {/* Left — Vertical button-style tabs */}
+      <div className="w-[220px] shrink-0 border-r border-tds-border-neutral-primary py-tds-16 overflow-y-auto">
+        <nav className="flex flex-col">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `block px-tds-12 py-tds-8 text-[14px] rounded-r-[4px] border-l-2 transition-colors ${
+                `px-tds-16 py-tds-12 text-[14px] font-medium transition-colors ${
                   isActive
-                    ? 'border-l-[#2563eb] text-[#2563eb] font-medium bg-[#eff6ff]'
-                    : 'border-l-transparent text-tds-text-body-primary hover:bg-[#f5f5f5]'
+                    ? 'text-[#2563eb] bg-[#eff6ff] border-l-[3px] border-l-[#2563eb]'
+                    : 'text-tds-text-body-primary hover:bg-[#f5f5f5] border-l-[3px] border-l-transparent'
                 }`
               }
             >
@@ -39,7 +36,7 @@ const Settings = () => {
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 overflow-y-auto p-tds-24 bg-tds-surface-bg-secondary-default">
+      <div className="flex-1 overflow-y-auto p-tds-24">
         <Outlet />
       </div>
     </div>
