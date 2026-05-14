@@ -85,12 +85,12 @@ const SideNavigation = () => {
       <div className="flex-1" />
 
       {/* Avatar + Profile Dropdown */}
-      <div ref={profileRef} className="relative">
+      <div ref={profileRef} className="relative flex justify-center">
         <div
-          className="flex items-center gap-tds-12 cursor-pointer rounded-[8px] hover:bg-[#ededed] px-[6px] py-tds-6"
+          className="flex items-center gap-tds-12 cursor-pointer rounded-[8px] hover:bg-[#ededed] px-tds-8 py-tds-6"
           onClick={() => setProfileOpen(!profileOpen)}
         >
-          <span className="shrink-0 w-[20px] flex items-center justify-center">
+          <span className="shrink-0 flex items-center justify-center">
             <Avatar
               size="sm"
               avatarType="image"
