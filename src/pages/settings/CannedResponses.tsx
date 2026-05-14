@@ -78,6 +78,8 @@ const CannedResponses = () => {
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-tds-16">
+        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Canned Responses</h2>
+        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Canned Responses</h2>
         
         <div className="flex items-center gap-tds-8">
           <Button variant="black" buttonStyle="tertiary" size="md" text="Create Folder" />

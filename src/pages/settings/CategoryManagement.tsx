@@ -91,6 +91,8 @@ const CategoryManagement = () => {
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-tds-16">
+        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Category Management</h2>
+        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Category Management</h2>
         
         <Button variant="black" buttonStyle="secondary" size="md" text="Create Category Group" />
       </div>

@@ -51,6 +51,8 @@ const ManageTeams = () => {
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-tds-16">
+        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Manage Teams</h2>
+        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Manage Teams</h2>
         
         <Button variant="black" buttonStyle="secondary" size="md" text="Create Team" />
       </div>

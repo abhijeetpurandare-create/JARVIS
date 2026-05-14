@@ -18,6 +18,7 @@ const SLAManagement = () => {
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-tds-16">
+        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">SLA Management</h2>
         
       </div>
 
