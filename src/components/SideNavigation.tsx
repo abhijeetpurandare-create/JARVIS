@@ -42,7 +42,7 @@ const profileMenuItems = [
   { label: 'My Requests', path: '' },
   { label: 'Agent Availability', path: '/availability' },
   { label: 'Bulk Ticket Update', path: '/bulk-upload' },
-  { label: 'Settings', path: '' },
+  { label: 'Settings', path: '/settings/field-management' },
   { label: 'Switch to Classic Layout', path: '__toggle_layout__' },
   { label: 'Logout', path: '' },
 ];
