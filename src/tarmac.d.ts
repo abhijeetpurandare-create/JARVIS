@@ -380,6 +380,53 @@ declare module '@delhivery/tarmac' {
   }
   export const SideDrawer: SideDrawerComponent;
 
+  // FileUpload
+  export interface FileUploadItem {
+    id: string;
+    name: string;
+    size: number;
+    progress?: number;
+    status?: string;
+  }
+  export interface FileUploadProps {
+    title?: ReactNode;
+    showTitle?: boolean;
+    subtext?: ReactNode;
+    showSubtext?: boolean;
+    subtextBottom?: ReactNode;
+    showSubtextBottom?: boolean;
+    showStatusIndicator?: boolean;
+    statusText?: string;
+    statusVariant?: string;
+    files?: FileUploadItem[];
+    multiple?: boolean;
+    accept?: string;
+    maxSize?: number;
+    maxFiles?: number;
+    isDisabled?: boolean;
+    dropText?: string;
+    browseText?: string;
+    onFilesAdded?: (files: File[]) => void;
+    onFileRemove?: (fileId: string) => void;
+    onFileCancel?: (fileId: string) => void;
+    onFilePreview?: (fileId: string) => void;
+    onFileChange?: (fileId: string) => void;
+    className?: string;
+    illustrationVariant?: string;
+  }
+  export const FileUpload: FC<FileUploadProps>;
+
+  // Link
+  export interface LinkProps {
+    href?: string;
+    onClick?: (e: React.MouseEvent) => void;
+    className?: string;
+    children?: ReactNode;
+    style?: string;
+    size?: string;
+  }
+  export const Link: FC<LinkProps>;
+
   // Card
   export interface CardProps {
     cardStyle?: string;

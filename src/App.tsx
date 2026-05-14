@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import TicketList from './pages/TicketList';
 import TicketDetails from './pages/TicketDetails';
 import AgentAvailability from './pages/AgentAvailability';
+import BulkUpload from './pages/BulkUpload';
 
 function AppRoutes() {
   const { layout } = useLayout();
@@ -19,6 +20,7 @@ function AppRoutes() {
         <Route path="tickets" element={<TicketList />} />
         <Route path="ticket/:ticketId" element={<TicketDetails />} />
         <Route path="availability" element={<AgentAvailability />} />
+        <Route path="bulk-upload" element={<BulkUpload />} />
       </Route>
     </Routes>
   );

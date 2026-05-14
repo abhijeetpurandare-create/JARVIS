@@ -36,6 +36,7 @@ const TopNavigation = () => {
   const isTicketList = location.pathname === '/tickets';
   const isDashboard = location.pathname === '/';
   const isAvailability = location.pathname === '/availability';
+  const isBulkUpload = location.pathname === '/bulk-upload';
 
   return (
     <header className="flex items-center gap-tds-16 px-tds-16 py-tds-8 bg-[#f7f7f7] w-full h-[56px] relative z-10 shrink-0">
@@ -68,6 +69,13 @@ const TopNavigation = () => {
                   <a href="#/" className="text-tds-text-caption-secondary hover:text-tds-text-body-primary cursor-pointer">Dashboard</a>
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3L7.5 6L4.5 9" stroke="#999" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   <span className="text-tds-text-body-primary font-medium">Manage Availability</span>
+                </>
+              )}
+              {isBulkUpload && (
+                <>
+                  <a href="#/" className="text-tds-text-caption-secondary hover:text-tds-text-body-primary cursor-pointer">Dashboard</a>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3L7.5 6L4.5 9" stroke="#999" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <span className="text-tds-text-body-primary font-medium">Bulk Upload</span>
                 </>
               )}
             </nav>
