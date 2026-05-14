@@ -20,7 +20,7 @@ const Settings = () => {
   return (
     <div className="flex h-full overflow-hidden">
       {/* Left — TDS TabGroup vertical */}
-      <div className="shrink-0 border-r border-tds-border-neutral-primary pt-tds-16 pb-tds-12 pl-tds-4 pr-tds-16 overflow-hidden">
+      <div className="shrink-0 border-r border-tds-border-neutral-primary pt-[20px] pb-tds-12 pl-tds-4 pr-tds-16 overflow-hidden">
         <TabGroup orientation="vertical" size="lg" tabType="button" showDivider={false}>
           {navItems.map((item, i) => (
             <TabCell
