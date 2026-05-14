@@ -46,7 +46,7 @@ const SLAManagement = () => {
         <div className="mb-tds-24">
           <Button
             variant="black"
-            buttonStyle="secondary"
+            buttonStyle="tertiary"
             size="md"
             text="Download Sample Template"
             leadingIcon={<DownloadIcon />}

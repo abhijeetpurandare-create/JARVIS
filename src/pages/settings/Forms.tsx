@@ -84,7 +84,7 @@ const Forms = () => {
         <h1 className="text-[20px] font-semibold text-tds-text-body-primary" style={{ fontFamily: 'Noto Sans, sans-serif' }}>
           Forms
         </h1>
-        <Button variant="black" buttonStyle="primary" size="md" text="Create Form" />
+        <Button variant="black" buttonStyle="secondary" size="md" text="Create Form" />
       </div>
 
       {/* Search */}

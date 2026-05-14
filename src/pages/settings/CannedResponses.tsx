@@ -82,8 +82,8 @@ const CannedResponses = () => {
           Canned Responses
         </h1>
         <div className="flex items-center gap-tds-8">
-          <Button variant="black" buttonStyle="secondary" size="md" text="Create Folder" />
-          <Button variant="black" buttonStyle="primary" size="md" text="Create Response" />
+          <Button variant="black" buttonStyle="tertiary" size="md" text="Create Folder" />
+          <Button variant="black" buttonStyle="secondary" size="md" text="Create Response" />
         </div>
       </div>
 

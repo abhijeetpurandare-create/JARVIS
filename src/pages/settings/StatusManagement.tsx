@@ -71,7 +71,7 @@ const StatusManagement = () => {
         <h1 className="text-[20px] font-semibold text-tds-text-body-primary" style={{ fontFamily: 'Noto Sans, sans-serif' }}>
           Status Management
         </h1>
-        <Button variant="black" buttonStyle="primary" size="md" text="Create Status Flow" />
+        <Button variant="black" buttonStyle="secondary" size="md" text="Create Status Flow" />
       </div>
 
       {/* Tabs */}
