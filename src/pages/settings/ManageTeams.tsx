@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Input } from '@delhivery/tarmac';
+import { Input } from '@delhivery/tarmac';
 
 const SearchIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -9,36 +9,36 @@ const SearchIcon = () => (
 );
 
 const UsersIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-    <path d="M13.33 15.83V14.17C13.33 12.5 12.08 11.25 10.42 11.25H5.42C3.75 11.25 2.5 12.5 2.5 14.17V15.83M17.5 15.83V14.17C17.5 12.92 16.67 11.83 15.42 11.5M12.5 4.58C13.75 4.92 14.58 6 14.58 7.25C14.58 8.5 13.75 9.58 12.5 9.92M7.92 9.17C9.58 9.17 10.83 7.92 10.83 6.25C10.83 4.58 9.58 3.33 7.92 3.33C6.25 3.33 5 4.58 5 6.25C5 7.92 6.25 9.17 7.92 9.17Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M10.67 12.67V11.33C10.67 10 9.67 9 8.33 9H4.33C3 9 2 10 2 11.33V12.67M14 12.67V11.33C14 10.33 13.33 9.47 12.33 9.2M10 3.53C11 3.8 11.67 4.67 11.67 5.67C11.67 6.67 11 7.53 10 7.8M6.33 7.33C7.8 7.33 8.67 6.47 8.67 5C8.67 3.53 7.8 2.67 6.33 2.67C4.87 2.67 4 3.53 4 5C4 6.47 4.87 7.33 6.33 7.33Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const allTeams = [
-  'B2C KAM Narad', 'Production Testing Narad', 'Ops Support Narad', 'Direct Shipper Narad',
-  'SME B2C Narad', 'Hyperlocal', 'LT Retail Narad', 'AnI - Breakdown and Downtime',
-  'B2C L2 Narad', 'Rapid Store CS Jarvis', 'SCS File Upload', 'Transit Insurance Claims',
-  'Scrap Support', 'Shipment Rescue', 'Facility Security', 'Franchise Support',
-  'SME CMB', 'RA LnD B2C', 'Fuel Payout', 'Unassigned Narad',
-  'Maintenance', 'AnI - Green Bag/Weighing Machine/Modification Support', 'SME - Investigation - Narad', 'Shiprocket Narad',
-  'FMS Pickup Narad', 'Odx Dts Narad', 'SME B2B Narad', 'Vendor Desk',
-  'Claims B2C', 'Claims B2B', 'B2C Narad', 'Flipkart Small Parcels Narad',
-  'B2B KAM Narad', 'SME Growth Plus Narad', 'SME Startup Narad', 'LT Retail KAM Narad',
-  'RA LnD Claims', 'CCTV Tracking', 'Finance Client Support Narad', 'PSI Client Support Narad',
-  'Recon Client Support Narad', 'COD Recon Digital', 'Micro SME Narad', 'SME - PTL Startup Narad',
-  'Stores North', 'Stores South', 'Stores West', 'Stores East',
-  'E2E Support Narad', 'Incenter CS', 'B2B CS Narad Team', 'Automation and Infrastructure Jarvis',
-  'SME', 'DLV Narad', 'Direct 2 Shipper', 'B2C Claims Management - Meesho',
-  'Platform PSI', 'SME Growth Narad', 'ONDC Narad', 'OS1-DispatchOne',
-  'FMS B2C Narad', 'FMS LTL Narad', 'Security Equipments Narad', 'Bihar',
-  'SF Client Group', 'Demo Jarvis Team1', 'B2BR Narad', 'Strategic B2C Narad',
-  'B2B Support Team', 'OS1-TMS', 'OS1-HyperLocal', 'OS1-Carrier',
+  'A&I Breakdown Support', 'A&I Modification Support', 'Automation and Infrastructure Jarvis',
+  'B2B CS Narad Team', 'B2B KAM Narad', 'B2B Support Team', 'B2BR Narad', 'B2C Claims Management - Meesho',
+  'B2C KAM Narad', 'B2C L2 Narad', 'B2C Narad',
+  'CCTV Tracking', 'Claims B2B', 'Claims B2C', 'COD Recon Digital',
+  'Demo Jarvis Team1', 'Direct 2 Shipper', 'Direct Shipper Narad', 'DLV Narad',
+  'E2E Support Narad',
+  'Facility Security', 'Finance Client Support Narad', 'Flipkart Small Parcels Narad', 'FMS B2C Narad',
+  'FMS LTL Narad', 'FMS Pickup Narad', 'Franchise Support', 'Fuel Payout',
+  'Hyperlocal',
+  'Incenter CS',
+  'LT Retail KAM Narad', 'LT Retail Narad',
+  'Maintenance', 'Micro SME Narad',
+  'Odx Dts Narad', 'ONDC Narad', 'Ops Support Narad', 'OS1-Carrier', 'OS1-DispatchOne', 'OS1-HyperLocal', 'OS1-TMS',
+  'Platform PSI', 'Production Testing Narad', 'PSI Client Support Narad',
+  'RA LnD B2C', 'RA LnD Claims', 'Rapid Store CS Jarvis', 'Recon Client Support Narad',
+  'SCS File Upload', 'Scrap Support', 'Security Equipments Narad', 'SF Client Group',
+  'Shipment Rescue', 'Shiprocket Narad', 'SME', 'SME - Investigation - Narad',
+  'SME - PTL Startup Narad', 'SME B2B Narad', 'SME B2C Narad', 'SME CMB',
+  'SME Growth Narad', 'SME Growth Plus Narad', 'SME Startup Narad', 'Stores East',
+  'Stores North', 'Stores South', 'Stores West', 'Strategic B2C Narad',
+  'Transit Insurance Claims',
+  'Unassigned Narad',
+  'Vendor Desk',
 ];
-
-function getMemberCount(teamName: string) {
-  const hash = teamName.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-  return 4 + (hash % 12);
-}
 
 const ManageTeams = () => {
   const [search, setSearch] = useState('');
@@ -47,51 +47,68 @@ const ManageTeams = () => {
     t.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Group teams alphabetically
+  const grouped: Record<string, string[]> = {};
+  filtered.forEach((team) => {
+    const letter = team[0].toUpperCase();
+    if (!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(team);
+  });
+
+  const letters = Object.keys(grouped).sort();
+  const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
   return (
-    <div>
+    <div className="px-tds-24 pt-tds-16">
       {/* Header */}
       <div className="flex items-center justify-between mb-tds-16">
-        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Manage Teams</h2>
-        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Manage Teams</h2>
-        
-        <Button variant="black" buttonStyle="secondary" size="md" text="Create Team" />
+        <div className="flex items-center gap-tds-8">
+          <span className="text-[14px] font-bold text-[#111111]">Manage Teams</span>
+          <span className="text-[12px] text-[#666666]">({filtered.length})</span>
+        </div>
+        <div className="w-[240px]">
+          <Input inputStyle="tarmac-01" inputSize="sm" styleVariant="standard" placeholder="Search teams" value={search} onChange={(e) => setSearch(e.target.value)} leadingIcon={<SearchIcon />} />
+        </div>
       </div>
 
-      {/* Search */}
-      <div className="mb-tds-16 max-w-[320px]">
-        <Input
-          size="sm"
-          placeholder="Search teams..."
-          value={search}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-          leadingIcon={<SearchIcon />}
-        />
-      </div>
-
-      {/* Teams Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-tds-12">
-        {filtered.map((team) => (
-          <div
-            key={team}
-            className="bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary rounded-tds-lg p-tds-16 hover:shadow-sm transition-shadow cursor-pointer"
-          >
-            <div className="flex items-start gap-tds-12">
-              <div className="w-[32px] h-[32px] rounded-[8px] bg-[#e8f0fe] flex items-center justify-center shrink-0">
-                <span className="text-[#2563eb]">
-                  <UsersIcon />
-                </span>
-              </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="text-[14px] font-medium text-tds-text-body-primary truncate" title={team}>
-                  {team}
-                </h3>
-                <p className="text-[12px] text-tds-text-caption-secondary mt-tds-4">
-                  {getMemberCount(team)} members
-                </p>
+      {/* Content with A-Z scroll */}
+      <div className="flex gap-tds-16">
+        {/* Teams grid grouped by letter */}
+        <div className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)]">
+          {letters.map((letter) => (
+            <div key={letter} id={`letter-${letter}`} className="mb-tds-24">
+              <h3 className="text-[14px] font-semibold text-[#444444] mb-tds-12">{letter}</h3>
+              <div className="grid grid-cols-4 gap-tds-12">
+                {grouped[letter].map((team) => (
+                  <div
+                    key={team}
+                    className="border border-[#e6e6e6] rounded-[8px] px-tds-12 py-tds-12 flex items-center gap-tds-8 hover:bg-[#f7f7f7] transition-colors cursor-pointer"
+                  >
+                    <span className="text-[#666666]"><UsersIcon /></span>
+                    <span className="text-[12px] font-medium text-[#2b2b2b] truncate">{team}</span>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* A-Z scroll sidebar */}
+        <div className="shrink-0 flex flex-col items-center gap-[2px] py-tds-8">
+          {allLetters.map((letter) => (
+            <a
+              key={letter}
+              href={`#letter-${letter}`}
+              className={`text-[11px] w-[20px] h-[20px] flex items-center justify-center rounded-[4px] transition-colors ${
+                letters.includes(letter)
+                  ? 'text-[#2b2b2b] hover:bg-[#e6e6e6] font-medium'
+                  : 'text-[#cccbcb]'
+              }`}
+            >
+              {letter}
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );

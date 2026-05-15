@@ -8,63 +8,31 @@ const SearchIcon = () => (
   </svg>
 );
 
-const FormIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M4 2.67H12C12.37 2.67 12.67 2.97 12.67 3.33V12.67C12.67 13.03 12.37 13.33 12 13.33H4C3.63 13.33 3.33 13.03 3.33 12.67V3.33C3.33 2.97 3.63 2.67 4 2.67Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M5.33 5.33H10.67M5.33 8H10.67M5.33 10.67H8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
+const EditIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.33 2L14 4.67L5.33 13.33H2.67V10.67L11.33 2Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+const LinkIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.67 8.67C7.2 9.33 8 9.67 8.87 9.67C9.73 9.67 10.53 9.33 11.07 8.67L13.07 6.67C14.13 5.6 14.13 3.87 13.07 2.8C12 1.73 10.27 1.73 9.2 2.8L8.27 3.73M9.33 7.33C8.8 6.67 8 6.33 7.13 6.33C6.27 6.33 5.47 6.67 4.93 7.33L2.93 9.33C1.87 10.4 1.87 12.13 2.93 13.2C4 14.27 5.73 14.27 6.8 13.2L7.73 12.27" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+const DeleteIcon = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.67 4.67H13.33M6 4.67V2.67H10V4.67M12 4.67V13.33H4V4.67H12ZM6.67 7.33V10.67M9.33 7.33V10.67" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 
 interface FormItem {
   name: string;
   category: string;
-  fieldCount: number;
-  createdAt: string;
-  status: 'Active' | 'Draft';
+  description: string;
 }
 
 const mockForms: FormItem[] = [
   {
     name: 'Scheduled Downtime',
     category: 'A&I - Breakdown & Downtime',
-    fieldCount: 12,
-    createdAt: '2024-01-20',
-    status: 'Active',
+    description: 'Scheduled Downtime Escalations',
   },
   {
-    name: 'Breakdown',
+    name: 'Breakdown Log Form',
     category: 'A&I - Breakdown & Downtime',
-    fieldCount: 15,
-    createdAt: '2023-11-15',
-    status: 'Active',
+    description: 'Unplanned Machine Breakdowns or weight/dimension issues across sorter, profiler, DWS, and conveyor systems',
   },
   {
-    name: 'Modification',
+    name: 'Modification Request Form',
     category: 'A&I - Modification',
-    fieldCount: 8,
-    createdAt: '2024-02-10',
-    status: 'Active',
-  },
-  {
-    name: 'Weighing Machine breakdown.',
-    category: 'A&I - Weighing Machine Support',
-    fieldCount: 10,
-    createdAt: '2023-12-05',
-    status: 'Active',
-  },
-  {
-    name: 'B2C Claim Submission',
-    category: 'Claims - B2C',
-    fieldCount: 14,
-    createdAt: '2024-03-01',
-    status: 'Draft',
-  },
-  {
-    name: 'Franchise Onboarding',
-    category: 'Franchise Support',
-    fieldCount: 20,
-    createdAt: '2024-02-28',
-    status: 'Active',
+    description: 'Modification requests for existing machines',
   },
 ];
 
@@ -78,60 +46,40 @@ const Forms = () => {
   );
 
   return (
-    <div>
+    <div className="px-tds-24 pt-tds-16">
       {/* Header */}
       <div className="flex items-center justify-between mb-tds-16">
-        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Forms</h2>
-        <h2 className="text-[16px] font-semibold text-tds-text-heading-primary">Forms</h2>
-        
-        <Button variant="black" buttonStyle="secondary" size="md" text="Create Form" />
+        <div className="flex items-center gap-tds-8">
+          <span className="text-[14px] font-bold text-[#111111]">Forms</span>
+          <span className="text-[12px] text-[#666666]">({filtered.length})</span>
+        </div>
+        <div className="flex items-center gap-tds-16">
+          <div className="w-[240px]">
+            <Input inputStyle="tarmac-01" inputSize="sm" styleVariant="standard" placeholder="Search forms" value={search} onChange={(e) => setSearch(e.target.value)} leadingIcon={<SearchIcon />} />
+          </div>
+          <Button variant="black" buttonStyle="secondary" size="md" text="+ Create New Form" />
+        </div>
       </div>
 
-      {/* Search */}
-      <div className="mb-tds-16 max-w-[320px]">
-        <Input
-          size="sm"
-          placeholder="Search forms..."
-          value={search}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-          leadingIcon={<SearchIcon />}
-        />
-      </div>
-
-      {/* Forms List */}
-      <div className="space-y-[8px]">
-        {filtered.map((form) => (
-          <div
-            key={form.name}
-            className="bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary rounded-tds-lg p-tds-16 flex items-center gap-tds-16 hover:shadow-sm transition-shadow cursor-pointer"
-          >
-            {/* Icon */}
-            <div className="w-[36px] h-[36px] rounded-[8px] bg-[#f0f7ff] flex items-center justify-center shrink-0">
-              <span className="text-[#2563eb]">
-                <FormIcon />
-              </span>
+      {/* Forms list */}
+      <div className="flex flex-col gap-tds-12">
+        {filtered.map((form, idx) => (
+          <div key={`${form.name}-${idx}`} className="border border-[#e6e6e6] rounded-[8px] p-tds-16">
+            {/* Form header */}
+            <div className="flex items-center justify-between mb-tds-8">
+              <div>
+                <h3 className="text-[14px] font-semibold text-[#2b2b2b]">{form.name}</h3>
+                <p className="text-[12px] text-[#666666]">{form.category}</p>
+              </div>
+              <div className="flex items-center gap-tds-8">
+                <button className="p-tds-4 text-[#737373] hover:text-[#2b2b2b] cursor-pointer"><EditIcon /></button>
+                <button className="p-tds-4 text-[#737373] hover:text-[#2b2b2b] cursor-pointer"><LinkIcon /></button>
+                <button className="p-tds-4 text-[#737373] hover:text-[#dc2626] cursor-pointer"><DeleteIcon /></button>
+              </div>
             </div>
 
-            {/* Info */}
-            <div className="flex-1 min-w-0">
-              <h3 className="text-[14px] font-medium text-tds-text-body-primary">{form.name}</h3>
-              <p className="text-[12px] text-tds-text-caption-secondary mt-tds-4">{form.category}</p>
-            </div>
-
-            {/* Meta */}
-            <div className="flex items-center gap-tds-16 shrink-0">
-              <span className="text-[12px] text-tds-text-caption-secondary">{form.fieldCount} fields</span>
-              <span className="text-[12px] text-tds-text-caption-secondary">{form.createdAt}</span>
-              <span
-                className={`inline-flex items-center px-tds-8 py-[2px] rounded-[4px] text-[12px] font-medium ${
-                  form.status === 'Active'
-                    ? 'bg-[#ecfdf5] text-[#059669]'
-                    : 'bg-[#f5f5f5] text-tds-text-caption-secondary'
-                }`}
-              >
-                {form.status}
-              </span>
-            </div>
+            {/* Description */}
+            <p className="text-[12px] text-[#666666]">{form.description}</p>
           </div>
         ))}
       </div>
