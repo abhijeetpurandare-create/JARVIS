@@ -115,13 +115,14 @@ const BusinessHours = () => {
             {/* Divider end-to-end */}
             <div className="h-px bg-[#e6e6e6] -mx-tds-16 mb-tds-12" />
 
-            {/* Working Days — right aligned */}
-            <div className="flex items-center justify-end gap-tds-8">
-              <span className="text-[12px] text-[#666666] mr-tds-4">Working Days</span>
+            {/* Working Days — label left, days right, small size */}
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-[#666666]">Working Days</span>
+              <div className="flex items-center gap-tds-4">
               {allDays.map((day) => (
                 <span
                   key={day}
-                  className={`w-[32px] h-[32px] flex items-center justify-center rounded-full text-[11px] font-medium ${
+                  className={`w-[24px] h-[24px] flex items-center justify-center rounded-full text-[10px] font-medium ${
                     config.workingDays.includes(day)
                       ? 'bg-[#191919] text-white'
                       : 'border border-[#e6e6e6] text-[#666666]'
@@ -130,6 +131,7 @@ const BusinessHours = () => {
                   {day.slice(0, 2)}
                 </span>
               ))}
+              </div>
             </div>
           </div>
         ))}
