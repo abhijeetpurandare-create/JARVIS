@@ -39,7 +39,7 @@ const Settings = () => {
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 overflow-y-auto p-tds-24">
+      <div className="flex-1 overflow-y-auto pt-0 pr-tds-24 pb-tds-24 pl-tds-24">
         <Outlet />
       </div>
     </div>
