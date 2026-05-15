@@ -131,9 +131,9 @@ const FieldManagement = () => {
           {/* Config sections */}
           <div className="flex flex-col gap-tds-24">
             {filteredConfigs.map((config) => (
-              <div key={config.name}>
+              <div key={config.name} className="border border-[#e6e6e6] rounded-[8px] p-tds-16">
                 {/* Section header */}
-                <div className="flex items-center justify-between mb-tds-8">
+                <div className="flex items-center justify-between mb-tds-12">
                   <div>
                     <h3 className="text-[14px] font-semibold text-[#111111]">{config.name}</h3>
                     <p className="text-[12px] text-[#666666]">{config.fieldCount} Fields Configured</p>
