@@ -112,8 +112,11 @@ const BusinessHours = () => {
               </div>
             </div>
 
-            {/* Working Days */}
-            <div className="flex items-center gap-tds-8">
+            {/* Divider end-to-end */}
+            <div className="h-px bg-[#e6e6e6] -mx-tds-16 mb-tds-12" />
+
+            {/* Working Days — right aligned */}
+            <div className="flex items-center justify-end gap-tds-8">
               <span className="text-[12px] text-[#666666] mr-tds-4">Working Days</span>
               {allDays.map((day) => (
                 <span
