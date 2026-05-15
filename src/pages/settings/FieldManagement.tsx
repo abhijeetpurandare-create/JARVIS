@@ -146,6 +146,9 @@ const FieldManagement = () => {
                   </div>
                 </div>
 
+                {/* Divider */}
+                <div className="h-px bg-[#e6e6e6] mb-tds-12" />
+
                 {/* Field chips grid */}
                 <div className="flex flex-wrap gap-tds-8">
                   {config.fields.map((field, idx) => (
