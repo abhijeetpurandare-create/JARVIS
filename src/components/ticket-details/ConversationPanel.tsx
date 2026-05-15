@@ -7,35 +7,43 @@ const MessageBubble = ({ message }: { message: Conversation }) => {
   const isPrivateNote = message.type === 'private_note';
 
   const bubbleStyles = isCustomer
-    ? 'bg-tds-surface-bg-blue-weakest border border-tds-border-info-primary/30'
+    ? 'bg-[#f0f7ff] border border-[#d0e3ff]'
     : isPrivateNote
-    ? 'bg-tds-surface-bg-warning-weakest border border-tds-border-warning-primary/40'
-    : 'bg-tds-surface-bg-primary-default border border-tds-border-neutral-primary';
+    ? 'bg-[#fff8eb] border border-[#ffd97a]'
+    : 'bg-white border border-[#e6e6e6]';
 
-  const alignStyles = isCustomer ? 'ml-tds-16 mr-tds-32' : 'ml-auto mr-tds-16 ml-tds-32';
+  // Avatar colors
+  const avatarBg = isCustomer ? 'bg-[#2563eb]' : isPrivateNote ? 'bg-[#16a34a]' : 'bg-[#7c3aed]';
+  const initials = message.sender.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
   return (
-    <div className={`max-w-[calc(100%-32px)] ${alignStyles} my-tds-8`}>
-      <div className={`rounded-tds-lg p-tds-12 ${bubbleStyles}`}>
+    <div className="flex gap-tds-8 my-tds-8 px-tds-16">
+      {/* Avatar */}
+      <div className={`w-[28px] h-[28px] rounded-full ${avatarBg} flex items-center justify-center shrink-0 mt-tds-4`}>
+        <span className="text-[10px] font-semibold text-white">{initials}</span>
+      </div>
+
+      {/* Bubble */}
+      <div className={`flex-1 rounded-[8px] p-tds-12 ${bubbleStyles}`}>
         <div className="flex items-center gap-tds-8 mb-tds-4">
-          <span className="text-[12px] font-semibold text-tds-text-body-primary">{message.sender}</span>
-          <span className="text-[12px] text-tds-text-caption-secondary">{message.timestamp}</span>
+          <span className="text-[12px] font-semibold text-[#2b2b2b]">{message.sender}</span>
+          <span className="text-[12px] text-[#666666]">{message.timestamp}</span>
           {isPrivateNote && (
-            <span className="text-[10px] font-medium text-tds-text-warning-primary bg-tds-surface-bg-warning-weakest px-tds-6 py-[1px] rounded-tds-full border border-tds-border-warning-primary/50 ml-auto">
-              Private Note
+            <span className="text-[10px] font-medium text-[#b45309] bg-[#fef3c7] px-tds-6 py-[1px] rounded-[4px] ml-auto">
+              Internal Note
             </span>
           )}
         </div>
-        <p className="text-[12px] text-tds-text-caption-secondary mb-tds-4">{message.role}</p>
+        <p className="text-[12px] text-[#666666] mb-tds-4">{message.role}</p>
         {message.notifiedTo && (
           <div className="mb-tds-6">
-            <p className="text-[12px] text-tds-text-caption-secondary">
+            <p className="text-[12px] text-[#666666]">
               Notified To: {message.notifiedTo.join(', ')}
             </p>
-            <div className="h-px bg-tds-border-neutral-primary/50 my-tds-4" />
+            <div className="h-px bg-[#e6e6e6] my-tds-4" />
           </div>
         )}
-        <p className="text-[12px] text-tds-text-body-primary leading-[18px] whitespace-pre-line">
+        <p className="text-[12px] text-[#2b2b2b] leading-[18px] whitespace-pre-line">
           {message.content}
         </p>
       </div>

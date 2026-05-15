@@ -4,11 +4,12 @@ import { TicketDetail } from '../../data/ticketDetailsData';
 interface ContextSectionProps {
   title: string;
   content: string;
+  borderColor?: string;
 }
 
-const ContextSection = ({ title, content }: ContextSectionProps) => (
-  <div className="border border-tds-border-neutral-primary rounded-tds-md p-tds-16">
-    <h4 className="text-[12px] font-semibold text-tds-text-heading-primary mb-tds-8">{title}</h4>
+const ContextSection = ({ title, content, borderColor = '#e6e6e6' }: ContextSectionProps) => (
+  <div className="border border-[#e6e6e6] rounded-[8px] p-tds-12 border-l-[3px]" style={{ borderLeftColor: borderColor }}>
+    <h4 className="text-[12px] font-semibold text-[#2b2b2b] mb-tds-6">{title}</h4>
     <p className="text-[12px] text-tds-text-body-secondary leading-[16px] whitespace-pre-line">{content}</p>
   </div>
 );
@@ -35,19 +36,23 @@ const ContextPanel = ({ ticket }: { ticket: TicketDetail }) => {
 
       {/* Context sections — scrollable */}
       <div className="flex-1 overflow-auto p-tds-16 flex flex-col gap-tds-12">
+        <div className="text-[14px] font-medium text-[#2b2b2b] mb-tds-4">Hello AI</div>
         <ContextSection
           title="Consignee"
           content={`Address: ${ticket.customerAddress}\nHistory: The customer has ${ticket.customerHistory}\nStatus: Address valid\nRisk: LOW RTO risk (69.0%)`}
+          borderColor="#16a34a"
         />
 
         <ContextSection
           title="Product"
           content={`Product: ${ticket.product}\nClient: ${ticket.productClient}\nType: ${ticket.productType}`}
+          borderColor="#ea580c"
         />
 
         <ContextSection
           title="Ticket"
           content={`Subject: ${ticket.subject}\nStatus: ${ticket.status}\nAgent: ${ticket.agent}\nPriority: ${ticket.priority}`}
+          borderColor="#7c3aed"
         />
 
         <ContextSection
