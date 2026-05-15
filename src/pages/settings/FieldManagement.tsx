@@ -95,7 +95,7 @@ const FieldManagement = () => {
 
   return (
     <div>
-      {/* Horizontal Tabs — regular style with underline */}
+      {/* Horizontal Tabs — regular style with underline, flush to edges */}
       <div className="flex items-center border-b border-[#e6e6e6] mb-tds-16">
         {tabs.map((tab, i) => (
           <button
@@ -114,7 +114,7 @@ const FieldManagement = () => {
 
       {/* ===== Field Configurations Tab ===== */}
       {activeTab === 0 && (
-        <>
+        <div className="px-tds-24 pt-tds-16">
           <div className="flex items-center justify-between mb-tds-16">
             <div className="flex items-center gap-tds-8">
               <span className="text-[14px] font-bold text-[#111111]">Configurations</span>
@@ -161,12 +161,12 @@ const FieldManagement = () => {
               </div>
             ))}
           </div>
-        </>
+        </div>
       )}
 
       {/* ===== Field Lists Tab ===== */}
       {activeTab === 1 && (
-        <>
+        <div className="px-tds-24 pt-tds-16">
           <div className="flex items-center justify-between mb-tds-16">
             <div className="flex items-center gap-tds-8">
               <span className="text-[14px] font-bold text-[#111111]">List</span>
@@ -225,7 +225,7 @@ const FieldManagement = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
