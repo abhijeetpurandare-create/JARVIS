@@ -139,7 +139,7 @@ const FieldManagement = () => {
                     <p className="text-[12px] text-[#666666]">{config.fieldCount} Fields Configured</p>
                   </div>
                   <div className="flex items-center gap-tds-12">
-                    <Button variant="black" buttonStyle="tertiary" size="sm" text="+ Add New Field" />
+                    <Button variant="black" buttonStyle="secondary" size="sm" text="+ Add New Field" />
                     <button className="p-tds-4 text-[#737373] hover:text-[#2b2b2b] cursor-pointer"><CopyIcon /></button>
                     <button className="p-tds-4 text-[#737373] hover:text-[#2b2b2b] cursor-pointer"><EditIcon /></button>
                     <button className="p-tds-4 text-[#737373] hover:text-[#dc2626] cursor-pointer"><DeleteIcon /></button>
