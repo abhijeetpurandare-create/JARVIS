@@ -101,7 +101,7 @@ const FieldManagement = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(i)}
-            className={`px-tds-12 py-tds-8 text-[12px] font-medium border-b-2 transition-colors cursor-pointer ${
+            className={`px-tds-16 py-tds-12 text-[14px] font-medium border-b-2 transition-colors cursor-pointer ${
               activeTab === i
                 ? 'border-b-[#191919] text-[#2b2b2b]'
                 : 'border-b-transparent text-[#737373] hover:text-[#2b2b2b]'
