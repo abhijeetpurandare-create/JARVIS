@@ -147,7 +147,7 @@ const FieldManagement = () => {
                 </div>
 
                 {/* Divider */}
-                <div className="h-px bg-[#e6e6e6] mb-tds-12" />
+                <div className="h-px bg-[#e6e6e6] mb-tds-12 -mx-tds-16" />
 
                 {/* Field chips grid */}
                 <div className="flex flex-wrap gap-tds-8">
